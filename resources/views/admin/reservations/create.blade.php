@@ -127,6 +127,16 @@
                 <span class="help-block">{{ trans('cruds.reservation.fields.notes_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="transfer_name">{{ trans('cruds.reservation.fields.transfer_name') }}</label>
+                <input class="form-control {{ $errors->has('transfer_name') ? 'is-invalid' : '' }}" type="text" name="transfer_name" id="transfer_name" value="{{ old('transfer_name', '') }}">
+                @if($errors->has('transfer_name'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('transfer_name') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.reservation.fields.transfer_name_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

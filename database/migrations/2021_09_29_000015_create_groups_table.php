@@ -15,6 +15,7 @@ class CreateGroupsTable extends Migration
             $table->integer('course_hours');
             $table->integer('course_cost');
             $table->string('status');
+            $table->longText('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

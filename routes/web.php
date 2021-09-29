@@ -55,6 +55,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Group
     Route::delete('groups/destroy', 'GroupController@massDestroy')->name('groups.massDestroy');
+    Route::post('groups/media', 'GroupController@storeMedia')->name('groups.storeMedia');
+    Route::post('groups/ckmedia', 'GroupController@storeCKEditorImages')->name('groups.storeCKEditorImages');
     Route::resource('groups', 'GroupController');
 
     // Center Services Packages

@@ -43,6 +43,10 @@ class UpdateReservationRequest extends FormRequest
                 'required',
                 'integer',
             ],
+            'transfer_name' => [
+                'string',
+                'nullable',
+            ],
         ];
     }
 }
