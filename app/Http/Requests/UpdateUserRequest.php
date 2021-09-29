@@ -44,7 +44,6 @@ class UpdateUserRequest extends FormRequest
                 'integer',
             ],
             'packages' => [
-                'required',
                 'array',
             ],
         ];

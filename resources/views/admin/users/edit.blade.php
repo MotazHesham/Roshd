@@ -79,12 +79,12 @@
                 <span class="help-block">{{ trans('cruds.user.fields.user_type_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="packages">{{ trans('cruds.user.fields.package') }}</label>
+                <label for="packages">{{ trans('cruds.user.fields.package') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                     <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                 </div>
-                <select class="form-control select2 {{ $errors->has('packages') ? 'is-invalid' : '' }}" name="packages[]" id="packages" multiple required>
+                <select class="form-control select2 {{ $errors->has('packages') ? 'is-invalid' : '' }}" name="packages[]" id="packages" multiple>
                     @foreach($packages as $id => $package)
                         <option value="{{ $id }}" {{ (in_array($id, old('packages', [])) || $user->packages->contains($id)) ? 'selected' : '' }}>{{ $package }}</option>
                     @endforeach

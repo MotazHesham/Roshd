@@ -44,9 +44,6 @@
                             {{ trans('cruds.user.fields.user_type') }}
                         </th>
                         <th>
-                            {{ trans('cruds.user.fields.package') }}
-                        </th>
-                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -79,11 +76,6 @@
                             </td>
                             <td>
                                 {{ $user->user_type ?? '' }}
-                            </td>
-                            <td>
-                                @foreach($user->packages as $key => $item)
-                                    <span class="badge badge-info">{{ $item->name }}</span>
-                                @endforeach
                             </td>
                             <td>
                                 @can('user_show')
@@ -157,7 +149,7 @@
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
-    pageLength: 100,
+    pageLength: 25,
   });
   let table = $('.datatable-User:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
