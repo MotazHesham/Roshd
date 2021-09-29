@@ -12,6 +12,7 @@ use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class UsersController extends Controller
 {
@@ -38,6 +39,8 @@ class UsersController extends Controller
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
 
+        Alert::success('تم إضافة المستخدم بنجاح', 'تم بنجاح ');
+
         return redirect()->route('admin.users.index');
     }
 
@@ -60,6 +63,8 @@ class UsersController extends Controller
         $user->roles()->sync($request->input('roles', []));
         $user->packages()->sync($request->input('packages', []));
 
+        Alert::success('تم تعديل بيانات المستخدم بنجاح', 'تم بنجاح ');
+
         return redirect()->route('admin.users.index');
     }
 
@@ -77,6 +82,8 @@ class UsersController extends Controller
         abort_if(Gate::denies('user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $user->delete();
+
+        Alert::success('تم حذف المستخدم بنجاح', 'تم بنجاح ');
 
         return back();
     }

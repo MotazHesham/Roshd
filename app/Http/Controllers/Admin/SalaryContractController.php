@@ -12,6 +12,7 @@ use App\Models\SalaryContract;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class SalaryContractController extends Controller
 {
@@ -39,7 +40,7 @@ class SalaryContractController extends Controller
     {
         $salaryContract = SalaryContract::create($request->all());
         $salaryContract->allowances()->sync($request->input('allowances', []));
-
+        Alert::success('تم إضافة الراتب للأستشاري بنجاح', 'تم بنجاح ');
         return redirect()->route('admin.salary-contracts.index');
     }
 
@@ -61,7 +62,9 @@ class SalaryContractController extends Controller
         $salaryContract->update($request->all());
         $salaryContract->allowances()->sync($request->input('allowances', []));
 
+        Alert::success('تم تعديل الراتب بنجاح', 'تم بنجاح ');
         return redirect()->route('admin.salary-contracts.index');
+
     }
 
     public function show(SalaryContract $salaryContract)
@@ -78,6 +81,8 @@ class SalaryContractController extends Controller
         abort_if(Gate::denies('salary_contract_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $salaryContract->delete();
+
+        Alert::success('تم حذف الراتب بنجاح', 'تم بنجاح ');
 
         return back();
     }

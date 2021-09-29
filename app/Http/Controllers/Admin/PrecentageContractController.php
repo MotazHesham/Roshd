@@ -11,6 +11,7 @@ use App\Models\PrecentageContract;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class PrecentageContractController extends Controller
 {
@@ -36,6 +37,8 @@ class PrecentageContractController extends Controller
     {
         $precentageContract = PrecentageContract::create($request->all());
 
+        Alert::success('تم إضافة النسبة للأستشارى بنجاح', 'تم بنجاح ');
+
         return redirect()->route('admin.precentage-contracts.index');
     }
 
@@ -54,6 +57,8 @@ class PrecentageContractController extends Controller
     {
         $precentageContract->update($request->all());
 
+        Alert::success('تم تعديل نسبة الأستشاري بنجاح', 'تم بنجاح ');
+
         return redirect()->route('admin.precentage-contracts.index');
     }
 
@@ -71,6 +76,8 @@ class PrecentageContractController extends Controller
         abort_if(Gate::denies('precentage_contract_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $precentageContract->delete();
+
+        Alert::success('تم حذف نسبة الأستشاري بنجاح', 'تم بنجاح ');
 
         return back();
     }

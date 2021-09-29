@@ -12,6 +12,7 @@ use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class StudentController extends Controller
 {
@@ -39,6 +40,8 @@ class StudentController extends Controller
     {
         $student = Student::create($request->all());
 
+        Alert::success('تم إضافة الطالبة بنجاح', 'تم بنجاح ');
+
         return redirect()->route('admin.students.index');
     }
 
@@ -58,6 +61,7 @@ class StudentController extends Controller
     public function update(UpdateStudentRequest $request, Student $student)
     {
         $student->update($request->all());
+        Alert::success('تم تعديل بيانات الطالبة بنجاح', 'تم بنجاح ');
 
         return redirect()->route('admin.students.index');
     }
@@ -76,6 +80,7 @@ class StudentController extends Controller
         abort_if(Gate::denies('student_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $student->delete();
+        Alert::success('تم حذف بيانات بنجاح', 'تم بنجاح ');
 
         return back();
     }

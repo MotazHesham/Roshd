@@ -10,6 +10,7 @@ use App\Models\CenterService;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class CenterServiceController extends Controller
 {
@@ -33,6 +34,9 @@ class CenterServiceController extends Controller
     {
         $centerService = CenterService::create($request->all());
 
+    
+    Alert::success('تم إضافة الخدمة بنجاح', 'تم بنجاح ');
+
         return redirect()->route('admin.center-services.index');
     }
 
@@ -46,6 +50,9 @@ class CenterServiceController extends Controller
     public function update(UpdateCenterServiceRequest $request, CenterService $centerService)
     {
         $centerService->update($request->all());
+
+    
+    Alert::success('تم تعديل الخدمة بنجاح', 'تم بنجاح ');
 
         return redirect()->route('admin.center-services.index');
     }
@@ -62,6 +69,9 @@ class CenterServiceController extends Controller
         abort_if(Gate::denies('center_service_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $centerService->delete();
+
+    
+    Alert::success('تم حذف الخدمة بنجاح', 'تم بنجاح ');
 
         return back();
     }

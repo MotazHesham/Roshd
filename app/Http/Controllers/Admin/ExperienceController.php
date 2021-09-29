@@ -11,6 +11,7 @@ use App\Models\Experience;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class ExperienceController extends Controller
 {
@@ -36,6 +37,9 @@ class ExperienceController extends Controller
     {
         $experience = Experience::create($request->all());
 
+    
+    Alert::success('تم إضافة الخبرة العملية بنجاح', 'تم بنجاح ');
+
         return redirect()->route('admin.experiences.index');
     }
 
@@ -54,6 +58,9 @@ class ExperienceController extends Controller
     {
         $experience->update($request->all());
 
+    
+    Alert::success('تم تعديل الخبرة العملية بنجاح', 'تم بنجاح ');
+
         return redirect()->route('admin.experiences.index');
     }
 
@@ -71,6 +78,9 @@ class ExperienceController extends Controller
         abort_if(Gate::denies('experience_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $experience->delete();
+
+    
+    Alert::success('تم حذف الخبرة العملية بنجاح', 'تم بنجاح ');
 
         return back();
     }

@@ -10,6 +10,7 @@ use App\Models\Specialization;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class SpecializationController extends Controller
 {
@@ -33,6 +34,8 @@ class SpecializationController extends Controller
     {
         $specialization = Specialization::create($request->all());
 
+        Alert::success('تم إضافة التخصص بنجاح', 'تم بنجاح ');
+
         return redirect()->route('admin.specializations.index');
     }
 
@@ -46,6 +49,8 @@ class SpecializationController extends Controller
     public function update(UpdateSpecializationRequest $request, Specialization $specialization)
     {
         $specialization->update($request->all());
+
+        Alert::success('تم تعديل التخصص بنجاح', 'تم بنجاح ');
 
         return redirect()->route('admin.specializations.index');
     }
@@ -62,6 +67,8 @@ class SpecializationController extends Controller
         abort_if(Gate::denies('specialization_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $specialization->delete();
+
+        Alert::success('تم حذف التخصص بنجاح', 'تم بنجاح ');
 
         return back();
     }

@@ -13,6 +13,7 @@ use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class ReservationController extends Controller
 {
@@ -42,6 +43,8 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::create($request->all());
 
+        Alert::success('تم إضافة الحجز بنجاح', 'تم بنجاح ');
+
         return redirect()->route('admin.reservations.index');
     }
 
@@ -64,6 +67,8 @@ class ReservationController extends Controller
     {
         $reservation->update($request->all());
 
+        Alert::success('تم  تعديل الحجز بنجاح', 'تم بنجاح ');
+
         return redirect()->route('admin.reservations.index');
     }
 
@@ -81,6 +86,8 @@ class ReservationController extends Controller
         abort_if(Gate::denies('reservation_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $reservation->delete();
+
+        Alert::success('تم حذف الحجز بنجاح', 'تم بنجاح ');
 
         return back();
     }

@@ -11,6 +11,7 @@ use App\Models\Specialization;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class ClinicController extends Controller
 {
@@ -37,6 +38,8 @@ class ClinicController extends Controller
         $clinic = Clinic::create($request->all());
         $clinic->specializations()->sync($request->input('specializations', []));
 
+    
+    Alert::success('تم إضافة العيادة بنجاح', 'تم بنجاح ');
         return redirect()->route('admin.clinics.index');
     }
 
@@ -56,6 +59,8 @@ class ClinicController extends Controller
         $clinic->update($request->all());
         $clinic->specializations()->sync($request->input('specializations', []));
 
+        Alert::success('تم تعديل العيادة بنجاح', 'تم بنجاح ');
+
         return redirect()->route('admin.clinics.index');
     }
 
@@ -73,6 +78,9 @@ class ClinicController extends Controller
         abort_if(Gate::denies('clinic_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $clinic->delete();
+
+    
+    Alert::success('تم حذف العيادة بنجاح', 'تم بنجاح ');
 
         return back();
     }

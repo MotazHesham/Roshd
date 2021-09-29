@@ -11,6 +11,7 @@ use App\Models\Education;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class EducationController extends Controller
 {
@@ -36,6 +37,9 @@ class EducationController extends Controller
     {
         $education = Education::create($request->all());
 
+    
+    Alert::success('تم إضافة الدرجة العلمية بنجاح', 'تم بنجاح ');
+
         return redirect()->route('admin.education.index');
     }
 
@@ -54,6 +58,9 @@ class EducationController extends Controller
     {
         $education->update($request->all());
 
+    
+    Alert::success('تم تعديل الدرجة العلمية بنجاح', 'تم بنجاح ');
+
         return redirect()->route('admin.education.index');
     }
 
@@ -71,6 +78,8 @@ class EducationController extends Controller
         abort_if(Gate::denies('education_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $education->delete();
+        
+    Alert::success('تم حذف الدرجة العلمية بنجاح', 'تم بنجاح ');
 
         return back();
     }

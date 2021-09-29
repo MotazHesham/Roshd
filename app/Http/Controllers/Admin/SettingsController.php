@@ -12,6 +12,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class SettingsController extends Controller
 {
@@ -45,6 +46,8 @@ class SettingsController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $setting->id]);
         }
 
+        Alert::success('تم إضافة الإعدادات بنجاح', 'تم بنجاح ');
+
         return redirect()->route('admin.settings.index');
     }
 
@@ -69,7 +72,7 @@ class SettingsController extends Controller
         } elseif ($setting->logo) {
             $setting->logo->delete();
         }
-
+        Alert::success('تم تعديل الإعدادات بنجاح', 'تم بنجاح ');
         return redirect()->route('admin.settings.index');
     }
 
@@ -85,6 +88,8 @@ class SettingsController extends Controller
         abort_if(Gate::denies('setting_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $setting->delete();
+
+        Alert::success('تم حذف الإعدادات بنجاح', 'تم بنجاح ');
 
         return back();
     }

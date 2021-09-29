@@ -11,6 +11,7 @@ use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class EditorsController extends Controller
 {
@@ -36,6 +37,9 @@ class EditorsController extends Controller
     {
         $editor = Editor::create($request->all());
 
+    
+    Alert::success('تم إضافة المراجع بنجاح', 'تم بنجاح ');
+
         return redirect()->route('admin.editors.index');
     }
 
@@ -54,6 +58,9 @@ class EditorsController extends Controller
     {
         $editor->update($request->all());
 
+    
+    Alert::success('تم تهديل بيانات المراجع بنجاح', 'تم بنجاح ');
+
         return redirect()->route('admin.editors.index');
     }
 
@@ -71,6 +78,9 @@ class EditorsController extends Controller
         abort_if(Gate::denies('editor_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $editor->delete();
+
+    
+    Alert::success('تم حذف المراجع بنجاح', 'تم بنجاح ');
 
         return back();
     }

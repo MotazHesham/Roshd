@@ -12,6 +12,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+Use Alert;
 
 class ActivatesController extends Controller
 {
@@ -48,6 +49,7 @@ class ActivatesController extends Controller
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $activate->id]);
         }
+        Alert::success('تم إضافة النشاط بنجاح', 'تم بنجاح ');
 
         return redirect()->route('admin.activates.index');
     }
@@ -85,6 +87,7 @@ class ActivatesController extends Controller
             $activate->video->delete();
         }
 
+        Alert::success('تم تعديل النشاط بنجاح', 'تم بنجاح ');
         return redirect()->route('admin.activates.index');
     }
 

@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Alert;
 
 class GroupController extends Controller
 {
@@ -106,6 +107,9 @@ class GroupController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $group->id]);
         }
 
+    
+     Alert::success('تم إضافة المجموعة بنجاح', 'تم بنجاح ');   
+
         return redirect()->route('admin.groups.index');
     }
 
@@ -136,7 +140,7 @@ class GroupController extends Controller
         } elseif ($group->photo) {
             $group->photo->delete();
         }
-
+        Alert::success('تم تعديل المجموعة بنجاح', 'تم بنجاح ');
         return redirect()->route('admin.groups.index');
     }
 
@@ -154,6 +158,7 @@ class GroupController extends Controller
         abort_if(Gate::denies('group_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $group->delete();
+        Alert::success('تم حذف المجموعة بنجاح', 'تم بنجاح ');
 
         return back();
     }

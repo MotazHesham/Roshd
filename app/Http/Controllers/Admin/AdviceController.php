@@ -10,6 +10,7 @@ use App\Models\Advice;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class AdviceController extends Controller
 {
@@ -32,6 +33,8 @@ class AdviceController extends Controller
     public function store(StoreAdviceRequest $request)
     {
         $advice = Advice::create($request->all());
+
+    Alert::success('تم إضافة الأستشارة بنجاح', 'تم بنجاح ');
 
         return redirect()->route('admin.advice.index');
     }

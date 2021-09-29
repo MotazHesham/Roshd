@@ -10,6 +10,7 @@ use App\Models\Allowance;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class AllowancesController extends Controller
 {
@@ -33,6 +34,8 @@ class AllowancesController extends Controller
     {
         $allowance = Allowance::create($request->all());
 
+    Alert::success('تم إضافة البدل بنجاح', 'تم بنجاح ');
+
         return redirect()->route('admin.allowances.index');
     }
 
@@ -46,6 +49,9 @@ class AllowancesController extends Controller
     public function update(UpdateAllowanceRequest $request, Allowance $allowance)
     {
         $allowance->update($request->all());
+
+
+    Alert::success('تم تعديل البدل بنجاح', 'تم بنجاح ');
 
         return redirect()->route('admin.allowances.index');
     }
@@ -62,6 +68,8 @@ class AllowancesController extends Controller
         abort_if(Gate::denies('allowance_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $allowance->delete();
+
+    Alert::success('تم حذف البدل بنجاح', 'تم بنجاح ');
 
         return back();
     }
