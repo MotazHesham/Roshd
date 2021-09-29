@@ -17,6 +17,10 @@ class CreateReservationsTable extends Migration
             $table->decimal('cost', 15, 2);
             $table->longText('condation')->nullable();
             $table->longText('notes')->nullable();
+            $table->string('payment_status')->nullable();
+            $table->string('payment_type')->nullable();
+            $table->string('transfer_name')->nullable();
+            $table->string('reference_number')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -81,6 +81,26 @@
                             @endforeach
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.group.fields.photo') }}
+                        </th>
+                        <td>
+                            @if($group->photo)
+                                <a href="{{ $group->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $group->photo->getUrl('thumb') }}">
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.group.fields.description') }}
+                        </th>
+                        <td>
+                            {{ $group->description }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

@@ -51,6 +51,9 @@ class StoreGroupRequest extends FormRequest
                 'required',
                 'array',
             ],
+            'photo' => [
+                'required',
+            ],
         ];
     }
 }

@@ -51,6 +51,9 @@ class UpdateGroupRequest extends FormRequest
                 'required',
                 'array',
             ],
+            'photo' => [
+                'required',
+            ],
         ];
     }
 }

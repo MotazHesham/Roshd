@@ -103,6 +103,38 @@
                             {{ $reservation->notes }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.reservation.fields.payment_status') }}
+                        </th>
+                        <td>
+                            {{ App\Models\Reservation::PAYMENT_STATUS_SELECT[$reservation->payment_status] ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.reservation.fields.payment_type') }}
+                        </th>
+                        <td>
+                            {{ App\Models\Reservation::PAYMENT_TYPE_SELECT[$reservation->payment_type] ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.reservation.fields.transfer_name') }}
+                        </th>
+                        <td>
+                            {{ $reservation->transfer_name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.reservation.fields.reference_number') }}
+                        </th>
+                        <td>
+                            {{ $reservation->reference_number }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

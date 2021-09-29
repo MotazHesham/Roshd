@@ -43,6 +43,10 @@ class StoreReservationRequest extends FormRequest
                 'required',
                 'integer',
             ],
+            'transfer_name' => [
+                'string',
+                'nullable',
+            ],
         ];
     }
 }

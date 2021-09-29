@@ -11,6 +11,17 @@ class Reservation extends Model
 {
     use SoftDeletes;
 
+    public const PAYMENT_STATUS_SELECT = [
+        'not_paid' => 'لم يتم السداد',
+        'paid'     => 'تم السداد',
+    ];
+
+    public const PAYMENT_TYPE_SELECT = [
+        'bank'    => 'تحويل بنكي',
+        'cash'    => 'نقدي',
+        'package' => 'باقة',
+    ];
+
     public const STATUSE_SELECT = [
         'attended'  => 'تم الحضور',
         'waiting'   => 'قيد الإنتظار',
@@ -39,6 +50,10 @@ class Reservation extends Model
         'doctor_id',
         'clinic_id',
         'notes',
+        'payment_status',
+        'payment_type',
+        'transfer_name',
+        'reference_number',
         'created_at',
         'updated_at',
         'deleted_at',

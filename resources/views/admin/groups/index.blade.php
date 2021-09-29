@@ -43,7 +43,7 @@
                         {{ trans('cruds.group.fields.user') }}
                     </th>
                     <th>
-                        {{ trans('cruds.group.fields.students') }}
+                        {{ trans('cruds.group.fields.photo') }}
                     </th>
                     <th>
                         &nbsp;
@@ -108,7 +108,7 @@
 { data: 'course_cost', name: 'course_cost' },
 { data: 'status', name: 'status' },
 { data: 'user_email', name: 'user.email' },
-{ data: 'students', name: 'students.hours' },
+{ data: 'photo', name: 'photo', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

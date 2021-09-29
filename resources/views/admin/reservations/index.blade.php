@@ -44,6 +44,12 @@
                             {{ trans('cruds.reservation.fields.clinic') }}
                         </th>
                         <th>
+                            {{ trans('cruds.reservation.fields.payment_status') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.reservation.fields.transfer_name') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -74,6 +80,12 @@
                             </td>
                             <td>
                                 {{ $reservation->clinic->clinic_name ?? '' }}
+                            </td>
+                            <td>
+                                {{ App\Models\Reservation::PAYMENT_STATUS_SELECT[$reservation->payment_status] ?? '' }}
+                            </td>
+                            <td>
+                                {{ $reservation->transfer_name ?? '' }}
                             </td>
                             <td>
                                 @can('reservation_show')
