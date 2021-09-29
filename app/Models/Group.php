@@ -18,8 +18,8 @@ class Group extends Model implements HasMedia
     use Auditable;
 
     public const STATUS_RADIO = [
-        '1' => 'active',
-        '0' => 'not_active',
+        '1' => 'مفعله',
+        '0' => 'غير مفعله',
     ];
 
     public $table = 'groups';

@@ -30,16 +30,13 @@ class UsersController extends Controller
 
         $roles = Role::pluck('title', 'id');
 
-        $packages = CenterServicesPackage::pluck('name', 'id');
-
-        return view('admin.users.create', compact('roles', 'packages'));
+        return view('admin.users.create', compact('roles'));
     }
 
     public function store(StoreUserRequest $request)
     {
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
-        $user->packages()->sync($request->input('packages', []));
 
         return redirect()->route('admin.users.index');
     }

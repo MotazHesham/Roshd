@@ -78,24 +78,6 @@
                 <span class="help-block">{{ trans('cruds.user.fields.user_type_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="packages">{{ trans('cruds.user.fields.package') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                </div>
-                <select class="form-control select2 {{ $errors->has('packages') ? 'is-invalid' : '' }}" name="packages[]" id="packages" multiple required>
-                    @foreach($packages as $id => $package)
-                        <option value="{{ $id }}" {{ in_array($id, old('packages', [])) ? 'selected' : '' }}>{{ $package }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('packages'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('packages') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.user.fields.package_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
