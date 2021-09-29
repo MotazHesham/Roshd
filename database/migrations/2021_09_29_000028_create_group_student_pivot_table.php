@@ -13,6 +13,14 @@ class CreateGroupStudentPivotTable extends Migration
             $table->foreign('group_id', 'group_id_fk_4987800')->references('id')->on('groups')->onDelete('cascade');
             $table->unsignedBigInteger('student_id');
             $table->foreign('student_id', 'student_id_fk_4987800')->references('id')->on('students')->onDelete('cascade');
+            $table->datetime('time');
+            $table->string('latitude');
+            $table->string('longitude');
+            $table->string('payment_status')->nullable();
+            $table->string('payment_type')->nullable();
+            $table->string('transfer_name')->nullable();
+            $table->string('reference_number')->nullable();
+
         });
     }
 }

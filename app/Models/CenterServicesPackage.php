@@ -12,7 +12,17 @@ class CenterServicesPackage extends Model
     use SoftDeletes;
 
     public $table = 'center_services_packages';
+    public const PAYMENT_STATUS_SELECT = [
+        'not_paid' => 'لم يتم السداد',
+        'paid'     => 'تم السداد',
+    ];
 
+    public const PAYMENT_TYPE_SELECT = [
+        'bank'    => 'تحويل بنكي',
+        'cash'    => 'نقدي',
+        'package' => 'باقة',
+    ];
+    
     protected $dates = [
         'start_date',
         'end_date',

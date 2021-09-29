@@ -37,4 +37,9 @@ class Clinic extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    public function doctor()
+    {
+        return $this->hasMany(Doctor::class , 'doctor_id');
+    }
 }

@@ -61,4 +61,9 @@ class Doctor extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    public function clinic()
+    {
+        return $this->belongsTo(clinic::class , 'clinic_id');
+    }
 }
