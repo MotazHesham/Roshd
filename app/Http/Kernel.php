@@ -44,5 +44,6 @@ class Kernel extends HttpKernel
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'staff' => \App\Http\Middleware\Staff::class,
         'patient' => \App\Http\Middleware\patient::class,
+        'doctor' => \App\Http\Middleware\doctor::class,
     ];
 }

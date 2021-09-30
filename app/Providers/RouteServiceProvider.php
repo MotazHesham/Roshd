@@ -46,7 +46,9 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapadminRoutes();
 
-        $this->mapPatientRoutes(); 
+        $this->mapPatientRoutes();
+
+        $this->mapdoctorRoutes();
 
         //
     }
@@ -58,22 +60,27 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
- 
-    protected function mapadminRoutes() 
+
+    protected function mapadminRoutes()
     {
         Route::middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/admin.php'));
     }
-    protected function mapPatientRoutes() 
+    protected function mapPatientRoutes()
     {
         Route::middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/patient.php'));
     }
-   
+    protected function mapdoctorRoutes()
+    {
+        Route::middleware('web')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/doctor.php'));
+    }
 
-  
+
     /**
      * Define the "api" routes for the application.
      *
