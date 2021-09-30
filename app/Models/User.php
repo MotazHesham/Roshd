@@ -15,7 +15,13 @@ class User extends Authenticatable
 {
     use SoftDeletes;
     use Notifiable;
-
+    
+    public const Type_SELECT = [
+        'staff'  => 'موظف ',
+        'doctor'   => 'إستشاري ',
+        'patient' => 'مريض ',
+        'student' => 'طالبة',
+    ];
     public $table = 'users';
 
     protected $hidden = [

@@ -69,7 +69,12 @@
             </div>
             <div class="form-group">
                 <label class="required" for="user_type">{{ trans('cruds.user.fields.user_type') }}</label>
-                <input class="form-control {{ $errors->has('user_type') ? 'is-invalid' : '' }}" type="text" name="user_type" id="user_type" value="{{ old('user_type', '') }}" required>
+                <select class="form-control {{ $errors->has('user_type') ? 'is-invalid' : '' }}" name="user_type" id="user_type" required>
+                    <option value disabled {{ old('statuse', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                    @foreach(App\Models\User::Type_SELECT as $key => $label)
+                        <option value="{{ $key }}" {{ old('statuse', 'waiting') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
+                </select>
                 @if($errors->has('user_type'))
                     <div class="invalid-feedback">
                         {{ $errors->first('user_type') }}
