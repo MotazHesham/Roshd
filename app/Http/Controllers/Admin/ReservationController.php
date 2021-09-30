@@ -32,7 +32,7 @@ class ReservationController extends Controller
 
         $users = User::pluck('email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $doctors = Doctor::pluck('years_experience', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $clinics = Clinic::pluck('clinic_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -54,7 +54,7 @@ class ReservationController extends Controller
 
         $users = User::pluck('email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $doctors = Doctor::pluck('years_experience', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $clinics = Clinic::pluck('clinic_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 

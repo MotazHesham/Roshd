@@ -84,7 +84,7 @@
                             {{ trans('cruds.reservation.fields.doctor') }}
                         </th>
                         <td>
-                            {{ $reservation->doctor->years_experience ?? '' }}
+                            {{ $reservation->doctor->user->email ?? '' }}
                         </td>
                     </tr>
                     <tr>

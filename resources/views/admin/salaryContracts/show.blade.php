@@ -84,7 +84,7 @@
                             {{ trans('cruds.salaryContract.fields.doctor') }}
                         </th>
                         <td>
-                            {{ $salaryContract->doctor->years_experience ?? '' }}
+                            {{ $salaryContract->doctor->user->email ?? '' }}
                         </td>
                     </tr>
                     <tr>

@@ -77,7 +77,7 @@
                         </th>
                         <td>
                             @foreach($group->students as $key => $students)
-                                <span class="label label-info">{{ $students->hours }}</span>
+                                <span class="label label-info">{{ $students->user->email }}</span>
                             @endforeach
                         </td>
                     </tr>

@@ -49,7 +49,7 @@
                                 {{ $precentageContract->percentage ?? '' }}
                             </td>
                             <td>
-                                {{ $precentageContract->doctor->years_experience ?? '' }}
+                                {{ $precentageContract->doctor->user->email ?? '' }}
                             </td>
                             <td>
                                 @can('precentage_contract_show')
@@ -130,7 +130,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

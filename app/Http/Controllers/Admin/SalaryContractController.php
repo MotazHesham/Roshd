@@ -29,7 +29,7 @@ class SalaryContractController extends Controller
     {
         abort_if(Gate::denies('salary_contract_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $doctors = Doctor::pluck('years_experience', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $allowances = Allowance::pluck('name', 'id');
 
@@ -48,7 +48,7 @@ class SalaryContractController extends Controller
     {
         abort_if(Gate::denies('salary_contract_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $doctors = Doctor::pluck('years_experience', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $allowances = Allowance::pluck('name', 'id');
 

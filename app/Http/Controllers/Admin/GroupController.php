@@ -90,7 +90,7 @@ class GroupController extends Controller
 
         $users = User::pluck('email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $students = Student::pluck('hours', 'id');
+        $students = Student::with('user')->get()->pluck('user.email', 'id');
 
         return view('admin.groups.create', compact('users', 'students'));
     }
@@ -107,8 +107,8 @@ class GroupController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $group->id]);
         }
 
-    
-     Alert::success('تم بنجاح', 'تم إضافة المجموعة بنجاح ');   
+
+     Alert::success('تم بنجاح', 'تم إضافة المجموعة بنجاح ');
 
         return redirect()->route('admin.groups.index');
     }
@@ -119,8 +119,8 @@ class GroupController extends Controller
 
         $users = User::pluck('email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $students = Student::pluck('hours', 'id');
-
+        $students =Student::with('user')->get()->pluck('user.email', 'id');
+        
         $group->load('user', 'students');
 
         return view('admin.groups.edit', compact('users', 'students', 'group'));

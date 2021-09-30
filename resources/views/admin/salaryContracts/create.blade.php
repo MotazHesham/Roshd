@@ -41,7 +41,7 @@
             </div>
             <div class="form-group">
                 <label class="required">{{ trans('cruds.salaryContract.fields.workday') }}</label>
-                <select class="form-control {{ $errors->has('workday') ? 'is-invalid' : '' }}" name="workday" id="workday" required>
+                <select class="form-control {{ $errors->has('workday') ? 'is-invalid' : '' }}" name="workday" id="workday" multiple  required>
                     <option value disabled {{ old('workday', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                     @foreach(App\Models\SalaryContract::WORKDAY_SELECT as $key => $label)
                         <option value="{{ $key }}" {{ old('workday', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>

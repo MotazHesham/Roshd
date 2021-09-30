@@ -28,7 +28,7 @@ class ExperienceController extends Controller
     {
         abort_if(Gate::denies('experience_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $doctors = Doctor::pluck('years_experience', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.experiences.create', compact('doctors'));
     }
@@ -37,7 +37,7 @@ class ExperienceController extends Controller
     {
         $experience = Experience::create($request->all());
 
-    
+
     Alert::success('تم بنجاح', 'تم  إضافة الخبرة العملية بنجاح ');
 
         return redirect()->route('admin.experiences.index');
@@ -47,7 +47,7 @@ class ExperienceController extends Controller
     {
         abort_if(Gate::denies('experience_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $doctors = Doctor::pluck('years_experience', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $experience->load('doctor');
 
@@ -58,7 +58,7 @@ class ExperienceController extends Controller
     {
         $experience->update($request->all());
 
-    
+
     Alert::success('تم بنجاح', 'تم تعديل الخبرة العملية بنجاح ');
 
         return redirect()->route('admin.experiences.index');
@@ -79,7 +79,7 @@ class ExperienceController extends Controller
 
         $experience->delete();
 
-    
+
     Alert::success('تم بنجاح', 'تم حذف الخبرة العملية بنجاح ');
 
         return back();

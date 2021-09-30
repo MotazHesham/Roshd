@@ -52,7 +52,7 @@
                             {{ trans('cruds.education.fields.doctor') }}
                         </th>
                         <td>
-                            {{ $education->doctor->years_experience ?? '' }}
+                            {{ $education->doctor->user->email ?? '' }}
                         </td>
                     </tr>
                 </tbody>

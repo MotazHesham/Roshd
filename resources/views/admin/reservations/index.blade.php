@@ -76,7 +76,7 @@
                                 {{ $reservation->user->email ?? '' }}
                             </td>
                             <td>
-                                {{ $reservation->doctor->years_experience ?? '' }}
+                                {{ $reservation->doctor->user->email ?? '' }}
                             </td>
                             <td>
                                 {{ $reservation->clinic->clinic_name ?? '' }}
@@ -166,7 +166,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

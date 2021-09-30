@@ -28,7 +28,7 @@ class EducationController extends Controller
     {
         abort_if(Gate::denies('education_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $doctors = Doctor::pluck('years_experience', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.education.create', compact('doctors'));
     }
@@ -37,7 +37,7 @@ class EducationController extends Controller
     {
         $education = Education::create($request->all());
 
-    
+
     Alert::success('تم بنجاح', 'تم إضافة الدرجة العلمية بنجاح ');
 
         return redirect()->route('admin.education.index');
@@ -47,7 +47,7 @@ class EducationController extends Controller
     {
         abort_if(Gate::denies('education_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $doctors = Doctor::pluck('years_experience', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $education->load('doctor');
 
@@ -58,7 +58,7 @@ class EducationController extends Controller
     {
         $education->update($request->all());
 
-    
+
     Alert::success('تم بنجاح', 'تم تعديل الدرجة العلمية بنجاح ');
 
         return redirect()->route('admin.education.index');
@@ -78,7 +78,7 @@ class EducationController extends Controller
         abort_if(Gate::denies('education_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $education->delete();
-        
+
     Alert::success('تم بنجاح', 'تم حذف الدرجة العلمية بنجاح ');
 
         return back();

@@ -88,7 +88,7 @@
                                 {{ $salaryContract->salary ?? '' }}
                             </td>
                             <td>
-                                {{ $salaryContract->doctor->years_experience ?? '' }}
+                                {{ $salaryContract->doctor->user->email ?? '' }}
                             </td>
                             <td>
                                 @foreach($salaryContract->allowances as $key => $item)
@@ -174,7 +174,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

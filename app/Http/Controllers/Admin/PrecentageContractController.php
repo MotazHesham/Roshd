@@ -28,7 +28,7 @@ class PrecentageContractController extends Controller
     {
         abort_if(Gate::denies('precentage_contract_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $doctors = Doctor::pluck('years_experience', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.precentageContracts.create', compact('doctors'));
     }
@@ -46,7 +46,7 @@ class PrecentageContractController extends Controller
     {
         abort_if(Gate::denies('precentage_contract_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $doctors = Doctor::pluck('years_experience', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $precentageContract->load('doctor');
 

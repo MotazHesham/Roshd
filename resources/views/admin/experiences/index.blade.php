@@ -73,7 +73,7 @@
                                 {{ $experience->end_date ?? '' }}
                             </td>
                             <td>
-                                {{ $experience->doctor->years_experience ?? '' }}
+                                {{ $experience->doctor->user->email ?? '' }}
                             </td>
                             <td>
                                 @can('experience_show')
@@ -154,7 +154,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>
