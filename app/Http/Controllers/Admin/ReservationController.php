@@ -43,7 +43,7 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::create($request->all());
 
-        Alert::success('تم إضافة الحجز بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم إضافة الحجز بنجاح ');
 
         return redirect()->route('admin.reservations.index');
     }
@@ -67,7 +67,7 @@ class ReservationController extends Controller
     {
         $reservation->update($request->all());
 
-        Alert::success('تم  تعديل الحجز بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم  تعديل الحجز بنجاح ');
 
         return redirect()->route('admin.reservations.index');
     }
@@ -87,7 +87,7 @@ class ReservationController extends Controller
 
         $reservation->delete();
 
-        Alert::success('تم حذف الحجز بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم حذف الحجز بنجاح ');
 
         return back();
     }

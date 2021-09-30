@@ -39,7 +39,7 @@ class UsersController extends Controller
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
 
-        Alert::success('تم إضافة المستخدم بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم إضافة المستخدم بنجاح ');
 
         return redirect()->route('admin.users.index');
     }
@@ -63,7 +63,7 @@ class UsersController extends Controller
         $user->roles()->sync($request->input('roles', []));
         $user->packages()->sync($request->input('packages', []));
 
-        Alert::success('تم تعديل بيانات المستخدم بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم تعديل بيانات المستخدم بنجاح ');
 
         return redirect()->route('admin.users.index');
     }
@@ -83,7 +83,7 @@ class UsersController extends Controller
 
         $user->delete();
 
-        Alert::success('تم حذف المستخدم بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم  حذف المستخدم بنجاح ');
 
         return back();
     }

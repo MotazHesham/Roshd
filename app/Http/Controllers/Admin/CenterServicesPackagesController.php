@@ -10,6 +10,7 @@ use App\Models\CenterServicesPackage;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class CenterServicesPackagesController extends Controller
 {
@@ -33,6 +34,8 @@ class CenterServicesPackagesController extends Controller
     {
         $centerServicesPackage = CenterServicesPackage::create($request->all());
 
+        Alert::success('تم بنجاح', 'تم إضافة الباقة بنجاح ');
+
         return redirect()->route('admin.center-services-packages.index');
     }
 
@@ -46,6 +49,8 @@ class CenterServicesPackagesController extends Controller
     public function update(UpdateCenterServicesPackageRequest $request, CenterServicesPackage $centerServicesPackage)
     {
         $centerServicesPackage->update($request->all());
+
+        Alert::success('تم بنجاح', 'تم تعديل الباقة بنجاح ');
 
         return redirect()->route('admin.center-services-packages.index');
     }
@@ -62,6 +67,8 @@ class CenterServicesPackagesController extends Controller
         abort_if(Gate::denies('center_services_package_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $centerServicesPackage->delete();
+
+        Alert::success('تم بنجاح', 'تم حذف الباقة بنجاح ');
 
         return back();
     }

@@ -45,5 +45,7 @@ class Kernel extends HttpKernel
         'staff' => \App\Http\Middleware\Staff::class,
         'patient' => \App\Http\Middleware\patient::class,
         'doctor' => \App\Http\Middleware\doctor::class,
+        'student' => \App\Http\Middleware\student::class,
+        
     ];
 }

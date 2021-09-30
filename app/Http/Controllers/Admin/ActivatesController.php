@@ -49,7 +49,7 @@ class ActivatesController extends Controller
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $activate->id]);
         }
-        Alert::success('تم إضافة النشاط بنجاح', 'تم بنجاح ');
+        Alert::success('تم  بنجاح', 'تم إضافةالنشاط بنجاح ');
 
         return redirect()->route('admin.activates.index');
     }
@@ -87,7 +87,8 @@ class ActivatesController extends Controller
             $activate->video->delete();
         }
 
-        Alert::success('تم تعديل النشاط بنجاح', 'تم بنجاح ');
+        Alert::success('تم  بنجاح', 'تم تعديل النشاط بنجاح ');
+
         return redirect()->route('admin.activates.index');
     }
 
@@ -103,6 +104,9 @@ class ActivatesController extends Controller
         abort_if(Gate::denies('activate_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $activate->delete();
+
+        Alert::success('تم  بنجاح', 'تم حذف النشاط بنجاح ');
+
 
         return back();
     }

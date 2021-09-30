@@ -12,6 +12,7 @@ use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class DoctorController extends Controller
 {
@@ -39,6 +40,9 @@ class DoctorController extends Controller
     {
         $doctor = Doctor::create($request->all());
 
+        Alert::success('تم بنجاح', 'تم إضافة الإستشاري بنجاح ');
+   
+
         return redirect()->route('admin.doctors.index');
     }
 
@@ -59,6 +63,8 @@ class DoctorController extends Controller
     {
         $doctor->update($request->all());
 
+        Alert::success('تم بنجاح', 'تم تعديل بيانات الإستشاري بنجاح ');
+
         return redirect()->route('admin.doctors.index');
     }
 
@@ -76,6 +82,8 @@ class DoctorController extends Controller
         abort_if(Gate::denies('doctor_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $doctor->delete();
+
+        Alert::success('تم بنجاح', 'تم حذف الإستشاري بنجاح ');
 
         return back();
     }

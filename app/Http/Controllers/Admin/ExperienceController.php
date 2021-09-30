@@ -38,7 +38,7 @@ class ExperienceController extends Controller
         $experience = Experience::create($request->all());
 
     
-    Alert::success('تم إضافة الخبرة العملية بنجاح', 'تم بنجاح ');
+    Alert::success('تم بنجاح', 'تم  إضافة الخبرة العملية بنجاح ');
 
         return redirect()->route('admin.experiences.index');
     }
@@ -59,7 +59,7 @@ class ExperienceController extends Controller
         $experience->update($request->all());
 
     
-    Alert::success('تم تعديل الخبرة العملية بنجاح', 'تم بنجاح ');
+    Alert::success('تم بنجاح', 'تم تعديل الخبرة العملية بنجاح ');
 
         return redirect()->route('admin.experiences.index');
     }
@@ -80,7 +80,7 @@ class ExperienceController extends Controller
         $experience->delete();
 
     
-    Alert::success('تم حذف الخبرة العملية بنجاح', 'تم بنجاح ');
+    Alert::success('تم بنجاح', 'تم حذف الخبرة العملية بنجاح ');
 
         return back();
     }

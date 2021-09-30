@@ -108,7 +108,7 @@ class GroupController extends Controller
         }
 
     
-     Alert::success('تم إضافة المجموعة بنجاح', 'تم بنجاح ');   
+     Alert::success('تم بنجاح', 'تم إضافة المجموعة بنجاح ');   
 
         return redirect()->route('admin.groups.index');
     }
@@ -140,7 +140,7 @@ class GroupController extends Controller
         } elseif ($group->photo) {
             $group->photo->delete();
         }
-        Alert::success('تم تعديل المجموعة بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم تعديل المجموعة بنجاح ');
         return redirect()->route('admin.groups.index');
     }
 
@@ -158,7 +158,7 @@ class GroupController extends Controller
         abort_if(Gate::denies('group_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $group->delete();
-        Alert::success('تم حذف المجموعة بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم حذف المجموعة بنجاح ');
 
         return back();
     }

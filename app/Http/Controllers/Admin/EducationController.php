@@ -38,7 +38,7 @@ class EducationController extends Controller
         $education = Education::create($request->all());
 
     
-    Alert::success('تم إضافة الدرجة العلمية بنجاح', 'تم بنجاح ');
+    Alert::success('تم بنجاح', 'تم إضافة الدرجة العلمية بنجاح ');
 
         return redirect()->route('admin.education.index');
     }
@@ -59,7 +59,7 @@ class EducationController extends Controller
         $education->update($request->all());
 
     
-    Alert::success('تم تعديل الدرجة العلمية بنجاح', 'تم بنجاح ');
+    Alert::success('تم بنجاح', 'تم تعديل الدرجة العلمية بنجاح ');
 
         return redirect()->route('admin.education.index');
     }
@@ -79,7 +79,7 @@ class EducationController extends Controller
 
         $education->delete();
         
-    Alert::success('تم حذف الدرجة العلمية بنجاح', 'تم بنجاح ');
+    Alert::success('تم بنجاح', 'تم حذف الدرجة العلمية بنجاح ');
 
         return back();
     }

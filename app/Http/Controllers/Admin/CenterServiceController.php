@@ -35,7 +35,7 @@ class CenterServiceController extends Controller
         $centerService = CenterService::create($request->all());
 
     
-    Alert::success('تم إضافة الخدمة بنجاح', 'تم بنجاح ');
+    Alert::success('تم بنجاح', 'تم إضافة الخدمة بنجاح ');
 
         return redirect()->route('admin.center-services.index');
     }
@@ -51,8 +51,8 @@ class CenterServiceController extends Controller
     {
         $centerService->update($request->all());
 
-    
-    Alert::success('تم تعديل الخدمة بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم تعديل الخدمة بنجاح ');    
+   
 
         return redirect()->route('admin.center-services.index');
     }
@@ -71,7 +71,7 @@ class CenterServiceController extends Controller
         $centerService->delete();
 
     
-    Alert::success('تم حذف الخدمة بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم حذف الخدمة بنجاح ');
 
         return back();
     }

@@ -46,7 +46,7 @@ class SettingsController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $setting->id]);
         }
 
-        Alert::success('تم إضافة الإعدادات بنجاح', 'تم بنجاح ');
+        Alert::success('تم  بنجاح', 'تم إضافة الإعدادات بنجاح ');
 
         return redirect()->route('admin.settings.index');
     }
@@ -72,7 +72,7 @@ class SettingsController extends Controller
         } elseif ($setting->logo) {
             $setting->logo->delete();
         }
-        Alert::success('تم تعديل الإعدادات بنجاح', 'تم بنجاح ');
+        Alert::success('تم  بنجاح', 'تم  تعديل الإعدادات بنجاح ');
         return redirect()->route('admin.settings.index');
     }
 
@@ -89,7 +89,7 @@ class SettingsController extends Controller
 
         $setting->delete();
 
-        Alert::success('تم حذف الإعدادات بنجاح', 'تم بنجاح ');
+        Alert::success('تم  بنجاح', 'تم حذف الإعداد بنجاح ');
 
         return back();
     }

@@ -39,7 +39,7 @@ class ClinicController extends Controller
         $clinic->specializations()->sync($request->input('specializations', []));
 
     
-    Alert::success('تم إضافة العيادة بنجاح', 'تم بنجاح ');
+    Alert::success('تم بنجاح', 'تم إضافة العيادة بنجاح ');
         return redirect()->route('admin.clinics.index');
     }
 
@@ -58,8 +58,7 @@ class ClinicController extends Controller
     {
         $clinic->update($request->all());
         $clinic->specializations()->sync($request->input('specializations', []));
-
-        Alert::success('تم تعديل العيادة بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم تعديل بيانات العيادة بنجاح ');
 
         return redirect()->route('admin.clinics.index');
     }
@@ -80,7 +79,7 @@ class ClinicController extends Controller
         $clinic->delete();
 
     
-    Alert::success('تم حذف العيادة بنجاح', 'تم بنجاح ');
+    Alert::success('تم بنجاح', 'تم حذف العيادة بنجاح ');
 
         return back();
     }

@@ -34,7 +34,7 @@ class SpecializationController extends Controller
     {
         $specialization = Specialization::create($request->all());
 
-        Alert::success('تم إضافة التخصص بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم إضافة التخصص  بنجاح ');
 
         return redirect()->route('admin.specializations.index');
     }
@@ -50,7 +50,7 @@ class SpecializationController extends Controller
     {
         $specialization->update($request->all());
 
-        Alert::success('تم تعديل التخصص بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم تعديل التخصص بنجاح ');
 
         return redirect()->route('admin.specializations.index');
     }
@@ -68,7 +68,7 @@ class SpecializationController extends Controller
 
         $specialization->delete();
 
-        Alert::success('تم حذف التخصص بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم  حذف التخصص بنجاح ');
 
         return back();
     }

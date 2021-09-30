@@ -38,7 +38,7 @@ class EditorsController extends Controller
         $editor = Editor::create($request->all());
 
     
-    Alert::success('تم إضافة المراجع بنجاح', 'تم بنجاح ');
+    Alert::success('تم بنجاح', 'تمإضافة المراجع بنجاح ');
 
         return redirect()->route('admin.editors.index');
     }
@@ -59,7 +59,7 @@ class EditorsController extends Controller
         $editor->update($request->all());
 
     
-    Alert::success('تم تهديل بيانات المراجع بنجاح', 'تم بنجاح ');
+    Alert::success('تم بنجاح', 'تم تعديل بيانات المراجع بنجاح ');
 
         return redirect()->route('admin.editors.index');
     }
@@ -80,7 +80,7 @@ class EditorsController extends Controller
         $editor->delete();
 
     
-    Alert::success('تم حذف المراجع بنجاح', 'تم بنجاح ');
+    Alert::success('تم بنجاح', 'تم حذف المراجع  بنجاح ');
 
         return back();
     }

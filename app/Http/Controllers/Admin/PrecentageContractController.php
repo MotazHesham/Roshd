@@ -37,7 +37,7 @@ class PrecentageContractController extends Controller
     {
         $precentageContract = PrecentageContract::create($request->all());
 
-        Alert::success('تم إضافة النسبة للأستشارى بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم إضافة النسبة للأستشارى بنجاح ');
 
         return redirect()->route('admin.precentage-contracts.index');
     }
@@ -57,7 +57,7 @@ class PrecentageContractController extends Controller
     {
         $precentageContract->update($request->all());
 
-        Alert::success('تم تعديل نسبة الأستشاري بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم  تعديل نسبةالأستشاري بنجاح ');
 
         return redirect()->route('admin.precentage-contracts.index');
     }
@@ -77,7 +77,7 @@ class PrecentageContractController extends Controller
 
         $precentageContract->delete();
 
-        Alert::success('تم حذف نسبة الأستشاري بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم  حذف نسبة الأستشاري بنجاح ');
 
         return back();
     }

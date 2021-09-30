@@ -34,7 +34,7 @@ class AdviceController extends Controller
     {
         $advice = Advice::create($request->all());
 
-    Alert::success('تم إضافة الأستشارة بنجاح', 'تم بنجاح ');
+    Alert::success('تم بنجاح', 'تم إضافة الأستشارة بنجاح ');
 
         return redirect()->route('admin.advice.index');
     }

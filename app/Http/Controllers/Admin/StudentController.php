@@ -40,7 +40,7 @@ class StudentController extends Controller
     {
         $student = Student::create($request->all());
 
-        Alert::success('تم إضافة الطالبة بنجاح', 'تم بنجاح ');
+        Alert::success('تم  بنجاح', 'تم إضافة الطالبة بنجاح ');
 
         return redirect()->route('admin.students.index');
     }
@@ -61,7 +61,7 @@ class StudentController extends Controller
     public function update(UpdateStudentRequest $request, Student $student)
     {
         $student->update($request->all());
-        Alert::success('تم تعديل بيانات الطالبة بنجاح', 'تم بنجاح ');
+        Alert::success('تم  بنجاح', 'تم تعديل بيانات الطالبة بنجاح ');
 
         return redirect()->route('admin.students.index');
     }
@@ -80,7 +80,7 @@ class StudentController extends Controller
         abort_if(Gate::denies('student_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $student->delete();
-        Alert::success('تم حذف بيانات بنجاح', 'تم بنجاح ');
+        Alert::success('تم  بنجاح', 'تمحذف بيانات الطالبة بنجاح ');
 
         return back();
     }

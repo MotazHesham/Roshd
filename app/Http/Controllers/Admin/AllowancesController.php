@@ -34,7 +34,7 @@ class AllowancesController extends Controller
     {
         $allowance = Allowance::create($request->all());
 
-    Alert::success('تم إضافة البدل بنجاح', 'تم بنجاح ');
+    Alert::success('تم بنجاح', 'تم إضافة البدل بنجاح ');
 
         return redirect()->route('admin.allowances.index');
     }
@@ -51,7 +51,7 @@ class AllowancesController extends Controller
         $allowance->update($request->all());
 
 
-    Alert::success('تم تعديل البدل بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم تعديل البدل بنجاح ');
 
         return redirect()->route('admin.allowances.index');
     }
@@ -68,8 +68,8 @@ class AllowancesController extends Controller
         abort_if(Gate::denies('allowance_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $allowance->delete();
-
-    Alert::success('تم حذف البدل بنجاح', 'تم بنجاح ');
+        
+        Alert::success('تم بنجاح', 'تم حذف البدل بنجاح ');
 
         return back();
     }

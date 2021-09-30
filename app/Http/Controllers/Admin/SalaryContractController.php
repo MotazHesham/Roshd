@@ -40,7 +40,7 @@ class SalaryContractController extends Controller
     {
         $salaryContract = SalaryContract::create($request->all());
         $salaryContract->allowances()->sync($request->input('allowances', []));
-        Alert::success('تم إضافة الراتب للأستشاري بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم  إضافة الراتب للأستشاري بنجاح ');
         return redirect()->route('admin.salary-contracts.index');
     }
 
@@ -62,7 +62,7 @@ class SalaryContractController extends Controller
         $salaryContract->update($request->all());
         $salaryContract->allowances()->sync($request->input('allowances', []));
 
-        Alert::success('تم تعديل الراتب بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم تعديل الراتب بنجاح ');
         return redirect()->route('admin.salary-contracts.index');
 
     }
@@ -82,7 +82,7 @@ class SalaryContractController extends Controller
 
         $salaryContract->delete();
 
-        Alert::success('تم حذف الراتب بنجاح', 'تم بنجاح ');
+        Alert::success('تم بنجاح', 'تم حذف الراتب بنجاح ');
 
         return back();
     }
