@@ -27,14 +27,6 @@ class StoreClinicRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'start_time' => [
-                'required',
-                'date_format:' . config('panel.time_format'),
-            ],
-            'end_time' => [
-                'required',
-                'date_format:' . config('panel.time_format'),
-            ],
             'specializations.*' => [
                 'integer',
             ],

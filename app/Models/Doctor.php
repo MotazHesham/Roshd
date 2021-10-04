@@ -10,6 +10,16 @@ class Doctor extends Model
 {
     use SoftDeletes;
 
+    public const WORK_DAYS_SELECT = [
+        'Saturday'  => 'السبت',
+        'Sunday'    => 'الأحد',
+        'Monday'    => 'الأثنين',
+        'Tuesday'   => 'الثلاثاء',
+        'Wednesday' => 'الأربعاء',
+        'Thursday'  => 'الخميس',
+        'Friday'    => 'الجمعة',
+    ];
+
     public $table = 'doctors';
 
     protected $dates = [
@@ -22,6 +32,10 @@ class Doctor extends Model
         'years_experience',
         'user_id',
         'specialization_id',
+        'start_time',
+        'end_time',
+        'clinic_id',
+        'work_days',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -57,13 +71,14 @@ class Doctor extends Model
         return $this->belongsTo(Specialization::class, 'specialization_id');
     }
 
+    public function clinic()
+    {
+        return $this->belongsTo(Clinic::class, 'clinic_id');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
     }
-
-    public function clinic()
-    {
-        return $this->belongsTo(clinic::class , 'clinic_id');
-    }
 }
+

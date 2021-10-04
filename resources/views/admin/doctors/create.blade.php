@@ -48,6 +48,55 @@
                 <span class="help-block">{{ trans('cruds.doctor.fields.specialization_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required" for="clinic_id">{{ trans('cruds.doctor.fields.clinic') }}</label>
+                <select class="form-control select2 {{ $errors->has('clinic') ? 'is-invalid' : '' }}" name="clinic_id" id="clinic_id" required>
+                    @foreach($clinics as $id => $entry)
+                        <option value="{{ $id }}" {{ old('clinic_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('clinic'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('clinic') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.doctor.fields.clinic_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required">{{ trans('cruds.doctor.fields.work_days') }}</label>
+                <select class="form-control {{ $errors->has('work_days') ? 'is-invalid' : '' }}" name="work_days[]" id="work_days" required  multiple="multiple" >
+                    <option value disabled {{ old('work_days', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                    @foreach(App\Models\Doctor::WORK_DAYS_SELECT as $key => $label)
+                        <option value="{{ $key }}" {{ old('work_days', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('work_days'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('work_days') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.doctor.fields.work_days_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="start_time">{{ trans('cruds.doctor.fields.start_time') }}</label>
+                <input class="form-control timepicker {{ $errors->has('start_time') ? 'is-invalid' : '' }}" type="text" name="start_time" id="start_time" value="{{ old('start_time') }}" required>
+                @if($errors->has('start_time'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('start_time') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.doctor.fields.start_time_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="end_time">{{ trans('cruds.doctor.fields.end_time') }}</label>
+                <input class="form-control timepicker {{ $errors->has('end_time') ? 'is-invalid' : '' }}" type="text" name="end_time" id="end_time" value="{{ old('end_time') }}" required>
+                @if($errors->has('end_time'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('end_time') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.doctor.fields.end_time_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

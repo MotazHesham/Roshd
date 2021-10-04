@@ -13,7 +13,7 @@ class CreateAllowanceSalaryContractPivotTable extends Migration
             $table->foreign('salary_contract_id', 'salary_contract_id_fk_4987496')->references('id')->on('salary_contracts')->onDelete('cascade');
             $table->unsignedBigInteger('allowance_id');
             $table->foreign('allowance_id', 'allowance_id_fk_4987496')->references('id')->on('allowances')->onDelete('cascade');
-            $table->float('extra_salary')->nullable;
+            $table->float('extra_salary')->nullable();
         });
     }
 }

@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'ROSHD',
+    'site_title' => 'رشد',
 ];

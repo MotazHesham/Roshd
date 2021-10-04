@@ -34,9 +34,6 @@
                             {{ trans('cruds.salaryContract.fields.duration') }}
                         </th>
                         <th>
-                            {{ trans('cruds.salaryContract.fields.workday') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.salaryContract.fields.work_hours') }}
                         </th>
                         <th>
@@ -73,9 +70,6 @@
                             </td>
                             <td>
                                 {{ $salaryContract->duration ?? '' }}
-                            </td>
-                            <td>
-                                {{ App\Models\SalaryContract::WORKDAY_SELECT[$salaryContract->workday] ?? '' }}
                             </td>
                             <td>
                                 {{ $salaryContract->work_hours ?? '' }}

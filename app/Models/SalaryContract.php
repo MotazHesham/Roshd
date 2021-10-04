@@ -16,16 +16,6 @@ class SalaryContract extends Model
         'part' => 'دوام جزئي',
     ];
 
-    public const WORKDAY_SELECT = [
-        'Saturday'  => 'السبت',
-        'Sunday'    => 'الأحد',
-        'Monday'    => 'الأثنين',
-        'Tuesday'   => 'الثلاثاء',
-        'Wednesday' => 'الاربعاء',
-        'Thursday'  => 'الخميس',
-        'Friday'    => 'الجمعه',
-    ];
-
     public $table = 'salary_contracts';
 
     protected $dates = [
@@ -39,7 +29,6 @@ class SalaryContract extends Model
         'contract_number',
         'date',
         'duration',
-        'workday',
         'work_hours',
         'mechanism',
         'salary',
@@ -66,7 +55,7 @@ class SalaryContract extends Model
 
     public function allowances()
     {
-        return $this->belongsToMany(Allowance::class);
+        return $this->belongsToMany(Allowance::class)->withPivot('extra_salary');
     }
 
     protected function serializeDate(DateTimeInterface $date)

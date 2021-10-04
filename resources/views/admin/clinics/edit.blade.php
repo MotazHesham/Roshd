@@ -31,26 +31,6 @@
                 <span class="help-block">{{ trans('cruds.clinic.fields.clinic_name_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="start_time">{{ trans('cruds.clinic.fields.start_time') }}</label>
-                <input class="form-control timepicker {{ $errors->has('start_time') ? 'is-invalid' : '' }}" type="text" name="start_time" id="start_time" value="{{ old('start_time', $clinic->start_time) }}" required>
-                @if($errors->has('start_time'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('start_time') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.clinic.fields.start_time_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="end_time">{{ trans('cruds.clinic.fields.end_time') }}</label>
-                <input class="form-control timepicker {{ $errors->has('end_time') ? 'is-invalid' : '' }}" type="text" name="end_time" id="end_time" value="{{ old('end_time', $clinic->end_time) }}" required>
-                @if($errors->has('end_time'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('end_time') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.clinic.fields.end_time_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label class="required" for="specializations">{{ trans('cruds.clinic.fields.specialization') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>

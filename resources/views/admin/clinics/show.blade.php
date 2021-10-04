@@ -41,22 +41,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.clinic.fields.start_time') }}
-                        </th>
-                        <td>
-                            {{ $clinic->start_time }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.clinic.fields.end_time') }}
-                        </th>
-                        <td>
-                            {{ $clinic->end_time }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.clinic.fields.specialization') }}
                         </th>
                         <td>
@@ -76,6 +60,22 @@
     </div>
 </div>
 
-
+<div class="card">
+    <div class="card-header">
+        {{ trans('global.relatedData') }}
+    </div>
+    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="#clinic_doctors" role="tab" data-toggle="tab">
+                {{ trans('cruds.doctor.title') }}
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane" role="tabpanel" id="clinic_doctors">
+            @includeIf('admin.clinics.relationships.clinicDoctors', ['doctors' => $clinic->clinicDoctors])
+        </div>
+    </div>
+</div>
 
 @endsection

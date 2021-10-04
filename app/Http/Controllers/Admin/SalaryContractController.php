@@ -31,7 +31,7 @@ class SalaryContractController extends Controller
 
         $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $allowances = Allowance::pluck('name', 'id');
+        $allowances = Allowance::all();
 
         return view('admin.salaryContracts.create', compact('doctors', 'allowances'));
     }
@@ -39,7 +39,9 @@ class SalaryContractController extends Controller
     public function store(StoreSalaryContractRequest $request)
     {
         $salaryContract = SalaryContract::create($request->all());
-        $salaryContract->allowances()->sync($request->input('allowances', []));
+       // $salaryContract->allowances()->sync($request->input('allowances', []));
+       $salaryContract->allowances()->sync($this->mapallowances($request['allowances']));
+     
         Alert::success('تم بنجاح', 'تم  إضافة الراتب للأستشاري بنجاح ');
         return redirect()->route('admin.salary-contracts.index');
     }
@@ -50,18 +52,26 @@ class SalaryContractController extends Controller
 
         $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $allowances = Allowance::pluck('name', 'id');
+       // $allowances = Allowance::pluck('name', 'id');
+
+        $allowances = Allowance::get()->map(function($allowance) use ($salaryContract) {
+            $allowance->extra_salary = data_get($salaryContract->allowances->firstWhere('id', $salaryContract->id), 'pivot.extra_salary') ?? null;
+            return $allowance;
+        });
 
         $salaryContract->load('doctor', 'allowances');
 
-        return view('admin.salaryContracts.edit', compact('doctors', 'allowances', 'salaryContract'));
+      return view('admin.salaryContracts.edit', compact('doctors', 'allowances', 'salaryContract'));
     }
 
     public function update(UpdateSalaryContractRequest $request, SalaryContract $salaryContract)
     {
+     
         $salaryContract->update($request->all());
-        $salaryContract->allowances()->sync($request->input('allowances', []));
 
+        $salaryContract->allowances()->sync($this->mapallowances($request['allowances']));
+
+        
         Alert::success('تم بنجاح', 'تم تعديل الراتب بنجاح ');
         return redirect()->route('admin.salary-contracts.index');
 
@@ -93,4 +103,11 @@ class SalaryContractController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    private function mapallowances($allowances)
+{
+    return collect($allowances)->map(function ($i) {
+        return ['extra_salary' => $i];
+    });
+}
 }

@@ -41,24 +41,24 @@
                 <span class="help-block">{{ trans('cruds.experience.fields.description_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="start_date">{{ trans('cruds.experience.fields.start_date') }}</label>
-                <input class="form-control date {{ $errors->has('start_date') ? 'is-invalid' : '' }}" type="text" name="start_date" id="start_date" value="{{ old('start_date', $experience->start_date) }}" required>
-                @if($errors->has('start_date'))
+                <label class="required" for="sart_work">{{ trans('cruds.experience.fields.sart_work') }}</label>
+                <input class="form-control date {{ $errors->has('sart_work') ? 'is-invalid' : '' }}" type="text" name="sart_work" id="sart_work" value="{{ old('sart_work', $experience->sart_work) }}" required>
+                @if($errors->has('sart_work'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('start_date') }}
+                        {{ $errors->first('sart_work') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.experience.fields.start_date_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.experience.fields.sart_work_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="end_date">{{ trans('cruds.experience.fields.end_date') }}</label>
-                <input class="form-control date {{ $errors->has('end_date') ? 'is-invalid' : '' }}" type="text" name="end_date" id="end_date" value="{{ old('end_date', $experience->end_date) }}" required>
-                @if($errors->has('end_date'))
+                <label class="required" for="end_work">{{ trans('cruds.experience.fields.end_work') }}</label>
+                <input class="form-control date {{ $errors->has('end_work') ? 'is-invalid' : '' }}" type="text" name="end_work" id="end_work" value="{{ old('end_work', $experience->end_work) }}" required>
+                @if($errors->has('end_work'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('end_date') }}
+                        {{ $errors->first('end_work') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.experience.fields.end_date_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.experience.fields.end_work_helper') }}</span>
             </div>
             <div class="form-group">
                 <label class="required" for="doctor_id">{{ trans('cruds.experience.fields.doctor') }}</label>

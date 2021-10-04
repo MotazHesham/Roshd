@@ -28,11 +28,11 @@ class UpdateExperienceRequest extends FormRequest
             'description' => [
                 'required',
             ],
-            'start_date' => [
+            'sart_work' => [
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],
-            'end_date' => [
+            'end_work' => [
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],

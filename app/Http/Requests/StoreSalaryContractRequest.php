@@ -33,9 +33,6 @@ class StoreSalaryContractRequest extends FormRequest
                 'min:-2147483648',
                 'max:2147483647',
             ],
-            'workday' => [
-                'required',
-            ],
             'work_hours' => [
                 'required',
                 'integer',
@@ -57,7 +54,6 @@ class StoreSalaryContractRequest extends FormRequest
                 'integer',
             ],
             'allowances' => [
-                'required',
                 'array',
             ],
         ];

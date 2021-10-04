@@ -31,6 +31,22 @@ class UpdateDoctorRequest extends FormRequest
                 'required',
                 'integer',
             ],
+            'start_time' => [
+                'required',
+                'date_format:' . config('panel.time_format'),
+            ],
+            'end_time' => [
+                'required',
+                'date_format:' . config('panel.time_format'),
+            ],
+            'clinic_id' => [
+                'required',
+                'integer',
+            ],
+            'work_days' => [
+                'required',
+                'array',
+            ],
         ];
     }
 }

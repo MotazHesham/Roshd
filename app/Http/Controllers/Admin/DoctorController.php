@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroyDoctorRequest;
 use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\Doctor;
+use App\Models\Clinic;
 use App\Models\Specialization;
 use App\Models\User;
 use Gate;
@@ -32,16 +33,21 @@ class DoctorController extends Controller
         $users = User::pluck('email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $specializations = Specialization::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $clinics = Clinic::pluck('clinic_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.doctors.create', compact('users', 'specializations'));
+        return view('admin.doctors.create', compact('users', 'specializations', 'clinics'));
     }
 
     public function store(StoreDoctorRequest $request)
     {
-        $doctor = Doctor::create($request->all());
+      
+        $input = $request->all();
+        $days = $input['work_days'];
+        $input['work_days'] = implode(',', $days);
+        
+        Doctor::create($input);
 
         Alert::success('تم بنجاح', 'تم إضافة الإستشاري بنجاح ');
-   
 
         return redirect()->route('admin.doctors.index');
     }
@@ -49,14 +55,16 @@ class DoctorController extends Controller
     public function edit(Doctor $doctor)
     {
         abort_if(Gate::denies('doctor_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $users = User::pluck('email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $specializations = Specialization::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $doctor->load('user', 'specialization');
+        $clinics = Clinic::pluck('clinic_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.doctors.edit', compact('users', 'specializations', 'doctor'));
+        $doctor->load('user', 'specialization', 'clinic');
+
+        return view('admin.doctors.edit', compact('users', 'specializations', 'clinics', 'doctor'));
+    
     }
 
     public function update(UpdateDoctorRequest $request, Doctor $doctor)

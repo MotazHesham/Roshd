@@ -47,6 +47,38 @@
                             {{ $doctor->specialization->name ?? '' }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.doctor.fields.clinic') }}
+                        </th>
+                        <td>
+                            {{ $doctor->clinic->clinic_name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.doctor.fields.work_days') }}
+                        </th>
+                        <td>
+                            {{ App\Models\Doctor::WORK_DAYS_SELECT[$doctor->work_days] ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.doctor.fields.start_time') }}
+                        </th>
+                        <td>
+                            {{ $doctor->start_time }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.doctor.fields.end_time') }}
+                        </th>
+                        <td>
+                            {{ $doctor->end_time }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

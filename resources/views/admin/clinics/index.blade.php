@@ -32,12 +32,6 @@
                             {{ trans('cruds.clinic.fields.clinic_name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.clinic.fields.start_time') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.clinic.fields.end_time') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.clinic.fields.specialization') }}
                         </th>
                         <th>
@@ -59,12 +53,6 @@
                             </td>
                             <td>
                                 {{ $clinic->clinic_name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $clinic->start_time ?? '' }}
-                            </td>
-                            <td>
-                                {{ $clinic->end_time ?? '' }}
                             </td>
                             <td>
                                 @foreach($clinic->specializations as $key => $item)

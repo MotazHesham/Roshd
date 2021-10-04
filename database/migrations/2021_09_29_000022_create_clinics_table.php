@@ -12,8 +12,6 @@ class CreateClinicsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('clinic_number');
             $table->string('clinic_name');
-            $table->time('start_time');
-            $table->time('end_time');
             $table->timestamps();
             $table->softDeletes();
         });

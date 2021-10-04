@@ -21,12 +21,15 @@ class Clinic extends Model
     protected $fillable = [
         'clinic_number',
         'clinic_name',
-        'start_time',
-        'end_time',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
+
+    public function clinicDoctors()
+    {
+        return $this->hasMany(Doctor::class, 'clinic_id', 'id');
+    }
 
     public function specializations()
     {
@@ -36,10 +39,5 @@ class Clinic extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
-    }
-
-    public function doctor()
-    {
-        return $this->hasMany(Doctor::class , 'doctor_id');
     }
 }

@@ -40,21 +40,6 @@
                 <span class="help-block">{{ trans('cruds.salaryContract.fields.duration_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required">{{ trans('cruds.salaryContract.fields.workday') }}</label>
-                <select class="form-control {{ $errors->has('workday') ? 'is-invalid' : '' }}" name="workday" id="workday" multiple  required>
-                    <option value disabled {{ old('workday', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\SalaryContract::WORKDAY_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('workday', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('workday'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('workday') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.salaryContract.fields.workday_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label class="required" for="work_hours">{{ trans('cruds.salaryContract.fields.work_hours') }}</label>
                 <input class="form-control {{ $errors->has('work_hours') ? 'is-invalid' : '' }}" type="number" name="work_hours" id="work_hours" value="{{ old('work_hours', '') }}" step="1" required>
                 @if($errors->has('work_hours'))
@@ -105,15 +90,7 @@
             </div>
             <div class="form-group">
                 <label class="required" for="allowances">{{ trans('cruds.salaryContract.fields.allowance') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                </div>
-                <select class="form-control select2 {{ $errors->has('allowances') ? 'is-invalid' : '' }}" name="allowances[]" id="allowances" multiple required>
-                    @foreach($allowances as $id => $allowance)
-                        <option value="{{ $id }}" {{ in_array($id, old('allowances', [])) ? 'selected' : '' }}>{{ $allowance }}</option>
-                    @endforeach
-                </select>
+                @include('admin.salaryContracts.partials.allowances')
                 @if($errors->has('allowances'))
                     <div class="invalid-feedback">
                         {{ $errors->first('allowances') }}

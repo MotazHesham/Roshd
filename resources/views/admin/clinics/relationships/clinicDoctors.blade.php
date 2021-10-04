@@ -1,47 +1,49 @@
-@extends('layouts.admin')
-@section('content')
-@can('experience_create')
+@can('doctor_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.experiences.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.experience.title_singular') }}
+            <a class="btn btn-success" href="{{ route('admin.doctors.create') }}">
+                {{ trans('global.add') }} {{ trans('cruds.doctor.title_singular') }}
             </a>
         </div>
     </div>
 @endcan
+
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.experience.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.doctor.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-Experience">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-clinicDoctors">
                 <thead>
                     <tr>
                         <th width="10">
 
                         </th>
                         <th>
-                            {{ trans('cruds.experience.fields.id') }}
+                            {{ trans('cruds.doctor.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.experience.fields.job_title') }}
+                            {{ trans('cruds.doctor.fields.years_experience') }}
                         </th>
                         <th>
-                            {{ trans('cruds.experience.fields.work_place') }}
+                            {{ trans('cruds.doctor.fields.user') }}
                         </th>
                         <th>
-                            {{ trans('cruds.experience.fields.description') }}
+                            {{ trans('cruds.doctor.fields.specialization') }}
                         </th>
                         <th>
-                            {{ trans('cruds.experience.fields.sart_work') }}
+                            {{ trans('cruds.doctor.fields.clinic') }}
                         </th>
                         <th>
-                            {{ trans('cruds.experience.fields.end_work') }}
+                            {{ trans('cruds.doctor.fields.work_days') }}
                         </th>
                         <th>
-                            {{ trans('cruds.experience.fields.doctor') }}
+                            {{ trans('cruds.doctor.fields.start_time') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.doctor.fields.end_time') }}
                         </th>
                         <th>
                             &nbsp;
@@ -49,47 +51,50 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($experiences as $key => $experience)
-                        <tr data-entry-id="{{ $experience->id }}">
+                    @foreach($doctors as $key => $doctor)
+                        <tr data-entry-id="{{ $doctor->id }}">
                             <td>
 
                             </td>
                             <td>
-                                {{ $experience->id ?? '' }}
+                                {{ $doctor->id ?? '' }}
                             </td>
                             <td>
-                                {{ $experience->job_title ?? '' }}
+                                {{ $doctor->years_experience ?? '' }}
                             </td>
                             <td>
-                                {{ $experience->work_place ?? '' }}
+                                {{ $doctor->user->email ?? '' }}
                             </td>
                             <td>
-                                {{ $experience->description ?? '' }}
+                                {{ $doctor->specialization->name ?? '' }}
                             </td>
                             <td>
-                                {{ $experience->sart_work ?? '' }}
+                                {{ $doctor->clinic->clinic_name ?? '' }}
                             </td>
                             <td>
-                                {{ $experience->end_work ?? '' }}
+                                {{ App\Models\Doctor::WORK_DAYS_SELECT[$doctor->work_days] ?? '' }}
                             </td>
                             <td>
-                                {{ $experience->doctor->years_experience ?? '' }}
+                                {{ $doctor->start_time ?? '' }}
                             </td>
                             <td>
-                                @can('experience_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.experiences.show', $experience->id) }}">
+                                {{ $doctor->end_time ?? '' }}
+                            </td>
+                            <td>
+                                @can('doctor_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.doctors.show', $doctor->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @can('experience_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.experiences.edit', $experience->id) }}">
+                                @can('doctor_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.doctors.edit', $doctor->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
-                                @can('experience_delete')
-                                    <form action="{{ route('admin.experiences.destroy', $experience->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                @can('doctor_delete')
+                                    <form action="{{ route('admin.doctors.destroy', $doctor->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
@@ -106,19 +111,16 @@
     </div>
 </div>
 
-
-
-@endsection
 @section('scripts')
 @parent
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('experience_delete')
+@can('doctor_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.experiences.massDestroy') }}",
+    url: "{{ route('admin.doctors.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
@@ -149,7 +151,7 @@
     order: [[ 1, 'desc' ]],
     pageLength: 25,
   });
-  let table = $('.datatable-Experience:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  let table = $('.datatable-clinicDoctors:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();

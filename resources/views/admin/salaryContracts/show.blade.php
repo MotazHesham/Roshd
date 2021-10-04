@@ -49,14 +49,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.salaryContract.fields.workday') }}
-                        </th>
-                        <td>
-                            {{ App\Models\SalaryContract::WORKDAY_SELECT[$salaryContract->workday] ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.salaryContract.fields.work_hours') }}
                         </th>
                         <td>
@@ -84,7 +76,7 @@
                             {{ trans('cruds.salaryContract.fields.doctor') }}
                         </th>
                         <td>
-                            {{ $salaryContract->doctor->user->email ?? '' }}
+                            {{ $salaryContract->doctor->years_experience ?? '' }}
                         </td>
                     </tr>
                     <tr>
