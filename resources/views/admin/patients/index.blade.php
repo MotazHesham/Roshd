@@ -3,7 +3,7 @@
 @can('user_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.users.create') }}">
+            <a class="btn btn-success" href="{{ route('admin.patients.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.user.title_singular') }}
             </a>
         </div>
@@ -60,6 +60,7 @@
                             <td>
                                 {{ $user->email ?? '' }}
                             </td>
+                          
                             <td>
                                 @foreach($user->roles as $key => $item)
                                     <span class="badge badge-info">{{ $item->title }}</span>

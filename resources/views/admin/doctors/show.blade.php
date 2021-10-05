@@ -17,10 +17,10 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.doctor.fields.id') }}
+                            {{ trans('cruds.user.fields.name') }}
                         </th>
                         <td>
-                            {{ $doctor->id }}
+                            {{ $doctor->user->name ?? '' }}
                         </td>
                     </tr>
                     <tr>

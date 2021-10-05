@@ -17,10 +17,10 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.student.fields.id') }}
+                            {{ trans('cruds.user.fields.name') }}
                         </th>
                         <td>
-                            {{ $student->id }}
+                            {{ $student->user->name }}
                         </td>
                     </tr>
                     <tr>

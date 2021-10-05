@@ -107,6 +107,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('settings/ckmedia', 'SettingsController@storeCKEditorImages')->name('settings.storeCKEditorImages');
     Route::resource('settings', 'SettingsController');
 
+      // patients
+      Route::delete('patients/destroy', 'PatientController@massDestroy')->name('patients.massDestroy');
+      Route::resource('patients', 'PatientController');
+
     // Advice
     Route::delete('advice/destroy', 'AdviceController@massDestroy')->name('advice.massDestroy');
     Route::resource('advice', 'AdviceController');

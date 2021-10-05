@@ -23,13 +23,11 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.doctor.fields.id') }}
+                            {{ trans('cruds.user.fields.name') }}
                         </th>
+
                         <th>
-                            {{ trans('cruds.doctor.fields.years_experience') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.doctor.fields.user') }}
+                            {{ trans('cruds.user.fields.email') }}
                         </th>
                         <th>
                             {{ trans('cruds.doctor.fields.specialization') }}
@@ -58,10 +56,7 @@
 
                             </td>
                             <td>
-                                {{ $doctor->id ?? '' }}
-                            </td>
-                            <td>
-                                {{ $doctor->years_experience ?? '' }}
+                                {{ $doctor->user->name ?? '' }}
                             </td>
                             <td>
                                 {{ $doctor->user->email ?? '' }}

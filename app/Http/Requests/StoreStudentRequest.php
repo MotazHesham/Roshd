@@ -28,8 +28,22 @@ class StoreStudentRequest extends FormRequest
                 'integer',
             ],
             'user_id' => [
-                'required',
                 'integer',
+            ],
+            'name' => [
+                'string',
+                'required',
+            ],
+            'email' => [
+                'required',
+                'unique:users',
+            ],
+            'password' => [
+                'required',
+            ],
+            'phone' => [
+                'string',
+                'required',
             ],
         ];
     }

@@ -24,7 +24,6 @@ class StoreDoctorRequest extends FormRequest
                 'max:2147483647',
             ],
             'user_id' => [
-                'required',
                 'integer',
             ],
             'specialization_id' => [
@@ -43,12 +42,27 @@ class StoreDoctorRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'work_days.*' => [
-                'string',
-            ],
             'work_days' => [
+                
                 'required',
-                  'array',
+            ],
+            'name' => [
+                'string',
+                'required',
+            ],
+            'email' => [
+                'required',
+                'unique:users',
+            ],
+            'password' => [
+                'required',
+            ],
+            'roles.*' => [
+                'integer',
+            ],
+            'phone' => [
+                'string',
+                'required',
             ],
         ];
     }

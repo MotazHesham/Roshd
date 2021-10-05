@@ -40,12 +40,22 @@ class DoctorController extends Controller
 
     public function store(StoreDoctorRequest $request)
     {
-      
-        $input = $request->all();
-        $days = $input['work_days'];
-        $input['work_days'] = implode(',', $days);
-        
-        Doctor::create($input);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'phone' => $request->phone,
+            'user_type' => 'doctor',
+        ]);
+        Doctor::create ([
+            'years_experience'=>$request->years_experience,
+            'work_days'=>$request->work_days,
+            'start_time'=>$request->start_time,
+            'end_time'=>$request->end_time,
+            'user_id'=>$user->id,
+            'specialization_id'=> $request->specialization_id,
+            'clinic_id'=>$request->clinic_id,
+        ]);
 
         Alert::success('تم بنجاح', 'تم إضافة الإستشاري بنجاح ');
 
@@ -69,7 +79,24 @@ class DoctorController extends Controller
 
     public function update(UpdateDoctorRequest $request, Doctor $doctor)
     {
-        $doctor->update($request->all());
+        $doctor->update ([
+            'years_experience'=>$request->years_experience,
+            'work_days'=>$request->work_days,
+            'start_time'=>$request->start_time,
+            'end_time'=>$request->end_time,
+            'specialization_id'=> $request->specialization_id,
+            'clinic_id'=>$request->clinic_id,
+        ]);
+        $user = User::find($doctor->user_id);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'phone' => $request->phone,
+            'user_type' => 'doctor',
+        ]);
+       
 
         Alert::success('تم بنجاح', 'تم تعديل بيانات الإستشاري بنجاح ');
 

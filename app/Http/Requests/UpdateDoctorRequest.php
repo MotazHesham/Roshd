@@ -23,10 +23,6 @@ class UpdateDoctorRequest extends FormRequest
                 'min:-2147483648',
                 'max:2147483647',
             ],
-            'user_id' => [
-                'required',
-                'integer',
-            ],
             'specialization_id' => [
                 'required',
                 'integer',
@@ -45,7 +41,19 @@ class UpdateDoctorRequest extends FormRequest
             ],
             'work_days' => [
                 'required',
-                'array',
+            ],
+            'name' => [
+                'string',
+                'required',
+            ],
+            'email' => [
+                'required',
+                'unique:users,email,' . request()->route('doctor')->id,
+            ],
+            
+            'phone' => [
+                'string',
+                'required',
             ],
         ];
     }

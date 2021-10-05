@@ -38,7 +38,20 @@ class StudentController extends Controller
 
     public function store(StoreStudentRequest $request)
     {
-        $student = Student::create($request->all());
+    
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'phone' => $request->phone,
+            'user_type' => 'student',
+        ]);
+        Student::create ([
+            'hours'=>$request->hours,
+            'user_id'=>$user->id,
+            'specialization_id'=> $request->specialization_id,
+        ]);
+
 
         Alert::success('تم  بنجاح', 'تم إضافة الطالبة بنجاح ');
 

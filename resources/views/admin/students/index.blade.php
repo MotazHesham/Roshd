@@ -20,19 +20,18 @@
                 <thead>
                     <tr>
                         <th width="10">
-
                         </th>
                         <th>
-                            {{ trans('cruds.student.fields.id') }}
+                            {{ trans('cruds.user.fields.name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.student.fields.hours') }}
+                            {{ trans('cruds.user.fields.email') }}
                         </th>
                         <th>
                             {{ trans('cruds.student.fields.specialization') }}
                         </th>
                         <th>
-                            {{ trans('cruds.student.fields.user') }}
+                            {{ trans('cruds.student.fields.hours') }}
                         </th>
                         <th>
                             &nbsp;
@@ -46,16 +45,18 @@
 
                             </td>
                             <td>
-                                {{ $student->id ?? '' }}
+                                {{ $student->user->name ?? '' }}
                             </td>
+                        
                             <td>
-                                {{ $student->hours ?? '' }}
+                                {{ $student->user->email ?? '' }}
                             </td>
+                      
                             <td>
                                 {{ $student->specialization->name ?? '' }}
                             </td>
                             <td>
-                                {{ $student->user->email ?? '' }}
+                                {{ $student->hours ?? '' }}
                             </td>
                             <td>
                                 @can('student_show')

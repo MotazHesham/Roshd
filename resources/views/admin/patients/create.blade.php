@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.users.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("admin.patients.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
@@ -67,7 +67,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.phone_helper') }}</span>
             </div>
-        <input type="hidden" name ="user_type"value="{{'staff'}}">
+        <input type="hidden" name ="user_type"value="{{'patient'}}">
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

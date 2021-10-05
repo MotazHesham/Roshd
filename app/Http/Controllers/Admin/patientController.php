@@ -14,15 +14,17 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Alert;
 
-class UsersController extends Controller
+class patientController extends Controller
 {
+    //
+    
     public function index()
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::where('user_type','staff')->with(['roles', 'packages'])->get();
+        $users = User::where('user_type','patient')->with(['roles', 'packages'])->get();
 
-        return view('admin.users.index', compact('users'));
+        return view('admin.patients.index', compact('users'));
     }
 
     public function create()
@@ -31,7 +33,7 @@ class UsersController extends Controller
 
         $roles = Role::pluck('title', 'id');
 
-        return view('admin.users.create', compact('roles'));
+        return view('admin.patients.create', compact('roles'));
     }
 
     public function store(StoreUserRequest $request)
@@ -39,9 +41,9 @@ class UsersController extends Controller
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
 
-        Alert::success('تم بنجاح', 'تم إضافة المستخدم بنجاح ');
+        Alert::success('تم بنجاح', 'تم إضافة المريض بنجاح ');
 
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.patients.index');
     }
 
     public function edit(User $user)
@@ -54,7 +56,7 @@ class UsersController extends Controller
 
         $user->load('roles', 'packages');
 
-        return view('admin.users.edit', compact('roles', 'packages', 'user'));
+        return view('admin.patients.edit', compact('roles', 'packages', 'user'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
@@ -65,7 +67,7 @@ class UsersController extends Controller
 
         Alert::success('تم بنجاح', 'تم تعديل بيانات المستخدم بنجاح ');
 
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.patients.index');
     }
 
     public function show(User $user)
@@ -74,7 +76,7 @@ class UsersController extends Controller
 
         $user->load('roles', 'packages', 'userUserAlerts');
 
-        return view('admin.users.show', compact('user'));
+        return view('admin.patients.show', compact('user'));
     }
 
     public function destroy(User $user)
@@ -95,3 +97,4 @@ class UsersController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 }
+

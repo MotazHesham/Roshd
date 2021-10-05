@@ -64,6 +64,14 @@
                             </a>
                         </li>
                     @endcan
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.patients.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/patients") || request()->is("admin/patients/*") ? "c-active" : "" }}">
+                            <i class="fa-fw fas fa-user-edit c-sidebar-nav-icon">
+
+                            </i>
+                            {{ trans('cruds.patients.title') }}
+                        </a>
+                    </li>
                     @can('audit_log_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.audit-logs.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/audit-logs") || request()->is("admin/audit-logs/*") ? "c-active" : "" }}">

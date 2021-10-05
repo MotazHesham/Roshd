@@ -3,15 +3,16 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.user.title_singular') }}
+        {{ trans('global.edit') }} {{ trans('cruds.user.title_singular') }}
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.users.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("admin.patients.update", [$user->id]) }}" enctype="multipart/form-data">
+            @method('PUT')
             @csrf
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $user->name) }}" required>
                 @if($errors->has('name'))
                     <div class="invalid-feedback">
                         {{ $errors->first('name') }}
@@ -21,7 +22,7 @@
             </div>
             <div class="form-group">
                 <label class="required" for="email">{{ trans('cruds.user.fields.email') }}</label>
-                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email') }}" required>
+                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email', $user->email) }}" required>
                 @if($errors->has('email'))
                     <div class="invalid-feedback">
                         {{ $errors->first('email') }}
@@ -31,7 +32,7 @@
             </div>
             <div class="form-group">
                 <label class="required" for="password">{{ trans('cruds.user.fields.password') }}</label>
-                <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password" name="password" id="password" required>
+                <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password" name="password" id="password">
                 @if($errors->has('password'))
                     <div class="invalid-feedback">
                         {{ $errors->first('password') }}
@@ -47,7 +48,7 @@
                 </div>
                 <select class="form-control select2 {{ $errors->has('roles') ? 'is-invalid' : '' }}" name="roles[]" id="roles" multiple required>
                     @foreach($roles as $id => $role)
-                        <option value="{{ $id }}" {{ in_array($id, old('roles', [])) ? 'selected' : '' }}>{{ $role }}</option>
+                        <option value="{{ $id }}" {{ (in_array($id, old('roles', [])) || $user->roles->contains($id)) ? 'selected' : '' }}>{{ $role }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('roles'))
@@ -59,7 +60,7 @@
             </div>
             <div class="form-group">
                 <label class="required" for="phone">{{ trans('cruds.user.fields.phone') }}</label>
-                <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{ old('phone', '') }}" required>
+                <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{ old('phone', $user->phone) }}" required>
                 @if($errors->has('phone'))
                     <div class="invalid-feedback">
                         {{ $errors->first('phone') }}
@@ -67,7 +68,25 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.phone_helper') }}</span>
             </div>
-        <input type="hidden" name ="user_type"value="{{'staff'}}">
+            <input type="hidden" name ="user_type"value="{{'patient'}}">
+            <div class="form-group">
+                <label for="packages">{{ trans('cruds.user.fields.package') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('packages') ? 'is-invalid' : '' }}" name="packages[]" id="packages" multiple>
+                    @foreach($packages as $id => $package)
+                        <option value="{{ $id }}" {{ (in_array($id, old('packages', [])) || $user->packages->contains($id)) ? 'selected' : '' }}>{{ $package }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('packages'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('packages') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.user.fields.package_helper') }}</span>
+            </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
