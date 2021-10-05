@@ -48,8 +48,8 @@ class UpdateDoctorRequest extends FormRequest
             ],
             'email' => [
                 'required',
-                'unique:users,email,' . request()->route('doctor')->id,
-            ],
+                'unique:users,email,' . request()->user_id,
+            ],                               
             
             'phone' => [
                 'string',

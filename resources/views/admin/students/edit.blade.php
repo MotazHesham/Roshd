@@ -10,7 +10,49 @@
         <form method="POST" action="{{ route("admin.students.update", [$student->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="form-group">
+            <input type="hidden" name="user_id" value="{{$student->user_id}}">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
+                    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $student->user->name) }}" required>
+                    @if($errors->has('name'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('name') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
+                </div>
+                <div class="form-group  col-md-6">
+                    <label class="required" for="email">{{ trans('cruds.user.fields.email') }}</label>
+                    <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email', $student->user->email) }}" required>
+                    @if($errors->has('email'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('email') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.user.fields.email_helper') }}</span>
+                </div>
+                <div class="form-group  col-md-6">
+                    <label class="required" for="password">{{ trans('cruds.user.fields.password') }}</label>
+                    <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password" name="password" id="password">
+                    @if($errors->has('password'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('password') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.user.fields.password_helper') }}</span>
+                </div>
+                <div class="form-group  col-md-6">
+                    <label class="required" for="phone">{{ trans('cruds.user.fields.phone') }}</label>
+                    <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{ old('phone', $student->user->phone) }}" required>
+                    @if($errors->has('phone'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('phone') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.user.fields.phone_helper') }}</span>
+                </div>
+            <div class="form-group col-md-6">
                 <label class="required" for="hours">{{ trans('cruds.student.fields.hours') }}</label>
                 <input class="form-control {{ $errors->has('hours') ? 'is-invalid' : '' }}" type="number" name="hours" id="hours" value="{{ old('hours', $student->hours) }}" step="1" required>
                 @if($errors->has('hours'))
@@ -20,7 +62,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.student.fields.hours_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label class="required" for="specialization_id">{{ trans('cruds.student.fields.specialization') }}</label>
                 <select class="form-control select2 {{ $errors->has('specialization') ? 'is-invalid' : '' }}" name="specialization_id" id="specialization_id" required>
                     @foreach($specializations as $id => $entry)
@@ -34,24 +76,12 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.student.fields.specialization_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label class="required" for="user_id">{{ trans('cruds.student.fields.user') }}</label>
-                <select class="form-control select2 {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id" required>
-                    @foreach($users as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('user_id') ? old('user_id') : $student->user->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('user'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('user') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.student.fields.user_helper') }}</span>
-            </div>
-            <div class="form-group">
+            
+            <div class="form-group ">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
+            </div>
             </div>
         </form>
     </div>

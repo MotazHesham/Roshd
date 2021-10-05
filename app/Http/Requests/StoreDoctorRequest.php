@@ -42,10 +42,6 @@ class StoreDoctorRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'work_days' => [
-                
-                'required',
-            ],
             'name' => [
                 'string',
                 'required',
@@ -57,12 +53,16 @@ class StoreDoctorRequest extends FormRequest
             'password' => [
                 'required',
             ],
-            'roles.*' => [
-                'integer',
-            ],
             'phone' => [
                 'string',
                 'required',
+            ],
+            'work_days.*' => [
+                'string',
+            ],
+            'work_days' => [
+                'required',
+                  'array',
             ],
         ];
     }

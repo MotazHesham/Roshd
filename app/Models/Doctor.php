@@ -11,13 +11,13 @@ class Doctor extends Model
     use SoftDeletes;
 
     public const WORK_DAYS_SELECT = [
-        'Saturday'  => 'السبت',
-        'Sunday'    => 'الأحد',
-        'Monday'    => 'الأثنين',
-        'Tuesday'   => 'الثلاثاء',
-        'Wednesday' => 'الأربعاء',
-        'Thursday'  => 'الخميس',
-        'Friday'    => 'الجمعة',
+        'السبت'  => 'السبت',
+        'الأحد'    => 'الأحد',
+        'الأثنين'    => 'الأثنين',
+        'الثلاثاء'   => 'الثلاثاء',
+        'الأربعاء' => 'الأربعاء',
+        'الخميس'  => 'الخميس',
+        'الجمعة'    => 'الجمعة',
     ];
 
     public $table = 'doctors';

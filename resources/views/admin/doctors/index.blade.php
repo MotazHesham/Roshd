@@ -68,7 +68,7 @@
                                 {{ $doctor->clinic->clinic_name ?? '' }}
                             </td>
                             <td>
-                                {{ App\Models\Doctor::WORK_DAYS_SELECT[$doctor->work_days] ?? '' }}
+                                {{ $doctor->work_days ?? '' }}
                             </td>
                             <td>
                                 {{ $doctor->start_time ?? '' }}

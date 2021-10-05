@@ -10,6 +10,7 @@
         <form method="POST" action="{{ route("admin.doctors.update", [$doctor->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
+            <input type="hidden" name="user_id" value="{{$doctor->user_id}}">
             <div class="row">
             <div class="form-group col-md-6">
                 <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>

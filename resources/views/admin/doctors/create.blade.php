@@ -9,6 +9,7 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.doctors.store") }}" enctype="multipart/form-data">
             @csrf
+     
             <div class="row">
             <div class="form-group col-md-6">
                 <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
@@ -91,7 +92,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label class="required">{{ trans('cruds.doctor.fields.work_days') }}</label>
-                <select class="form-control {{ $errors->has('work_days') ? 'is-invalid' : '' }}" name="work_days" id="work_days" required  multiple="multiple" >
+                <select class="form-control {{ $errors->has('work_days') ? 'is-invalid' : '' }}" name="work_days[]" id="work_days" required  multiple="multiple" >
                     <option value disabled {{ old('work_days', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                     @foreach(App\Models\Doctor::WORK_DAYS_SELECT as $key => $label)
                         <option value="{{ $key }}" {{ old('work_days', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>

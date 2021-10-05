@@ -40,6 +40,10 @@ class DoctorController extends Controller
 
     public function store(StoreDoctorRequest $request)
     {
+
+        $days = $request['work_days'];
+        $request['work_days'] = implode(',', $days);
+        
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
