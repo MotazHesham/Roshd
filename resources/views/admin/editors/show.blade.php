@@ -25,6 +25,30 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.user.fields.name') }}
+                        </th>
+                        <td>
+                            {{ $editor->user->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.email') }}
+                        </th>
+                        <td>
+                            {{ $editor->user->email ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.phone') }}
+                        </th>
+                        <td>
+                            {{ $editor->user->phone ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.editor.fields.city') }}
                         </th>
                         <td>

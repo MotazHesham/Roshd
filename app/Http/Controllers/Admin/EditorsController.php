@@ -8,6 +8,8 @@ use App\Http\Requests\StoreEditorRequest;
 use App\Http\Requests\UpdateEditorRequest;
 use App\Models\Editor;
 use App\Models\User;
+use App\Models\Role;
+
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,15 +31,28 @@ class EditorsController extends Controller
         abort_if(Gate::denies('editor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $users = User::pluck('email', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $roles = Role::pluck('title', 'id');
 
-        return view('admin.editors.create', compact('users'));
+        return view('admin.editors.create', compact('users','roles'));
     }
 
     public function store(StoreEditorRequest $request)
     {
-        $editor = Editor::create($request->all());
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'phone' => $request->phone,
+            'user_type' => 'editor',
+        ]);
+        Editor::create ([
+            'user_id'=>$user->id,
+            'city'=>$request->city,
+            'work'=>$request->work,
+        ]);
 
-    
+        $user->roles()->sync($request->input('roles', []));
+
     Alert::success('تم بنجاح', 'تمإضافة المراجع بنجاح ');
 
         return redirect()->route('admin.editors.index');
@@ -48,17 +63,34 @@ class EditorsController extends Controller
         abort_if(Gate::denies('editor_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $users = User::pluck('email', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $roles = Role::pluck('title', 'id');
 
         $editor->load('user');
 
-        return view('admin.editors.edit', compact('users', 'editor'));
+        return view('admin.editors.edit', compact('users', 'editor','roles'));
     }
 
     public function update(UpdateEditorRequest $request, Editor $editor)
     {
-        $editor->update($request->all());
 
-    
+
+        $editor->update ([
+            'city'=>$request->city,
+            'work'=>$request->work,
+        ]);
+        $user = User::find($editor->user_id);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'phone' => $request->phone,
+            'user_type' => 'editor',
+        ]);
+
+        $user->roles()->sync($request->input('roles', []));
+
+
     Alert::success('تم بنجاح', 'تم تعديل بيانات المراجع بنجاح ');
 
         return redirect()->route('admin.editors.index');
@@ -79,7 +111,7 @@ class EditorsController extends Controller
 
         $editor->delete();
 
-    
+
     Alert::success('تم بنجاح', 'تم حذف المراجع  بنجاح ');
 
         return back();

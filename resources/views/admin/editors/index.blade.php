@@ -22,8 +22,16 @@
                         <th width="10">
 
                         </th>
+
                         <th>
                             {{ trans('cruds.editor.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.user.fields.name') }}
+                        </th>
+
+                        <th>
+                            {{ trans('cruds.user.fields.email') }}
                         </th>
                         <th>
                             {{ trans('cruds.editor.fields.city') }}
@@ -31,9 +39,7 @@
                         <th>
                             {{ trans('cruds.editor.fields.work') }}
                         </th>
-                        <th>
-                            {{ trans('cruds.editor.fields.user') }}
-                        </th>
+                        
                         <th>
                             &nbsp;
                         </th>
@@ -49,14 +55,18 @@
                                 {{ $editor->id ?? '' }}
                             </td>
                             <td>
+                                {{ $editor->user->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $editor->user->email ?? '' }}
+                            </td>
+                            <td>
                                 {{ $editor->city ?? '' }}
                             </td>
                             <td>
                                 {{ $editor->work ?? '' }}
                             </td>
-                            <td>
-                                {{ $editor->user->email ?? '' }}
-                            </td>
+
                             <td>
                                 @can('editor_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.editors.show', $editor->id) }}">
@@ -136,7 +146,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

@@ -17,6 +17,27 @@ class UpdateEditorRequest extends FormRequest
     public function rules()
     {
         return [
+
+            'name' => [
+                'string',
+                'required',
+            ],
+            'email' => [
+                'required',
+                'unique:users,email,'. request()->user_id,
+            ],
+            'password' => [
+                'required',
+            ],
+            'roles.*' => [
+                'integer',
+            ],
+            'phone' => [
+                'string',
+                'required',
+            ],
+
+
             'city' => [
                 'string',
                 'required',
@@ -26,7 +47,7 @@ class UpdateEditorRequest extends FormRequest
                 'nullable',
             ],
             'user_id' => [
-                'required',
+
                 'integer',
             ],
         ];

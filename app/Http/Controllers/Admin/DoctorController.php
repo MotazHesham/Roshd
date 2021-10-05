@@ -74,7 +74,7 @@ class DoctorController extends Controller
         $doctor->load('user', 'specialization', 'clinic');
 
         return view('admin.doctors.edit', compact('users', 'specializations', 'clinics', 'doctor'));
-    
+
     }
 
     public function update(UpdateDoctorRequest $request, Doctor $doctor)
@@ -96,7 +96,7 @@ class DoctorController extends Controller
             'phone' => $request->phone,
             'user_type' => 'doctor',
         ]);
-       
+
 
         Alert::success('تم بنجاح', 'تم تعديل بيانات الإستشاري بنجاح ');
 
