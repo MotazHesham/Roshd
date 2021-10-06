@@ -68,7 +68,22 @@
                 <span class="help-block">{{ trans('cruds.user.fields.phone_helper') }}</span>
             </div>
         <input type="hidden" name ="user_type"value="{{'patient'}}">
-            <div class="form-group">
+
+
+        <div class="form-group">
+            <label class="required" for="packages">{{ trans('cruds.patients.fields.packages') }}</label>
+            @include('admin.patients.partials.packages')
+            @if($errors->has('packages'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('packages') }}
+                </div>
+            @endif
+            <span class="help-block">{{ trans('cruds.patients.fields.package_helper') }}</span>
+        </div>
+
+
+
+        <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

@@ -35,6 +35,7 @@ class UpdateCenterServicesPackageRequest extends FormRequest
             'package_value' => [
                 'required',
             ],
+            
         ];
     }
 }

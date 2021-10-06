@@ -15,7 +15,7 @@ class User extends Authenticatable
 {
     use SoftDeletes;
     use Notifiable;
-    
+
     public $table = 'users';
 
     protected $hidden = [
@@ -82,7 +82,7 @@ class User extends Authenticatable
 
     public function packages()
     {
-        return $this->belongsToMany(CenterServicesPackage::class);
+        return $this->belongsToMany(CenterServicesPackage::class)->withPivot('remaining','payment_status','payment_type','transfer_name','reference_number');
     }
 
     protected function serializeDate(DateTimeInterface $date)

@@ -17,7 +17,7 @@ use Alert;
 class patientController extends Controller
 {
     //
-    
+
     public function index()
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -32,14 +32,17 @@ class patientController extends Controller
         abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::pluck('title', 'id');
+        $packages = CenterServicesPackage::all();
 
-        return view('admin.patients.create', compact('roles'));
+        return view('admin.patients.create', compact('roles','packages'));
     }
 
     public function store(StoreUserRequest $request)
     {
         $user = User::create($request->all());
-        $user->roles()->sync($request->input('roles', []));
+        //$user->roles()->sync($request->input('roles', []));
+
+        $user->packages()->sync($this->mappackages($request['packages']));
 
         Alert::success('تم بنجاح', 'تم إضافة المريض بنجاح ');
 
@@ -52,9 +55,35 @@ class patientController extends Controller
 
         $roles = Role::pluck('title', 'id');
 
-        $packages = CenterServicesPackage::pluck('name', 'id');
+        //$packages = CenterServicesPackage::pluck('name', 'id');
 
-        $user->load('roles', 'packages');
+        $packages1 = CenterServicesPackage::get()->map(function($package) use ($user) {
+            $package->remaining = data_get($user->packages->firstWhere('id', $user->id), 'pivot.remaining') ?? null;
+            return $package;
+        });
+
+        $packages2 = CenterServicesPackage::get()->map(function($package) use ($user) {
+            $package->payment_status = data_get($user->packages->firstWhere('id', $user->id), 'pivot.payment_status') ?? null;
+            return $package;
+        });
+
+        $packages3 = CenterServicesPackage::get()->map(function($package) use ($user) {
+            $package->payment_type = data_get($user->packages->firstWhere('id', $user->id), 'pivot.payment_type') ?? null;
+            return $package;
+        });
+
+        $packages4 = CenterServicesPackage::get()->map(function($package) use ($user) {
+            $package->transfer_name = data_get($user->packages->firstWhere('id', $user->id), 'pivot.transfer_name') ?? null;
+            return $package;
+        });
+
+        $packages5 = CenterServicesPackage::get()->map(function($package) use ($user) {
+            $package->reference_number = data_get($user->packages->firstWhere('id', $user->id), 'pivot.reference_number') ?? null;
+            return $package;
+        });
+
+
+        $user->load('roles', 'packages1', 'packages2', 'packages3', 'packages4', 'packages5');
 
         return view('admin.patients.edit', compact('roles', 'packages', 'user'));
     }
@@ -63,7 +92,8 @@ class patientController extends Controller
     {
         $user->update($request->all());
         $user->roles()->sync($request->input('roles', []));
-        $user->packages()->sync($request->input('packages', []));
+        // $user->packages()->sync($request->input('packages', []));
+        $user->packages()->sync($this->mappackages($request['packages']));
 
         Alert::success('تم بنجاح', 'تم تعديل بيانات المستخدم بنجاح ');
 
@@ -96,5 +126,12 @@ class patientController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    private function mappackages($packages)
+{
+    return collect($packages)->map(function ($i) {
+        return ['remaining' => $i];
+    });
+}
 }
 
