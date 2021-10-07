@@ -44,7 +44,6 @@ class StoreUserRequest extends FormRequest
                 'required',
             ],
             'packages.*' => [
-                'integer',
             ],
             'packages' => [
                 'array',

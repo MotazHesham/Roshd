@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -40,9 +39,13 @@ class patientController extends Controller
     public function store(StoreUserRequest $request)
     {
         $user = User::create($request->all());
-        //$user->roles()->sync($request->input('roles', []));
 
-        $user->packages()->sync($this->mappackages($request['packages']));
+        $user->packages()->sync($this->mapremaining($request['remaining']));
+        $user->packages()->sync($this->mappayment_status($request['payment_status']));
+        $user->packages()->sync($this->mappayment_type($request['payment_type']));
+        $user->packages()->sync($this->maptransfer_name($request['transfer_name']));
+        $user->packages()->sync($this->mapreference_number($request['reference_number']));
+  
 
         Alert::success('تم بنجاح', 'تم إضافة المريض بنجاح ');
 
@@ -127,11 +130,35 @@ class patientController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    private function mappackages($packages)
+    private function mapremaining($remaining)
 {
-    return collect($packages)->map(function ($i) {
+    return collect($remaining)->map(function ($i) {
         return ['remaining' => $i];
     });
 }
+    private function mappayment_status($payment_status)
+    {
+        return collect($payment_status)->map(function ($i) {
+            return ['payment_status' => $i];
+        });
+    }
+        private function mappayment_type($payment_type)
+        {
+            return collect($payment_type)->map(function ($i) {
+                return ['payment_type' => $i];
+            });
+        }
+            private function maptransfer_name($transfer_name)
+            {
+                return collect($transfer_name)->map(function ($i) {
+                    return ['transfer_name' => $i];
+                });
 }
+private function mapreference_number($reference_number)
+{
+    return collect($reference_number)->map(function ($i) {
+        return ['reference_number' => $i];
+    });
 
+}
+}
