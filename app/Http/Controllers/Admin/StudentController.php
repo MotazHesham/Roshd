@@ -73,7 +73,20 @@ class StudentController extends Controller
 
     public function update(UpdateStudentRequest $request, Student $student)
     {
-        $student->update($request->all());
+        $student->update ([
+            'hours'=>$request->hours,
+            'specialization_id'=> $request->specialization_id,
+        ]);
+        $user = User::find($student->user_id);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'phone' => $request->phone,
+            'user_type' => 'student',
+        ]);
+       
         Alert::success('تم  بنجاح', 'تم تعديل بيانات الطالبة بنجاح ');
 
         return redirect()->route('admin.students.index');

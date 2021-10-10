@@ -9,6 +9,7 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.doctors.store") }}" enctype="multipart/form-data">
             @csrf
+     
             <div class="row">
                 <div class="form-group col-md-6">
                     <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>

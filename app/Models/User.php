@@ -19,7 +19,7 @@ class User extends Authenticatable implements HasMedia
     use SoftDeletes;
     use HasMediaTrait;
     use Notifiable;
-    
+
     public $table = 'users';
 
     protected $appends = [
@@ -110,7 +110,7 @@ class User extends Authenticatable implements HasMedia
 
     public function packages()
     {
-        return $this->belongsToMany(CenterServicesPackage::class);
+        return $this->belongsToMany(CenterServicesPackage::class)->withPivot('remaining','payment_status','payment_type','transfer_name','reference_number');
     }
 
     protected function serializeDate(DateTimeInterface $date)

@@ -78,9 +78,19 @@
                             {{ trans('cruds.user.fields.package') }}
                         </th>
                         <td>
-                            @foreach($user->packages as $key => $package)
+                            {{-- @foreach($user->packages as $key => $package)
                                 <span class="label label-info">{{ $package->name }}</span>
-                            @endforeach
+                            @endforeach --}}
+
+                            @foreach($user->packages as $key => $package)
+            <div class="label label-info">
+                {{ $packages->name }}
+                ({{ $user->pivot->remaining }})
+                ({{ $user->pivot->payment_status }})
+                ({{ $packages->pivot->payment_type }})
+                ({{ $packages->pivot->transfer_name }})
+                ({{ $packages->pivot->reference_number }})</div>
+        @endforeach
                         </td>
                     </tr>
                 </tbody>
