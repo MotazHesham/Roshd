@@ -43,9 +43,6 @@
                             {{ trans('cruds.salaryContract.fields.salary') }}
                         </th>
                         <th>
-                            {{ trans('cruds.salaryContract.fields.doctor') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.salaryContract.fields.allowance') }}
                         </th>
                         <th>
@@ -79,9 +76,6 @@
                             </td>
                             <td>
                                 {{ $salaryContract->salary ?? '' }}
-                            </td>
-                            <td>
-                                {{ $salaryContract->doctor->years_experience ?? '' }}
                             </td>
                             <td>
                                 @foreach($salaryContract->allowances as $key => $item)

@@ -24,16 +24,16 @@ class Clinic extends Model
         'created_at',
         'updated_at',
         'deleted_at',
-    ];
-
-    public function clinicDoctors()
-    {
-        return $this->hasMany(Doctor::class, 'clinic_id', 'id');
-    }
+    ]; 
 
     public function specializations()
     {
         return $this->belongsToMany(Specialization::class);
+    }
+
+    public function doctors()
+    {
+        return $this->belongsToMany(Doctor::class,'doctor_clinic')->withPivot(['day','start_time','end_time']);
     }
 
     protected function serializeDate(DateTimeInterface $date)

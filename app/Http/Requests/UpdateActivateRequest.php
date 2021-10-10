@@ -31,6 +31,9 @@ class UpdateActivateRequest extends FormRequest
             'video' => [
                 'required',
             ],
+            'images' => [
+                'array',
+            ],
         ];
     }
 }

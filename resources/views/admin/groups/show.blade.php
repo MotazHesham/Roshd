@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.group.fields.title') }}
+                        </th>
+                        <td>
+                            {{ $group->title }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.group.fields.start_date') }}
                         </th>
                         <td>

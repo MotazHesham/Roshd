@@ -29,23 +29,7 @@ class StoreDoctorRequest extends FormRequest
             'specialization_id' => [
                 'required',
                 'integer',
-            ],
-            'start_time' => [
-                'required',
-                'date_format:' . config('panel.time_format'),
-            ],
-            'end_time' => [
-                'required',
-                'date_format:' . config('panel.time_format'),
-            ],
-            'clinic_id' => [
-                'required',
-                'integer',
-            ],
-            'work_days' => [
-                
-                'required',
-            ],
+            ],  
             'name' => [
                 'string',
                 'required',
@@ -56,12 +40,19 @@ class StoreDoctorRequest extends FormRequest
             ],
             'password' => [
                 'required',
-            ],
-            'roles.*' => [
-                'integer',
-            ],
+            ], 
             'phone' => [
                 'string',
+                'required',
+            ],
+            'work_days.*' => [
+                'array',
+            ],
+            'work_days'   => [
+                'required',
+                'array',
+            ],
+            'cost' => [
                 'required',
             ],
         ];

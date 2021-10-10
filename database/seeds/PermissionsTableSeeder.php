@@ -352,50 +352,50 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 86,
                 'title' => 'general_setting_access',
             ],
-            [
-                'id'    => 87,
-                'title' => 'experience_create',
-            ],
-            [
-                'id'    => 88,
-                'title' => 'experience_edit',
-            ],
-            [
-                'id'    => 89,
-                'title' => 'experience_show',
-            ],
-            [
-                'id'    => 90,
-                'title' => 'experience_delete',
-            ],
-            [
-                'id'    => 91,
-                'title' => 'experience_access',
-            ],
-            [
-                'id'    => 92,
-                'title' => 'doctor_information_access',
-            ],
-            [
-                'id'    => 93,
-                'title' => 'education_create',
-            ],
-            [
-                'id'    => 94,
-                'title' => 'education_edit',
-            ],
-            [
-                'id'    => 95,
-                'title' => 'education_show',
-            ],
-            [
-                'id'    => 96,
-                'title' => 'education_delete',
-            ],
-            [
-                'id'    => 97,
-                'title' => 'education_access',
-            ],
+            // [
+            //     'id'    => 87,
+            //     'title' => 'experience_create',
+            // ],
+            // [
+            //     'id'    => 88,
+            //     'title' => 'experience_edit',
+            // ],
+            // [
+            //     'id'    => 89,
+            //     'title' => 'experience_show',
+            // ],
+            // [
+            //     'id'    => 90,
+            //     'title' => 'experience_delete',
+            // ],
+            // [
+            //     'id'    => 91,
+            //     'title' => 'experience_access',
+            // ],
+            // [
+            //     'id'    => 92,
+            //     'title' => 'doctor_information_access',
+            // ],
+            // [
+            //     'id'    => 93,
+            //     'title' => 'education_create',
+            // ],
+            // [
+            //     'id'    => 94,
+            //     'title' => 'education_edit',
+            // ],
+            // [
+            //     'id'    => 95,
+            //     'title' => 'education_show',
+            // ],
+            // [
+            //     'id'    => 96,
+            //     'title' => 'education_delete',
+            // ],
+            // [
+            //     'id'    => 97,
+            //     'title' => 'education_access',
+            // ],
             [
                 'id'    => 98,
                 'title' => 'activate_create',

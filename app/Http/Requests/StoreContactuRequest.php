@@ -11,7 +11,7 @@ class StoreContactuRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('contactu_create');
+        return true;
     }
 
     public function rules()

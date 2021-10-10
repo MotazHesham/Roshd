@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 @section('content')
 @can('advice_create')
-    <div style="margin-bottom: 10px;" class="row">
+    {{-- <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.advice.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.advice.title_singular') }}
             </a>
         </div>
-    </div>
+    </div> --}}
 @endcan
 <div class="card">
     <div class="card-header">
@@ -70,11 +70,11 @@
                                     </a>
                                 @endcan
 
-                                @can('advice_edit')
+                                {{-- @can('advice_edit')
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.advice.edit', $advice->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
-                                @endcan
+                                @endcan --}}
 
                                 @can('advice_delete')
                                     <form action="{{ route('admin.advice.destroy', $advice->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">

@@ -32,14 +32,8 @@
                             {{ trans('cruds.user.fields.email') }}
                         </th>
                         <th>
-                            {{ trans('cruds.user.fields.roles') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.user.fields.phone') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.user_type') }}
-                        </th>
+                        </th> 
                         <th>
                             &nbsp;
                         </th>
@@ -60,18 +54,9 @@
                             <td>
                                 {{ $user->email ?? '' }}
                             </td>
-                          
-                            <td>
-                                @foreach($user->roles as $key => $item)
-                                    <span class="badge badge-info">{{ $item->title }}</span>
-                                @endforeach
-                            </td>
                             <td>
                                 {{ $user->phone ?? '' }}
-                            </td>
-                            <td>
-                                {{ $user->user_type ?? '' }}
-                            </td>
+                            </td> 
                             <td>
                                 @can('user_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.users.show', $user->id) }}">

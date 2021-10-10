@@ -20,6 +20,7 @@ class Activate extends Model implements HasMedia
     protected $appends = [
         'photo',
         'video',
+        'images',
     ];
 
     protected $dates = [
@@ -42,6 +43,7 @@ class Activate extends Model implements HasMedia
     {
         $this->addMediaConversion('thumb')->fit('crop', 50, 50);
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
+        $this->addMediaConversion('preview2')->fit('crop', 180, 180);
     }
 
     public function getDateAttribute($value)
@@ -61,6 +63,7 @@ class Activate extends Model implements HasMedia
             $file->url       = $file->getUrl();
             $file->thumbnail = $file->getUrl('thumb');
             $file->preview   = $file->getUrl('preview');
+            $file->preview2   = $file->getUrl('preview2');
         }
 
         return $file;
@@ -69,6 +72,19 @@ class Activate extends Model implements HasMedia
     public function getVideoAttribute()
     {
         return $this->getMedia('video')->last();
+    }
+    
+    public function getImagesAttribute()
+    {
+        $files = $this->getMedia('images');
+        $files->each(function ($item) {
+            $item->url = $item->getUrl();
+            $item->thumbnail = $item->getUrl('thumb');
+            $item->preview = $item->getUrl('preview');
+            $item->preview2 = $item->getUrl('preview2');
+        });
+
+        return $files;
     }
 
     protected function serializeDate(DateTimeInterface $date)

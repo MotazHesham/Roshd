@@ -28,11 +28,11 @@ class StoreExperienceRequest extends FormRequest
             'description' => [
                 'required',
             ],
-            'sart_work' => [
+            'start_date' => [
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],
-            'end_work' => [
+            'end_date' => [
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],

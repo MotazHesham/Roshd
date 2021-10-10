@@ -34,13 +34,10 @@
                             {{ trans('cruds.experience.fields.description') }}
                         </th>
                         <th>
-                            {{ trans('cruds.experience.fields.sart_work') }}
+                            {{ trans('cruds.experience.fields.start_date') }}
                         </th>
                         <th>
-                            {{ trans('cruds.experience.fields.end_work') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.experience.fields.doctor') }}
+                            {{ trans('cruds.experience.fields.end_date') }}
                         </th>
                         <th>
                             &nbsp;
@@ -66,13 +63,10 @@
                                 {{ $experience->description ?? '' }}
                             </td>
                             <td>
-                                {{ $experience->sart_work ?? '' }}
+                                {{ $experience->start_date ?? '' }}
                             </td>
                             <td>
-                                {{ $experience->end_work ?? '' }}
-                            </td>
-                            <td>
-                                {{ $experience->doctor->years_experience ?? '' }}
+                                {{ $experience->end_date ?? '' }}
                             </td>
                             <td>
                                 @can('experience_show')

@@ -11,8 +11,10 @@ class CreateReservationsTable extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('reservation_date');
+            $table->time('reservation_time');
             $table->string('statuse');
             $table->date('delay_date')->nullable();
+            $table->time('delay_time')->nullable();
             $table->longText('cancel_reason')->nullable();
             $table->decimal('cost', 15, 2);
             $table->longText('condation')->nullable();

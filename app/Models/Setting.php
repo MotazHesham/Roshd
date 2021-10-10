@@ -28,6 +28,7 @@ class Setting extends Model implements HasMedia
 
     protected $fillable = [
         'site_name',
+        'email',
         'phone',
         'address',
         'facebook',

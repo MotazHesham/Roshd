@@ -38,9 +38,9 @@ class ExperienceController extends Controller
         $experience = Experience::create($request->all());
 
 
-    Alert::success('تم بنجاح', 'تم  إضافة الخبرة العملية بنجاح ');
+        Alert::success('تم بنجاح', 'تم  إضافة الخبرة العملية بنجاح ');
 
-        return redirect()->route('admin.experiences.index');
+        return redirect()->route('admin.doctors.show',$request->doctor_id);
     }
 
     public function edit(Experience $experience)
@@ -59,9 +59,9 @@ class ExperienceController extends Controller
         $experience->update($request->all());
 
 
-    Alert::success('تم بنجاح', 'تم تعديل الخبرة العملية بنجاح ');
+        Alert::success('تم بنجاح', 'تم تعديل الخبرة العملية بنجاح ');
 
-        return redirect()->route('admin.experiences.index');
+        return redirect()->route('admin.doctors.show',$request->doctor_id);
     }
 
     public function show(Experience $experience)

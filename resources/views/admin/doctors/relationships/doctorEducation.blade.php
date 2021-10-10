@@ -34,9 +34,6 @@
                             {{ trans('cruds.education.fields.end_date') }}
                         </th>
                         <th>
-                            {{ trans('cruds.education.fields.doctor') }}
-                        </th>
-                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -58,9 +55,6 @@
                             </td>
                             <td>
                                 {{ $education->end_date ?? '' }}
-                            </td>
-                            <td>
-                                {{ $education->doctor->years_experience ?? '' }}
                             </td>
                             <td>
                                 @can('education_show')

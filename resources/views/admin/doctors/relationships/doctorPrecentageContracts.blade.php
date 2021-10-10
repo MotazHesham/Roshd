@@ -28,9 +28,6 @@
                             {{ trans('cruds.precentageContract.fields.percentage') }}
                         </th>
                         <th>
-                            {{ trans('cruds.precentageContract.fields.doctor') }}
-                        </th>
-                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -46,9 +43,6 @@
                             </td>
                             <td>
                                 {{ $precentageContract->percentage ?? '' }}
-                            </td>
-                            <td>
-                                {{ $precentageContract->doctor->years_experience ?? '' }}
                             </td>
                             <td>
                                 @can('precentage_contract_show')

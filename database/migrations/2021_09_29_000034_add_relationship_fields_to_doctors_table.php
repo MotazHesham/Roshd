@@ -13,8 +13,6 @@ class AddRelationshipFieldsToDoctorsTable extends Migration
             $table->foreign('user_id', 'user_fk_4987469')->references('id')->on('users');
             $table->unsignedBigInteger('specialization_id');
             $table->foreign('specialization_id', 'specialization_fk_4987478')->references('id')->on('specializations');
-            $table->unsignedBigInteger('clinic_id');
-            $table->foreign('clinic_id', 'clinic_fk_5023005')->references('id')->on('clinics');
         });
     }
 }

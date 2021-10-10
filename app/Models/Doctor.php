@@ -5,19 +5,62 @@ namespace App\Models;
 use \DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class Doctor extends Model
 {
     use SoftDeletes;
 
     public const WORK_DAYS_SELECT = [
-        'Saturday'  => 'السبت',
-        'Sunday'    => 'الأحد',
-        'Monday'    => 'الأثنين',
-        'Tuesday'   => 'الثلاثاء',
-        'Wednesday' => 'الأربعاء',
-        'Thursday'  => 'الخميس',
-        'Friday'    => 'الجمعة',
+        [
+            'day_ar' => 'الأحد',
+            'day' => 'Sun',
+            'value' => null,
+            'start_time' => null,
+            'end_time' => null,
+        ],
+        [
+            'day_ar' => 'الأثنين',
+            'day' => 'Mon',
+            'value' => null,
+            'start_time' => null,
+            'end_time' => null,
+        ],
+        [
+            'day_ar' => 'الثلاثاء',
+            'day' => 'Tue',
+            'value' => null,
+            'start_time' => null,
+            'end_time' => null,
+        ],
+        [
+            'day_ar' => 'الأربعاء',
+            'day' => 'Wed',
+            'value' => null,
+            'start_time' => null,
+            'end_time' => null,
+        ],
+        [
+            'day_ar' => 'الخميس',
+            'day' => 'Thu',
+            'value' => null,
+            'start_time' => null,
+            'end_time' => null,
+        ],
+        [
+            'day_ar' => 'الجمعة',
+            'day' => 'Fri',
+            'value' => null,
+            'start_time' => null,
+            'end_time' => null,
+        ],
+        [
+            'day_ar' => 'السبت',
+            'day' => 'Sat',
+            'value' => null,
+            'start_time' => null,
+            'end_time' => null,
+        ],
     ];
 
     public $table = 'doctors';
@@ -30,16 +73,33 @@ class Doctor extends Model
 
     protected $fillable = [
         'years_experience',
+        'cost',
         'user_id',
-        'specialization_id',
-        'start_time',
-        'end_time',
-        'clinic_id',
-        'work_days',
+        'specialization_id',   
         'created_at',
         'updated_at',
         'deleted_at',
     ];
+
+    public function getStartTimeAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.time_format')) : null;
+    }
+
+    public function setStartTimeAttribute($value)
+    {
+        $this->attributes['start_time'] = $value ? Carbon::createFromFormat(config('panel.time_format'), $value)->format('H:i:s') : null;
+    }
+
+    public function getEndTimeAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.time_format')) : null;
+    }
+
+    public function setEndTimeAttribute($value)
+    {
+        $this->attributes['end_time'] = $value ? Carbon::createFromFormat(config('panel.time_format'), $value)->format('H:i:s') : null;
+    }
 
     public function doctorSalaryContracts()
     {
@@ -71,9 +131,9 @@ class Doctor extends Model
         return $this->belongsTo(Specialization::class, 'specialization_id');
     }
 
-    public function clinic()
+    public function clinics()
     {
-        return $this->belongsTo(Clinic::class, 'clinic_id');
+        return $this->belongsToMany(Clinic::class,'doctor_clinic')->withPivot(['day','start_time','end_time']);
     }
 
     protected function serializeDate(DateTimeInterface $date)

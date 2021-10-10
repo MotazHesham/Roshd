@@ -157,48 +157,16 @@
                 </ul>
             </li>
         @endcan
-        @can('doctor_information_access')
-            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/doctors*") ? "c-show" : "" }} {{ request()->is("admin/experiences*") ? "c-show" : "" }} {{ request()->is("admin/education*") ? "c-show" : "" }}">
-                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+        @can('doctor_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.doctors.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/doctors") || request()->is("admin/doctors/*") ? "c-active" : "" }}">
                     <i class="fa-fw fas fa-user-md c-sidebar-nav-icon">
 
                     </i>
-                    {{ trans('cruds.doctorInformation.title') }}
+                    {{ trans('cruds.doctor.title') }}
                 </a>
-                <ul class="c-sidebar-nav-dropdown-items">
-                    @can('doctor_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.doctors.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/doctors") || request()->is("admin/doctors/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-user-md c-sidebar-nav-icon">
-
-                                </i>
-                                {{ trans('cruds.doctor.title') }}
-                            </a>
-                        </li>
-                    @endcan
-                    @can('experience_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.experiences.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/experiences") || request()->is("admin/experiences/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
-
-                                </i>
-                                {{ trans('cruds.experience.title') }}
-                            </a>
-                        </li>
-                    @endcan
-                    @can('education_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.education.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/education") || request()->is("admin/education/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-graduation-cap c-sidebar-nav-icon">
-
-                                </i>
-                                {{ trans('cruds.education.title') }}
-                            </a>
-                        </li>
-                    @endcan
-                </ul>
             </li>
-        @endcan
+        @endcan 
         @can('dawrat_access')
             <li class="c-sidebar-nav-dropdown {{ request()->is("admin/students*") ? "c-show" : "" }} {{ request()->is("admin/groups*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
@@ -231,7 +199,7 @@
                 </ul>
             </li>
         @endcan
-        @can('contract_access')
+        {{-- @can('contract_access')
             <li class="c-sidebar-nav-dropdown {{ request()->is("admin/salary-contracts*") ? "c-show" : "" }} {{ request()->is("admin/precentage-contracts*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-file-signature c-sidebar-nav-icon">
@@ -262,7 +230,7 @@
                     @endcan
                 </ul>
             </li>
-        @endcan
+        @endcan --}}
         @can('general_setting_access')
             <li class="c-sidebar-nav-dropdown {{ request()->is("admin/specializations*") ? "c-show" : "" }} {{ request()->is("admin/allowances*") ? "c-show" : "" }} {{ request()->is("admin/contactus*") ? "c-show" : "" }} {{ request()->is("admin/settings*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">

@@ -24,7 +24,7 @@ class Reservation extends Model
 
     public const STATUSE_SELECT = [
         'attended'  => 'تم الحضور',
-        'waiting'   => 'قيد الإنتظار',
+        'pending'   => 'قيد الإنتظار',
         'cancelled' => 'تم الإلغاء',
         'postponed' => 'تم التأجيل',
     ];
@@ -33,7 +33,9 @@ class Reservation extends Model
 
     protected $dates = [
         'reservation_date',
+        'reservation_time',
         'delay_date',
+        'delay_time',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -41,8 +43,10 @@ class Reservation extends Model
 
     protected $fillable = [
         'reservation_date',
+        'reservation_time',
         'statuse',
         'delay_date',
+        'delay_time',
         'cancel_reason',
         'cost',
         'condation',
@@ -77,6 +81,26 @@ class Reservation extends Model
     public function setDelayDateAttribute($value)
     {
         $this->attributes['delay_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+
+    public function getReservationTimeAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.time_format')) : null;
+    }
+
+    public function setReservationTimeAttribute($value)
+    {
+        $this->attributes['reservation_time'] = $value ? Carbon::createFromFormat(config('panel.time_format'), $value)->format('H:i:s') : null;
+    }
+
+    public function getDelayTimeAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.time_format')) : null;
+    }
+
+    public function setDelayTimeAttribute($value)
+    {
+        $this->attributes['delay_time'] = $value ? Carbon::createFromFormat(config('panel.time_format'), $value)->format('H:i:s') : null;
     }
 
     public function user()

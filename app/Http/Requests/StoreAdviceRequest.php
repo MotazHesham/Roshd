@@ -11,7 +11,7 @@ class StoreAdviceRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('advice_create');
+        return true;
     }
 
     public function rules()

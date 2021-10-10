@@ -26,33 +26,27 @@ class UpdateDoctorRequest extends FormRequest
             'specialization_id' => [
                 'required',
                 'integer',
-            ],
-            'start_time' => [
-                'required',
-                'date_format:' . config('panel.time_format'),
-            ],
-            'end_time' => [
-                'required',
-                'date_format:' . config('panel.time_format'),
-            ],
-            'clinic_id' => [
-                'required',
-                'integer',
-            ],
-            'work_days' => [
-                'required',
-            ],
+            ],  
             'name' => [
                 'string',
                 'required',
             ],
             'email' => [
                 'required',
-                'unique:users,email,' . request()->route('doctor')->id,
-            ],
-            
+                'unique:users,email,' . request()->user_id,
+            ], 
             'phone' => [
                 'string',
+                'required',
+            ],
+            'work_days.*' => [
+                'array',
+            ],
+            'work_days'   => [
+                'required',
+                'array',
+            ],
+            'cost' => [
                 'required',
             ],
         ];

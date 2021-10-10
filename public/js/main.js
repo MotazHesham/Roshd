@@ -6,7 +6,7 @@ $(document).ready(function () {
   })
 
   $('.date').datetimepicker({
-    format: 'YYYY-MM-DD',
+    format: 'DD/MM/YYYY',
     locale: 'en',
     icons: {
       up: 'fas fa-chevron-up',
@@ -17,7 +17,7 @@ $(document).ready(function () {
   })
 
   $('.datetime').datetimepicker({
-    format: 'YYYY-MM-DD HH:mm:ss',
+    format: "DD/MM/YYYY hh:mm a",
     locale: 'en',
     sideBySide: true,
     icons: {
@@ -29,7 +29,8 @@ $(document).ready(function () {
   })
 
   $('.timepicker').datetimepicker({
-    format: 'HH:mm:ss',
+    format: 'hh:mm a',
+    stepping: 15,
     icons: {
       up: 'fas fa-chevron-up',
       down: 'fas fa-chevron-down',

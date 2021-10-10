@@ -46,9 +46,14 @@ class ActivatesController extends Controller
             $activate->addMedia(storage_path('tmp/uploads/' . basename($request->input('video'))))->toMediaCollection('video');
         }
 
+        foreach ($request->input('images', []) as $file) {
+            $activate->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('images');
+        }
+
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $activate->id]);
         }
+        
         Alert::success('تم  بنجاح', 'تم إضافةالنشاط بنجاح ');
 
         return redirect()->route('admin.activates.index');
@@ -87,6 +92,19 @@ class ActivatesController extends Controller
             $activate->video->delete();
         }
 
+        if (count($activate->images) > 0) {
+            foreach ($activate->images as $media) {
+                if (!in_array($media->file_name, $request->input('images', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $activate->images->pluck('file_name')->toArray();
+        foreach ($request->input('images', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $activate->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('images');
+            }
+        }
         Alert::success('تم  بنجاح', 'تم تعديل النشاط بنجاح ');
 
         return redirect()->route('admin.activates.index');

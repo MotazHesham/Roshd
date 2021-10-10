@@ -23,6 +23,9 @@
 
                         </th>
                         <th>
+                            {{ trans('cruds.user.fields.id') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.user.fields.name') }}
                         </th>
 
@@ -34,16 +37,7 @@
                         </th>
                         <th>
                             {{ trans('cruds.doctor.fields.clinic') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.doctor.fields.work_days') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.doctor.fields.start_time') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.doctor.fields.end_time') }}
-                        </th>
+                        </th> 
                         <th>
                             &nbsp;
                         </th>
@@ -56,6 +50,9 @@
 
                             </td>
                             <td>
+                                {{ $doctor->id ?? '' }}
+                            </td>
+                            <td>
                                 {{ $doctor->user->name ?? '' }}
                             </td>
                             <td>
@@ -65,17 +62,8 @@
                                 {{ $doctor->specialization->name ?? '' }}
                             </td>
                             <td>
-                                {{ $doctor->clinic->clinic_name ?? '' }}
-                            </td>
-                            <td>
-                                {{ App\Models\Doctor::WORK_DAYS_SELECT[$doctor->work_days] ?? '' }}
-                            </td>
-                            <td>
-                                {{ $doctor->start_time ?? '' }}
-                            </td>
-                            <td>
-                                {{ $doctor->end_time ?? '' }}
-                            </td>
+                                {{ $doctor->clinics()->first()->clinic_name ?? '' }}
+                            </td> 
                             <td>
                                 @can('doctor_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.doctors.show', $doctor->id) }}">

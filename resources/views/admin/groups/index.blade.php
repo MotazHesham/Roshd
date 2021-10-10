@@ -25,6 +25,9 @@
                         {{ trans('cruds.group.fields.id') }}
                     </th>
                     <th>
+                        {{ trans('cruds.group.fields.title') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.group.fields.start_date') }}
                     </th>
                     <th>
@@ -102,6 +105,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
+{ data: 'title', name: 'title' },
 { data: 'start_date', name: 'start_date' },
 { data: 'end_date', name: 'end_date' },
 { data: 'course_hours', name: 'course_hours' },

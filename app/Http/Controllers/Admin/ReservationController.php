@@ -17,6 +17,30 @@ use Alert;
 
 class ReservationController extends Controller
 {
+    public function ranges(Request $request){
+
+        $date = $request->date; 
+        $reservations = Reservation::where('doctor_id',$request->doctor_id)->where('reservation_date',$date)->get()->pluck(['reservation_time'])->toArray();
+        if(!$reservations){
+            $reservations = [];
+        }
+        $day = date('D',strtotime($date));
+
+        $doctor = Doctor::findOrFail($request->doctor_id);
+        $doctor->load(['clinics']);
+
+        $doctor_clinic = $doctor->clinics()->wherePivot('day',$day)->first();
+
+
+        if($doctor_clinic){
+            $range = range(strtotime($doctor_clinic->pivot->start_time),strtotime($doctor_clinic->pivot->end_time),15*60); 
+        }else{
+            $range = null;
+        }
+        
+        return view('admin.reservations.partials.ranges',compact('range','date','reservations'));
+    }
+
     public function index()
     {
         abort_if(Gate::denies('reservation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -41,7 +65,21 @@ class ReservationController extends Controller
 
     public function store(StoreReservationRequest $request)
     {
-        $reservation = Reservation::create($request->all());
+        
+        $doctor = Doctor::findOrFail($request->doctor_id); 
+        $date = date(config('panel.date_format'),strtotime($request->choosen_date));
+        $clinic_id = $doctor->clinics()->wherePivot('doctor_id',$request->doctor_id)->first()->pivot->clinic_id ?? 0; 
+
+        $reservation = Reservation::create([
+            'reservation_date' => $date,
+            'reservation_time' => $request->choosen_time,
+            'statuse' => 'pending',
+            'cost' => $doctor->cost,
+            'doctor_id' => $request->doctor_id,
+            'clinic_id' => $clinic_id,
+            'user_id' => $request->user_id,
+            'payment_status' => 'not_paid',
+        ]);
 
         Alert::success('تم بنجاح', 'تم إضافة الحجز بنجاح ');
 

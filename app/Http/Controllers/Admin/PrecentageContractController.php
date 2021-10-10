@@ -39,7 +39,7 @@ class PrecentageContractController extends Controller
 
         Alert::success('تم بنجاح', 'تم إضافة النسبة للأستشارى بنجاح ');
 
-        return redirect()->route('admin.precentage-contracts.index');
+        return redirect()->route('admin.doctors.show',$request->doctor_id);
     }
 
     public function edit(PrecentageContract $precentageContract)
@@ -59,7 +59,7 @@ class PrecentageContractController extends Controller
 
         Alert::success('تم بنجاح', 'تم  تعديل نسبةالأستشاري بنجاح ');
 
-        return redirect()->route('admin.precentage-contracts.index');
+        return redirect()->route('admin.doctors.show',$request->doctor_id);
     }
 
     public function show(PrecentageContract $precentageContract)

@@ -9,7 +9,7 @@ class HomeController
     public function index()
     {
         $settings1 = [
-            'chart_title'           => 'عدد الأطباء',
+            'chart_title'           => 'عدد الأستشاريين',
             'chart_type'            => 'number_block',
             'report_type'           => 'group_by_date',
             'model'                 => 'App\Models\Doctor',
@@ -161,8 +161,8 @@ class HomeController
             'group_by_period'       => 'day',
             'aggregate_function'    => 'count',
             'filter_field'          => 'created_at',
-            'group_by_field_format' => 'Y-m-d',
-            'column_class'          => 'col-md-12',
+            'group_by_field_format' => 'd/m/Y',
+            'column_class'          => 'col-md-6',
             'entries_number'        => '5',
             'translation_key'       => 'reservation',
         ];
@@ -170,7 +170,7 @@ class HomeController
         $chart5 = new LaravelChart($settings5);
 
         $settings6 = [
-            'chart_title'           => 'الأطباء المنضمين مؤخرا',
+            'chart_title'           => 'الأستشاريين المنضمين مؤخرا',
             'chart_type'            => 'latest_entries',
             'report_type'           => 'group_by_date',
             'model'                 => 'App\Models\Doctor',

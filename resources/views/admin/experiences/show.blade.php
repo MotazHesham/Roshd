@@ -49,18 +49,18 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.experience.fields.sart_work') }}
+                            {{ trans('cruds.experience.fields.start_date') }}
                         </th>
                         <td>
-                            {{ $experience->sart_work }}
+                            {{ $experience->start_date }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.experience.fields.end_work') }}
+                            {{ trans('cruds.experience.fields.end_date') }}
                         </th>
                         <td>
-                            {{ $experience->end_work }}
+                            {{ $experience->end_date }}
                         </td>
                     </tr>
                     <tr>

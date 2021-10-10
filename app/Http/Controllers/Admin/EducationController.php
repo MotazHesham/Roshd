@@ -40,7 +40,7 @@ class EducationController extends Controller
 
     Alert::success('تم بنجاح', 'تم إضافة الدرجة العلمية بنجاح ');
 
-        return redirect()->route('admin.education.index');
+    return redirect()->route('admin.doctors.show',$request->doctor_id);
     }
 
     public function edit(Education $education)
@@ -61,7 +61,7 @@ class EducationController extends Controller
 
     Alert::success('تم بنجاح', 'تم تعديل الدرجة العلمية بنجاح ');
 
-        return redirect()->route('admin.education.index');
+    return redirect()->route('admin.doctors.show',$request->doctor_id);
     }
 
     public function show(Education $education)

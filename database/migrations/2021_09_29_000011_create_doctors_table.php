@@ -11,12 +11,9 @@ class CreateDoctorsTable extends Migration
         Schema::create('doctors', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('years_experience');
-            $table->string('work_days');
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->decimal('cost', 15, 2);
             $table->timestamps();
-            $table->softDeletes();
-       
+            $table->softDeletes(); 
         });
     }
 }

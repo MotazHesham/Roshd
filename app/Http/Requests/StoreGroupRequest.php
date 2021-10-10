@@ -17,6 +17,9 @@ class StoreGroupRequest extends FormRequest
     public function rules()
     {
         return [
+            'title' => [
+                'required',
+            ],
             'start_date' => [
                 'required',
                 'date_format:' . config('panel.date_format'),

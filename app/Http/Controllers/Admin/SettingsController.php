@@ -19,12 +19,10 @@ class SettingsController extends Controller
     use MediaUploadingTrait;
 
     public function index()
-    {
-        abort_if(Gate::denies('setting_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    { 
+        $setting = Setting::first();
 
-        $settings = Setting::with(['media'])->get();
-
-        return view('admin.settings.index', compact('settings'));
+        return view('admin.settings.edit', compact('setting'));
     }
 
     public function create()

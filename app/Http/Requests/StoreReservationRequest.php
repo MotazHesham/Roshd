@@ -16,21 +16,7 @@ class StoreReservationRequest extends FormRequest
 
     public function rules()
     {
-        return [
-            'reservation_date' => [
-                'required',
-                'date_format:' . config('panel.date_format'),
-            ],
-            'statuse' => [
-                'required',
-            ],
-            'delay_date' => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
-            ],
-            'cost' => [
-                'required',
-            ],
+        return [ 
             'user_id' => [
                 'required',
                 'integer',
@@ -38,15 +24,22 @@ class StoreReservationRequest extends FormRequest
             'doctor_id' => [
                 'required',
                 'integer',
-            ],
-            'clinic_id' => [
+            ], 
+            'choosen_date' => [
                 'required',
-                'integer',
+                'date_format:Y-m-d',
             ],
-            'transfer_name' => [
-                'string',
-                'nullable',
+            'choosen_time' => [
+                'required',
+                'date_format:' . config('panel.time_format'),
             ],
+        ];
+    }
+
+    public function messages(){
+        return [
+            'choosen_time.required' => 'يرجي اختيار معاد' ,
+            'choosen_date.required' => '.' ,
         ];
     }
 }

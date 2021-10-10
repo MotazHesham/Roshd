@@ -43,7 +43,7 @@ class SalaryContractController extends Controller
        $salaryContract->allowances()->sync($this->mapallowances($request['allowances']));
      
         Alert::success('تم بنجاح', 'تم  إضافة الراتب للأستشاري بنجاح ');
-        return redirect()->route('admin.salary-contracts.index');
+        return redirect()->route('admin.doctors.show',$request->doctor_id);
     }
 
     public function edit(SalaryContract $salaryContract)
@@ -73,7 +73,7 @@ class SalaryContractController extends Controller
 
         
         Alert::success('تم بنجاح', 'تم تعديل الراتب بنجاح ');
-        return redirect()->route('admin.salary-contracts.index');
+        return redirect()->route('admin.doctors.show',$request->doctor_id);
 
     }
 

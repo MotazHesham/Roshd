@@ -27,9 +27,7 @@
             events={!! json_encode($events) !!};
             $('#calendar').fullCalendar({
                 // put your options and callbacks here
-                events: events,
-
-
+                events: events, 
             })
         });
 </script>

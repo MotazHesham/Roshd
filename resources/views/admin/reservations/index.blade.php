@@ -47,9 +47,6 @@
                             {{ trans('cruds.reservation.fields.payment_status') }}
                         </th>
                         <th>
-                            {{ trans('cruds.reservation.fields.transfer_name') }}
-                        </th>
-                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -64,7 +61,9 @@
                                 {{ $reservation->id ?? '' }}
                             </td>
                             <td>
-                                {{ $reservation->reservation_date ?? '' }}
+                                <span class="badge badge-dark">{{ $reservation->reservation_date ?? '' }}</span> 
+                                <br>
+                                <span class="badge badge-light">{{ $reservation->reservation_time ?? '' }}</span> 
                             </td>
                             <td>
                                 {{ App\Models\Reservation::STATUSE_SELECT[$reservation->statuse] ?? '' }}
@@ -85,9 +84,6 @@
                                 {{ App\Models\Reservation::PAYMENT_STATUS_SELECT[$reservation->payment_status] ?? '' }}
                             </td>
                             <td>
-                                {{ $reservation->transfer_name ?? '' }}
-                            </td>
-                            <td>
                                 @can('reservation_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.reservations.show', $reservation->id) }}">
                                         {{ trans('global.view') }}
@@ -95,9 +91,9 @@
                                 @endcan
 
                                 @can('reservation_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.reservations.edit', $reservation->id) }}">
+                                    {{-- <a class="btn btn-xs btn-info" href="{{ route('admin.reservations.edit', $reservation->id) }}">
                                         {{ trans('global.edit') }}
-                                    </a>
+                                    </a> --}}
                                 @endcan
 
                                 @can('reservation_delete')

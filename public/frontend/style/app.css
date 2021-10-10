@@ -1,0 +1,109 @@
+
+#header,
+#main,
+#footer {
+  flex-shrink: 0;
+}
+
+#main,
+#footer {
+  position: relative;
+}
+
+#main {
+  flex-grow: 1;
+}
+
+#main {
+  background: #ffffff;
+  color: #2b3742;
+  padding: 2rem;
+}
+#main.background-flowers {
+  background-image: linear-gradient(to bottom, rgba(86, 52, 209, 0.5), rgba(40, 221, 224, 0.5)), url("../image/background/background-flowers.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* nav toggle */
+.nav-toggle {
+  cursor: pointer;
+  height: 2rem;
+  left: 2rem;
+  position: fixed;
+  top: 2rem;
+  width: 3.6rem;
+  z-index: 2;
+}
+.nav-toggle:hover {
+  opacity: 0.8;
+}
+.nav-toggle .nav-toggle-bar,
+.nav-toggle .nav-toggle-bar::after,
+.nav-toggle .nav-toggle-bar::before {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  background: #19b6b1;
+  content: "";
+  height: 0.4rem;
+  width: 100%;
+    text-align: center;
+}
+.nav-toggle .nav-toggle-bar {
+  margin-top: 0;
+}
+.nav-toggle .nav-toggle-bar::after {
+  margin-top: 0.8rem;
+}
+.nav-toggle .nav-toggle-bar::before {
+  margin-top: -0.8rem;
+}
+.nav-toggle.expanded .nav-toggle-bar {
+  background: transparent;
+}
+.nav-toggle.expanded .nav-toggle-bar::after, .nav-toggle.expanded .nav-toggle-bar::before {
+  background: #ffffff;
+  margin-top: 0;
+}
+.nav-toggle.expanded .nav-toggle-bar::after {
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.nav-toggle.expanded .nav-toggle-bar::before {
+  -ms-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+/* nav */
+.nav {
+  background: #19b6b1;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  font-size: 18px;
+  height: 100vh;
+  left: -20rem;
+  padding: 6rem 6rem 6rem 2rem;
+  position: fixed;
+  top: 0;
+  transition: all 0.5s;
+  width: 20rem;
+    text-align: right;
+  z-index: 1;
+}
+.nav.expanded {
+  left: 0;
+}
+.nav ul {
+  list-style: none;
+  margin: auto 0;
+  padding: 0;
+}
+
+/*# sourceMappingURL=app.css.map */

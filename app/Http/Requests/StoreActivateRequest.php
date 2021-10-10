@@ -31,6 +31,9 @@ class StoreActivateRequest extends FormRequest
             'video' => [
                 'required',
             ],
+            'images' => [
+                'array',
+            ],
         ];
     }
 }
