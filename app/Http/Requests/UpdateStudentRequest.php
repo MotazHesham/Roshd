@@ -32,13 +32,14 @@ class UpdateStudentRequest extends FormRequest
                 'required',
             ],
             'email' => [
-                'required',
+                'nullable',
                 'unique:users,email,' . request()->user_id,
             ],                               
             
             'phone' => [
                 'string',
                 'required',
+                'unique:users,phone,' . request()->user_id,
             ],
         ];
     }

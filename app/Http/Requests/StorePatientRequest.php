@@ -2,16 +2,16 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Editor;
+use App\Models\Patient;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
 
-class StoreEditorRequest extends FormRequest
+class StorePatientRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('editor_create');
+        return Gate::allows('patient_create');
     }
 
     public function rules()
@@ -22,33 +22,16 @@ class StoreEditorRequest extends FormRequest
                 'required',
             ],
             'email' => [
-                'required',
                 'unique:users',
             ],
             'password' => [
                 'required',
-            ],
-            'roles.*' => [
-                'integer',
-            ],
+            ], 
             'phone' => [
                 'string',
                 'required',
-            ],
-
-
-            'city' => [
-                'string',
-                'required',
-            ],
-            'work' => [
-                'string',
-                'nullable',
-            ],
-            'user_id' => [
-                
-                'integer',
-            ],
+                'unique:users',
+            ],  
         ];
     }
 }

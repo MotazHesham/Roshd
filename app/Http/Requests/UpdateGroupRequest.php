@@ -50,8 +50,7 @@ class UpdateGroupRequest extends FormRequest
             'students.*' => [
                 'integer',
             ],
-            'students' => [
-                'required',
+            'students' => [ 
                 'array',
             ],
             'photo' => [

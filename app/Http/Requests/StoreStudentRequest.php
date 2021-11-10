@@ -35,7 +35,6 @@ class StoreStudentRequest extends FormRequest
                 'required',
             ],
             'email' => [
-                'required',
                 'unique:users',
             ],
             'password' => [
@@ -44,6 +43,7 @@ class StoreStudentRequest extends FormRequest
             'phone' => [
                 'string',
                 'required',
+                'unique:users',
             ],
         ];
     }

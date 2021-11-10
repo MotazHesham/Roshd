@@ -37,6 +37,11 @@ class Student extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function studentsGroups()
+    {
+        return $this->belongsToMany(Group::class)->withPivot('status','payment_status','payment_type','transfer_name','reference_number');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');

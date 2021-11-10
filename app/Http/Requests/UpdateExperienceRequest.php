@@ -11,7 +11,7 @@ class UpdateExperienceRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('experience_edit');
+        return true;
     }
 
     public function rules()
@@ -28,11 +28,11 @@ class UpdateExperienceRequest extends FormRequest
             'description' => [
                 'required',
             ],
-            'sart_work' => [
+            'start_date' => [
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],
-            'end_work' => [
+            'end_date' => [
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],

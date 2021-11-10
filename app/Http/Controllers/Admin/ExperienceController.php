@@ -16,8 +16,7 @@ use Alert;
 class ExperienceController extends Controller
 {
     public function index()
-    {
-        abort_if(Gate::denies('experience_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    { 
 
         $experiences = Experience::with(['doctor'])->get();
 
@@ -25,9 +24,7 @@ class ExperienceController extends Controller
     }
 
     public function create()
-    {
-        abort_if(Gate::denies('experience_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+    { 
         $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.experiences.create', compact('doctors'));
@@ -44,8 +41,7 @@ class ExperienceController extends Controller
     }
 
     public function edit(Experience $experience)
-    {
-        abort_if(Gate::denies('experience_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    { 
 
         $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -65,8 +61,7 @@ class ExperienceController extends Controller
     }
 
     public function show(Experience $experience)
-    {
-        abort_if(Gate::denies('experience_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    { 
 
         $experience->load('doctor');
 
@@ -74,8 +69,7 @@ class ExperienceController extends Controller
     }
 
     public function destroy(Experience $experience)
-    {
-        abort_if(Gate::denies('experience_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    { 
 
         $experience->delete();
 

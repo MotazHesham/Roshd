@@ -1,87 +1,83 @@
 @extends('layouts.admin')
 @section('content')
-@can('editor_create')
+@can('expense_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.editors.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.editor.title_singular') }}
+            <a class="btn btn-success" href="{{ route('admin.expenses.create') }}">
+                {{ trans('global.add') }} {{ trans('cruds.expense.title_singular') }}
             </a>
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.editor.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.expense.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-Editor">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-Expense">
                 <thead>
                     <tr>
                         <th width="10">
 
                         </th>
-
                         <th>
-                            {{ trans('cruds.editor.fields.id') }}
+                            {{ trans('cruds.expense.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.user.fields.name') }}
-                        </th>
-
-                        <th>
-                            {{ trans('cruds.user.fields.email') }}
+                            {{ trans('cruds.expense.fields.expense_category') }}
                         </th>
                         <th>
-                            {{ trans('cruds.editor.fields.city') }}
+                            {{ trans('cruds.expense.fields.entry_date') }}
                         </th>
                         <th>
-                            {{ trans('cruds.editor.fields.work') }}
+                            {{ trans('cruds.expense.fields.amount') }}
                         </th>
-                        
+                        <th>
+                            {{ trans('cruds.expense.fields.description') }}
+                        </th>
                         <th>
                             &nbsp;
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($editors as $key => $editor)
-                        <tr data-entry-id="{{ $editor->id }}">
+                    @foreach($expenses as $key => $expense)
+                        <tr data-entry-id="{{ $expense->id }}">
                             <td>
 
                             </td>
                             <td>
-                                {{ $editor->id ?? '' }}
+                                {{ $expense->id ?? '' }}
                             </td>
                             <td>
-                                {{ $editor->user->name ?? '' }}
+                                {{ $expense->expense_category->name ?? '' }}
                             </td>
                             <td>
-                                {{ $editor->user->email ?? '' }}
+                                {{ $expense->entry_date ?? '' }}
                             </td>
                             <td>
-                                {{ $editor->city ?? '' }}
+                                {{ $expense->amount ?? '' }}
                             </td>
                             <td>
-                                {{ $editor->work ?? '' }}
+                                {{ $expense->description ?? '' }}
                             </td>
-
                             <td>
-                                @can('editor_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.editors.show', $editor->id) }}">
+                                @can('expense_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.expenses.show', $expense->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @can('editor_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.editors.edit', $editor->id) }}">
+                                @can('expense_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.expenses.edit', $expense->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
-                                @can('editor_delete')
-                                    <form action="{{ route('admin.editors.destroy', $editor->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                @can('expense_delete')
+                                    <form action="{{ route('admin.expenses.destroy', $expense->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
@@ -106,11 +102,11 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('editor_delete')
+@can('expense_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.editors.massDestroy') }}",
+    url: "{{ route('admin.expenses.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
@@ -139,14 +135,14 @@
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
-    pageLength: 25,
+    pageLength: 100,
   });
-  let table = $('.datatable-Editor:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  let table = $('.datatable-Expense:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-
+  
 })
 
 </script>

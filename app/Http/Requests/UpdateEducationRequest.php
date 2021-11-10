@@ -11,7 +11,7 @@ class UpdateEducationRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('education_edit');
+        return true;
     }
 
     public function rules()

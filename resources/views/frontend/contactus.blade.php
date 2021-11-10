@@ -34,6 +34,15 @@
                 <div class="row contact bg-primary color-white pa-80 m-b-20 rounded-circle ">
                     <div class="col-lg-2 mb-4 text-center"></div>
                     <div class="col-lg-8 mb-4 text-center"> 
+                        @if($errors->count() > 0)
+                            <div class="alert alert-danger">
+                                <ul class="list-unstyled">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <form name="sentMessage" id="contactForm" novalidate="" method="POST" action="{{ route("frontend.contactus.store") }}" enctype="multipart/form-data">
                             @csrf
                             <div class="control-group form-group">

@@ -21,6 +21,56 @@ class GroupController extends Controller
 {
     use MediaUploadingTrait;
 
+    public function store_student(Request $request){
+        
+        $group = Group::findOrFail($request->group_id);  
+        
+        $group->students()->sync([
+            $request->student_id => [
+                'status' => $request->status,
+                'payment_status' => $request->payment_status,
+                'payment_type' => $request->payment_type,
+                'transfer_name' => $request->transfer_name,
+                'reference_number' => $request->reference_number, 
+            ]
+        ]); 
+
+        Alert::success('تم بنجاح');
+
+        return redirect()->route('admin.groups.show',$request->group_id);
+    }
+
+    public function update_student(Request $request){
+        $group = Group::findOrFail($request->group_id);
+        $group->students()->syncWithoutDetaching([
+            $request->student_id => [
+                'status' => $request->status,
+                'payment_status' => $request->payment_status,
+                'payment_type' => $request->payment_type,
+                'transfer_name' => $request->transfer_name,
+                'reference_number' => $request->reference_number, 
+            ]
+        ]); 
+        Alert::success('تم بنجاح');
+
+        return redirect()->route('admin.groups.show',$request->group_id);
+    }
+
+    public function edit_student($group_id){
+        $group = Group::findOrFail($group_id);
+        $student = $group->students()->first();
+        return view('admin.groups.partials.edit_student',compact('group','student'));
+    }
+
+    public function destroy_student($group_id){ 
+
+        $group = group::findOrFail($group_id);
+        $group->students()->detach();
+        
+        Alert::success('تم بنجاح');
+        return redirect()->route('admin.groups.show',$group->id);
+    }
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('group_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -88,7 +138,7 @@ class GroupController extends Controller
     {
         abort_if(Gate::denies('group_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::pluck('email', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::where('user_type','staff')->get()->pluck('email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $students = Student::with('user')->get()->pluck('user.email', 'id');
 
@@ -117,7 +167,7 @@ class GroupController extends Controller
     {
         abort_if(Gate::denies('group_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::pluck('email', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::where('user_type','staff')->get()->pluck('email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $students =Student::with('user')->get()->pluck('user.email', 'id');
         

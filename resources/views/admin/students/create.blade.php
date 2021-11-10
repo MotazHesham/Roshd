@@ -21,7 +21,7 @@
                     <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label class="required" for="email">{{ trans('cruds.user.fields.email') }}</label>
+                    <label for="email">{{ trans('cruds.user.fields.email') }}</label>
                     <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email') }}" required>
                     @if($errors->has('email'))
                         <div class="invalid-feedback">

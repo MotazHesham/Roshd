@@ -25,7 +25,7 @@ class ServicesController extends Controller
             $desc = $setting->el_gadaly_elsloky;
         }elseif($type == 'el_maarefe_elsloky'){
             $title = 'علاج المعرفي السلوكي';
-            $desc = $setting-'el_maarefe_elsloky';
+            $desc = $setting->el_maarefe_elsloky;
         }elseif($type == 'art_therapy'){
             $title = 'العلاج بالفن';
             $desc = $setting->art_therapy;

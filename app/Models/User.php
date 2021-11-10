@@ -108,11 +108,6 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsToMany(Role::class);
     }
 
-    public function packages()
-    {
-        return $this->belongsToMany(CenterServicesPackage::class)->withPivot('remaining','payment_status','payment_type','transfer_name','reference_number');
-    }
-
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');

@@ -54,9 +54,9 @@ class ReservationController extends Controller
     {
         abort_if(Gate::denies('reservation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::pluck('email', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::where('user_type','patient')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $doctors = Doctor::with('user')->get()->pluck('user.name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $clinics = Clinic::pluck('clinic_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -70,6 +70,15 @@ class ReservationController extends Controller
         $date = date(config('panel.date_format'),strtotime($request->choosen_date));
         $clinic_id = $doctor->clinics()->wherePivot('doctor_id',$request->doctor_id)->first()->pivot->clinic_id ?? 0; 
 
+        $reservations = Reservation::where('doctor_id',$request->doctor_id)
+                                    ->where('reservation_date',$request->choosen_date)
+                                    ->where('reservation_time',date('H:i:s',strtotime($request->choosen_time)))
+                                    ->first();
+        if($reservations){
+            Alert::error('لم يتم الحجز','تم حجز الموعد من قبل شخص اخر');
+            return back();
+        }
+        
         $reservation = Reservation::create([
             'reservation_date' => $date,
             'reservation_time' => $request->choosen_time,
@@ -90,9 +99,9 @@ class ReservationController extends Controller
     {
         abort_if(Gate::denies('reservation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::pluck('email', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::where('user_type','patient')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $doctors = Doctor::with('user')->get()->pluck('user.name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $clinics = Clinic::pluck('clinic_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 

@@ -16,8 +16,7 @@ use Alert;
 class EducationController extends Controller
 {
     public function index()
-    {
-        abort_if(Gate::denies('education_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    { 
 
         $education = Education::with(['doctor'])->get();
 
@@ -25,9 +24,7 @@ class EducationController extends Controller
     }
 
     public function create()
-    {
-        abort_if(Gate::denies('education_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+    { 
         $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.education.create', compact('doctors'));
@@ -44,8 +41,7 @@ class EducationController extends Controller
     }
 
     public function edit(Education $education)
-    {
-        abort_if(Gate::denies('education_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    { 
 
         $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -65,8 +61,7 @@ class EducationController extends Controller
     }
 
     public function show(Education $education)
-    {
-        abort_if(Gate::denies('education_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    { 
 
         $education->load('doctor');
 
@@ -74,8 +69,7 @@ class EducationController extends Controller
     }
 
     public function destroy(Education $education)
-    {
-        abort_if(Gate::denies('education_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    { 
 
         $education->delete();
 

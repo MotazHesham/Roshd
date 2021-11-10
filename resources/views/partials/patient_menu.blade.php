@@ -17,6 +17,14 @@
         </li>
     
         <li class="c-sidebar-nav-item">
+            <a href="{{ route("patient.reservations.index") }}" class="c-sidebar-nav-link {{ request()->is("patient/reservations") || request()->is("patient/reservations/*") ? "c-active" : "" }}">
+                <i class="fa-fw far fa-calendar-alt c-sidebar-nav-icon">
+
+                </i>
+                {{ trans('cruds.reservation.title') }}
+            </a>
+        </li>
+        <li class="c-sidebar-nav-item">
             <a href="#" class="c-sidebar-nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                 <i class="c-sidebar-nav-icon fas fa-fw fa-sign-out-alt">
 

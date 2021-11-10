@@ -22,6 +22,19 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css" rel="stylesheet" />
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
+    @if(app()->getLocale() == 'ar')
+      <style>
+        .c-sidebar-nav .c-sidebar-nav-dropdown-items{
+          padding-right: 8%; 
+        }
+      </style>
+    @else
+      <style>
+        .c-sidebar-nav .c-sidebar-nav-dropdown-items{
+          padding-left: 8%; 
+        }
+      </style>
+    @endif
     @yield('styles')
 </head>
 
@@ -143,7 +156,60 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+    
     <script>
+      
+      
+      function showFrontendAlert(type, title, message){
+          swal({ 
+            title: title,
+            text: message,
+            type: type, 
+            showConfirmButton: 'Okay',
+            timer: 3000
+        });
+      }
+
+      function deleteConfirmation(route, div = null, partials = false) { 
+          swal({
+              title: "{{trans('global.flash.delete_')}}",
+              text: "{{trans('global.flash.sure_')}}",
+              type: "warning",
+              showCancelButton: !0,
+              confirmButtonText: "{{trans('global.flash.yes_')}}",
+              cancelButtonText: "{{trans('global.flash.no_')}}",
+              reverseButtons: !0
+          }).then(function (e) {
+
+              if (e.value === true) { 
+
+                  $.ajax({
+                      type: 'DELETE',
+                      url: route, 
+                      data: { _token: '{{ csrf_token() }}', partials: partials}, 
+                      success: function (results) { 
+                        if(div != null){ 
+                          showFrontendAlert('success', '{{trans('global.flash.deleted')}}', '');
+                          $(div).html(null);
+                          $(div).html(results);
+                        }else{
+                          location.reload(); 
+                        }
+                      }
+                  });
+
+              } else {
+                  e.dismiss;
+              }
+
+          }, function (dismiss) {
+              return false;
+          })
+      }
+
         $(function() {
   let copyButtonTrans = '{{ trans('global.datatables.copy') }}'
   let csvButtonTrans = '{{ trans('global.datatables.csv') }}'

@@ -72,10 +72,10 @@
                                 {{ $reservation->cost ?? '' }}
                             </td>
                             <td>
-                                {{ $reservation->user->email ?? '' }}
+                                {{ $reservation->user->name ?? '' }}
                             </td>
                             <td>
-                                {{ $reservation->doctor->user->email ?? '' }}
+                                {{ $reservation->doctor->user->name ?? '' }}
                             </td>
                             <td>
                                 {{ $reservation->clinic->clinic_name ?? '' }}

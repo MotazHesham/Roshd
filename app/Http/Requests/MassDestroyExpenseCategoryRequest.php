@@ -2,16 +2,16 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Editor;
+use App\Models\ExpenseCategory;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
 
-class MassDestroyEditorRequest extends FormRequest
+class MassDestroyExpenseCategoryRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('editor_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('expense_category_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
@@ -20,7 +20,7 @@ class MassDestroyEditorRequest extends FormRequest
     {
         return [
             'ids'   => 'required|array',
-            'ids.*' => 'exists:editors,id',
+            'ids.*' => 'exists:expense_categories,id',
         ];
     }
 }

@@ -11,7 +11,7 @@ class StoreReservationRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('reservation_create');
+        return true;
     }
 
     public function rules()

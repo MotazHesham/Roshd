@@ -2,163 +2,152 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyUserRequest;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\MassDestroyPatientRequest;
+use App\Http\Requests\StorePatientRequest;
+use App\Http\Requests\UpdatePatientRequest;
 use App\Models\CenterServicesPackage;
-use App\Models\Role;
+use App\Models\Patient;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Alert;
+use Auth;
 
 class patientController extends Controller
 {
-    //
+    public function store_patient_package(Request $request){
+        
+        $patient = Patient::findOrFail($request->patient_id);  
+        $package = CenterServicesPackage::findOrFail($request->package_id);  
+        $patient->packages()->attach([
+            $request->package_id => [
+                'remaining' => $package->package_value,
+                'payment_status' => $request->payment_status,
+                'payment_type' => $request->payment_type,
+                'transfer_name' => $request->transfer_name,
+                'reference_number' => $request->reference_number, 
+            ]
+        ]); 
+
+        Alert::success('تم بنجاح');
+
+        return redirect()->route('admin.patients.show',$request->patient_id);
+    }
+
+    public function update_patient_package(Request $request){
+        $patient = Patient::findOrFail($request->patient_id);  
+        $package = CenterServicesPackage::findOrFail($request->package_id);  
+        $patient->packages()->wherePivot('id','=',$request->row_id)->syncWithoutDetaching([
+            $request->package_id => [
+                'remaining' => $package->package_value,
+                'payment_status' => $request->payment_status,
+                'payment_type' => $request->payment_type,
+                'transfer_name' => $request->transfer_name,
+                'reference_number' => $request->reference_number, 
+            ]
+        ]); 
+        Alert::success('تم بنجاح');
+
+        return redirect()->route('admin.patients.show',$request->patient_id);
+    }
+
+    public function edit_patient_package($row_id,$patient_id){
+        $patient = Patient::findOrFail($patient_id);
+        $centerServicesPackage = $patient->packages()->wherePivot('id','=',$row_id)->first();
+        return view('admin.patients.partials.edit_patient_package',compact('patient','centerServicesPackage'));
+    }
+
+    public function destroy_patient_package($row_id,$patient_id){ 
+
+        $patient = Patient::findOrFail($patient_id);
+        $patient->packages()->wherePivot('id','=',$row_id)->detach();
+        
+        Alert::success('تم بنجاح');
+        return redirect()->route('admin.patients.show',$patient->id);
+    }
 
     public function index()
     {
-        abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('patient_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::where('user_type','patient')->with(['roles', 'packages'])->get();
+        $patients = Patient::with(['user', 'packages'])->get();
 
-        return view('admin.patients.index', compact('users'));
+        return view('admin.patients.index', compact('patients'));
     }
 
     public function create()
     {
-        abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('patient_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $roles = Role::pluck('title', 'id');
         $packages = CenterServicesPackage::all();
 
-        return view('admin.patients.create', compact('roles','packages'));
+        return view('admin.patients.create', compact('packages'));
     }
 
-    public function store(StoreUserRequest $request)
+    public function store(StorePatientRequest $request)
     {
-        $user = User::create($request->all());
+        $validated_request = $request->all();
+        $validated_request['user_type'] = 'patient'; 
+        $user = User::create($validated_request);
 
-        $user->packages()->sync($this->mapremaining($request['remaining']));
-        $user->packages()->sync($this->mappayment_status($request['payment_status']));
-        $user->packages()->sync($this->mappayment_type($request['payment_type']));
-        $user->packages()->sync($this->maptransfer_name($request['transfer_name']));
-        $user->packages()->sync($this->mapreference_number($request['reference_number']));
-  
+        $patient = Patient::create(['user_id' => $user->id]); 
 
-        Alert::success('تم بنجاح', 'تم إضافة المريض بنجاح ');
+
+        if($request->ajax()){
+            $users = User::where('user_type','patient')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+            return view('admin.reservations.partials.patients_select',compact('users'));
+        }else{
+            Alert::success('تم بنجاح', 'تم إضافة المراجع بنجاح ');
+            return redirect()->route('admin.patients.index');
+        }
+    }
+
+    public function edit(Patient $patient)
+    {
+        abort_if(Gate::denies('patient_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden'); 
+
+        $patient->load('user');
+
+        return view('admin.patients.edit', compact('patient'));
+    }
+
+    public function update(UpdatePatientRequest $request, Patient $patient)
+    {
+        
+        $user = User::find($request->user_id);
+
+        $user->update($request->all());  
+
+        Alert::success('تم بنجاح', 'تم تعديل بيانات المراجع بنجاح ');
 
         return redirect()->route('admin.patients.index');
     }
 
-    public function edit(User $user)
+    public function show(Patient $patient)
     {
-        abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('patient_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $roles = Role::pluck('title', 'id');
+        $patient->load('user', 'packages');
 
-        //$packages = CenterServicesPackage::pluck('name', 'id');
-
-        $packages1 = CenterServicesPackage::get()->map(function($package) use ($user) {
-            $package->remaining = data_get($user->packages->firstWhere('id', $user->id), 'pivot.remaining') ?? null;
-            return $package;
-        });
-
-        $packages2 = CenterServicesPackage::get()->map(function($package) use ($user) {
-            $package->payment_status = data_get($user->packages->firstWhere('id', $user->id), 'pivot.payment_status') ?? null;
-            return $package;
-        });
-
-        $packages3 = CenterServicesPackage::get()->map(function($package) use ($user) {
-            $package->payment_type = data_get($user->packages->firstWhere('id', $user->id), 'pivot.payment_type') ?? null;
-            return $package;
-        });
-
-        $packages4 = CenterServicesPackage::get()->map(function($package) use ($user) {
-            $package->transfer_name = data_get($user->packages->firstWhere('id', $user->id), 'pivot.transfer_name') ?? null;
-            return $package;
-        });
-
-        $packages5 = CenterServicesPackage::get()->map(function($package) use ($user) {
-            $package->reference_number = data_get($user->packages->firstWhere('id', $user->id), 'pivot.reference_number') ?? null;
-            return $package;
-        });
-
-
-        $user->load('roles', 'packages1', 'packages2', 'packages3', 'packages4', 'packages5');
-
-        return view('admin.patients.edit', compact('roles', 'packages', 'user'));
+        return view('admin.patients.show', compact('patient'));
     }
 
-    public function update(UpdateUserRequest $request, User $user)
+    public function destroy(Patient $patient)
     {
-        $user->update($request->all());
-        $user->roles()->sync($request->input('roles', []));
-        // $user->packages()->sync($request->input('packages', []));
-        $user->packages()->sync($this->mappackages($request['packages']));
+        abort_if(Gate::denies('patient_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Alert::success('تم بنجاح', 'تم تعديل بيانات المستخدم بنجاح ');
+        $patient->delete();
 
-        return redirect()->route('admin.patients.index');
-    }
-
-    public function show(User $user)
-    {
-        abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $user->load('roles', 'packages', 'userUserAlerts');
-
-        return view('admin.patients.show', compact('user'));
-    }
-
-    public function destroy(User $user)
-    {
-        abort_if(Gate::denies('user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $user->delete();
-
-        Alert::success('تم بنجاح', 'تم  حذف المستخدم بنجاح ');
+        Alert::success('تم بنجاح', 'تم  حذف المراجع بنجاح ');
 
         return back();
     }
 
-    public function massDestroy(MassDestroyUserRequest $request)
+    public function massDestroy(MassDestroyPatientRequest $request)
     {
-        User::whereIn('id', request('ids'))->delete();
+        Patient::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
-    }
-
-    private function mapremaining($remaining)
-{
-    return collect($remaining)->map(function ($i) {
-        return ['remaining' => $i];
-    });
-}
-    private function mappayment_status($payment_status)
-    {
-        return collect($payment_status)->map(function ($i) {
-            return ['payment_status' => $i];
-        });
-    }
-        private function mappayment_type($payment_type)
-        {
-            return collect($payment_type)->map(function ($i) {
-                return ['payment_type' => $i];
-            });
-        }
-            private function maptransfer_name($transfer_name)
-            {
-                return collect($transfer_name)->map(function ($i) {
-                    return ['transfer_name' => $i];
-                });
-}
-private function mapreference_number($reference_number)
-{
-    return collect($reference_number)->map(function ($i) {
-        return ['reference_number' => $i];
-    });
-
-}
+    } 
 }

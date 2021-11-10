@@ -1,4 +1,4 @@
-@can('experience_create')
+
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.experiences.create') }}">
@@ -6,7 +6,7 @@
             </a>
         </div>
     </div>
-@endcan
+
 
 <div class="card">
     <div class="card-header">
@@ -69,25 +69,21 @@
                                 {{ $experience->end_date ?? '' }}
                             </td>
                             <td>
-                                @can('experience_show')
+                                
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.experiences.show', $experience->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
-                                @endcan
-
-                                @can('experience_edit')
+                                    
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.experiences.edit', $experience->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
-                                @endcan
-
-                                @can('experience_delete')
+                                    
                                     <form action="{{ route('admin.experiences.destroy', $experience->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
                                     </form>
-                                @endcan
+                                    
 
                             </td>
 

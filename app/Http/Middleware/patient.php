@@ -25,5 +25,5 @@ class patient
         }
         return $next($request);
     }
-    }
+}
 

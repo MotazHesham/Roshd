@@ -3,13 +3,13 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.editor.title') }}
+        {{ trans('global.show') }} {{ trans('cruds.income.title') }}
     </div>
 
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.editors.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.incomes.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -17,64 +17,60 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.editor.fields.id') }}
+                            {{ trans('cruds.income.fields.id') }}
                         </th>
                         <td>
-                            {{ $editor->id }}
+                            {{ $income->id }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.name') }}
+                            {{ trans('cruds.income.fields.income_category') }}
                         </th>
                         <td>
-                            {{ $editor->user->name ?? '' }}
+                            {{ $income->income_category->name ?? '' }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.email') }}
+                            {{ trans('cruds.income.fields.entry_date') }}
                         </th>
                         <td>
-                            {{ $editor->user->email ?? '' }}
+                            {{ $income->entry_date }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.phone') }}
+                            {{ trans('cruds.income.fields.amount') }}
                         </th>
                         <td>
-                            {{ $editor->user->phone ?? '' }}
+                            {{ $income->amount }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.editor.fields.city') }}
+                            {{ trans('cruds.income.fields.description') }}
                         </th>
                         <td>
-                            {{ $editor->city }}
+                            {{ $income->description }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.editor.fields.work') }}
+                            {{ trans('cruds.income.fields.receipt_photo') }}
                         </th>
                         <td>
-                            {{ $editor->work }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.editor.fields.user') }}
-                        </th>
-                        <td>
-                            {{ $editor->user->email ?? '' }}
+                            @foreach($income->receipt_photo as $key => $media)
+                                <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $media->getUrl('thumb') }}">
+                                </a>
+                            @endforeach
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.editors.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.incomes.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>

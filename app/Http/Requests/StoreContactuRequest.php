@@ -23,10 +23,12 @@ class StoreContactuRequest extends FormRequest
             ],
             'email' => [
                 'required',
+                'email'
             ],
             'phone' => [
-                'string',
                 'required',
+                'regex:/(05)[0-9]{8}/',
+                'size:10'
             ],
             'message' => [
                 'required',

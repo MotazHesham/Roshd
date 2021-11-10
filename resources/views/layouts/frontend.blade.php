@@ -92,7 +92,7 @@
             <div class="row">
                 <div class="col-md-7">
                     <div class="contact-head">
-                        <a href="tel:22408681"> <i class="fab fa-whatsapp" aria-hidden="true"></i> <span>{{ $setting->phone ?? ''}}</span>
+                        <a href="tel:{{ $setting->phone ?? ''}}"> <i class="fas fa-phone" aria-hidden="true"></i> <span>{{ $setting->phone ?? ''}}</span>
                         </a>
 
                         <a href="mailto:saif.jader.ku.@gmail.com"> <i class="far fa-envelope" aria-hidden="true"></i>
@@ -103,8 +103,25 @@
                 </div>
 
                 <div class="col-md-5">
-                    <div class="login"><a data-popup-open="popup-1" href="#"><i class="fas fa-user"></i> تسجيل
-                            الدخول </a></div>
+                    @auth 
+                        <?php
+                            if(auth()->user()->user_type == 'staff'){
+                                $type = 'admin';
+                            }elseif(auth()->user()->user_type == 'patient'){
+                                $type = 'patient';
+                            }elseif(auth()->user()->user_type == 'doctor'){
+                                $type = 'doctor';
+                            }elseif(auth()->user()->user_type == 'student'){
+                                $type = 'student';
+                            }else{
+                                $type = 'admin';
+                            }
+                        ?>
+                        <div class="login"><a href="{{ route($type.'.home') }}"><i class="fas fa-user"></i> لوحة التحكم</a></div>
+                    @else 
+                        <div class="login"><a data-popup-open="popup-1" href="#"><i class="fas fa-user"></i> تسجيل
+                                الدخول </a></div>
+                    @endauth
                 </div>
 
             </div>
@@ -150,7 +167,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="logo"><img src="{{ $image }}"></div>
+                    <div class="logo">
+                        <a href="{{ route('frontend.home') }}">
+                            <img src="{{ $image }}">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -183,11 +204,16 @@
 
 
                 <div class="col-md-7">
-                    <h4>احجز استشارتك الان</h4>
-                    <p>هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص
-                    </p>
-                    <button class="btn-primary"><a data-popup-open="popup-1" href="#"><i class="fas fa-plus"
-                                aria-hidden="true"></i> اضغط هنا لتحديد موعد </a></button>
+                    <h4>احجز استشارتك الان</h4> 
+                    @auth 
+                        @if(auth()->user()->user_type == 'patient')
+                            <a  href="{{ route('patient.reservations.create') }}" class="btn-primary"><i class="fas fa-plus"
+                                aria-hidden="true"></i> اضغط هنا لتحديد موعد </a> 
+                        @endif
+                    @else 
+                        <a data-popup-open="popup-1" href="#" class="btn-primary"><i class="fas fa-plus"
+                                aria-hidden="true"></i> اضغط هنا لتحديد موعد </a> 
+                    @endauth
                 </div>
 
                 <div class="col-md-5">

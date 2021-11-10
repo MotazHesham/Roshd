@@ -6,11 +6,11 @@ use \DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Editor extends Model
+class Patient extends Model
 {
     use SoftDeletes;
 
-    public $table = 'editors';
+    public $table = 'patients';
 
     protected $dates = [
         'created_at',
@@ -19,8 +19,6 @@ class Editor extends Model
     ];
 
     protected $fillable = [
-        'city',
-        'work',
         'user_id',
         'created_at',
         'updated_at',
@@ -32,6 +30,12 @@ class Editor extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+
+    public function packages()
+    {
+        return $this->belongsToMany(CenterServicesPackage::class)->withPivot('id','remaining','payment_status','payment_type','transfer_name','reference_number','created_at');
+    }
+    
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
