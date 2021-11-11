@@ -22,6 +22,9 @@
                         <th width="10">
                         </th>
                         <th>
+                            {{ trans('cruds.user.fields.id') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.user.fields.name') }}
                         </th>
                         <th>
@@ -43,6 +46,9 @@
                         <tr data-entry-id="{{ $student->id }}">
                             <td>
 
+                            </td>
+                            <td>
+                                {{ $student->id ?? '' }}
                             </td>
                             <td>
                                 {{ $student->user->name ?? '' }}

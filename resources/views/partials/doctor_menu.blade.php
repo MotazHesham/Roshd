@@ -8,11 +8,20 @@
 
     <ul class="c-sidebar-nav">
         <li class="c-sidebar-nav-item">
-            <a href="{{ route("admin.home") }}" class="c-sidebar-nav-link">
+            <a href="{{ route("doctor.home") }}" class="c-sidebar-nav-link">
                 <i class="c-sidebar-nav-icon fas fa-fw fa-tachometer-alt">
 
                 </i>
                 {{ trans('global.dashboard') }}
+            </a>
+        </li>
+
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route("doctor.reservations.index") }}" class="c-sidebar-nav-link {{ request()->is("doctor/reservations") || request()->is("doctor/reservations/*") ? "c-active" : "" }}">
+                <i class="fa-fw far fa-calendar-alt c-sidebar-nav-icon">
+
+                </i>
+                {{ trans('cruds.reservation.title') }}
             </a>
         </li>
 

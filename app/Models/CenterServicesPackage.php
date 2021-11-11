@@ -20,8 +20,7 @@ class CenterServicesPackage extends Model
 
     public const PAYMENT_TYPE_SELECT = [
         'bank'    => 'تحويل بنكي',
-        'cash'    => 'نقدي',
-        'package' => 'باقة',
+        'cash'    => 'نقدي', 
     ];
 
     protected $dates = [

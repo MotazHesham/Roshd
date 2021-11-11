@@ -46,26 +46,27 @@
                                 {{ $incomeCategory->name ?? '' }}
                             </td>
                             <td>
-                                @can('income_category_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.income-categories.show', $incomeCategory->id) }}">
-                                        {{ trans('global.view') }}
-                                    </a>
-                                @endcan
+                                @if(!in_array($incomeCategory->id,[1,2,3]))
+                                    @can('income_category_show')
+                                        <a class="btn btn-xs btn-primary" href="{{ route('admin.income-categories.show', $incomeCategory->id) }}">
+                                            {{ trans('global.view') }}
+                                        </a>
+                                    @endcan
 
-                                @can('income_category_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.income-categories.edit', $incomeCategory->id) }}">
-                                        {{ trans('global.edit') }}
-                                    </a>
-                                @endcan
+                                    @can('income_category_edit')
+                                        <a class="btn btn-xs btn-info" href="{{ route('admin.income-categories.edit', $incomeCategory->id) }}">
+                                            {{ trans('global.edit') }}
+                                        </a>
+                                    @endcan
 
-                                @can('income_category_delete')
-                                    <form action="{{ route('admin.income-categories.destroy', $incomeCategory->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                    </form>
-                                @endcan
-
+                                    @can('income_category_delete')
+                                        <form action="{{ route('admin.income-categories.destroy', $incomeCategory->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        </form>
+                                    @endcan
+                                @endif
                             </td>
 
                         </tr>

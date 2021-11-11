@@ -39,7 +39,13 @@
                 <i class="fas fa-fw fa-bars"></i>
             </button>
 
-            <ul class="c-header-nav ml-auto">
+            <ul class="c-header-nav mr-auto">
+              <li class="c-header-nav-item">
+                  <a href="{{route('frontend.home')}}" class="c-header-nav-link">
+                      {{trans('global.homepage')}} &nbsp;
+                      <i class="fa fa-home"></i>
+                  </a>
+              </li>
                 @if(count(config('panel.available_languages', [])) > 1)
                     <li class="c-header-nav-item dropdown d-md-down-none">
                         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">

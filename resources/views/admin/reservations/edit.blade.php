@@ -25,79 +25,7 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.reservation.fields.statuse_helper') }}</span>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="cancel_reason">{{ trans('cruds.reservation.fields.cancel_reason') }}</label>
-                    <textarea class="form-control {{ $errors->has('cancel_reason') ? 'is-invalid' : '' }}" name="cancel_reason" id="cancel_reason">{{ old('cancel_reason', $reservation->cancel_reason) }}</textarea>
-                    @if($errors->has('cancel_reason'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('cancel_reason') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.reservation.fields.cancel_reason_helper') }}</span>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="condation">{{ trans('cruds.reservation.fields.condation') }}</label>
-                    <textarea class="form-control {{ $errors->has('condation') ? 'is-invalid' : '' }}" name="condation" id="condation">{{ old('condation', $reservation->condation) }}</textarea>
-                    @if($errors->has('condation'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('condation') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.reservation.fields.condation_helper') }}</span>
-                </div>
-                <div class="form-group col-md-4">
-                    <label class="required" for="user_id">{{ trans('cruds.reservation.fields.user') }}</label>
-                    <select class="form-control select2 {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id" required>
-                        @foreach($users as $id => $entry)
-                            <option value="{{ $id }}" {{ (old('user_id') ? old('user_id') : $reservation->user->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('user'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('user') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.reservation.fields.user_helper') }}</span>
-                </div>
-                <div class="form-group col-md-4">
-                    <label class="required" for="doctor_id">{{ trans('cruds.reservation.fields.doctor') }}</label>
-                    <select class="form-control select2 {{ $errors->has('doctor') ? 'is-invalid' : '' }}" name="doctor_id" id="doctor_id" required>
-                        @foreach($doctors as $id => $entry)
-                            <option value="{{ $id }}" {{ (old('doctor_id') ? old('doctor_id') : $reservation->doctor->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('doctor'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('doctor') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.reservation.fields.doctor_helper') }}</span>
-                </div>
-                <div class="form-group col-md-4">
-                    <label class="required" for="clinic_id">{{ trans('cruds.reservation.fields.clinic') }}</label>
-                    <select class="form-control select2 {{ $errors->has('clinic') ? 'is-invalid' : '' }}" name="clinic_id" id="clinic_id" required>
-                        @foreach($clinics as $id => $entry)
-                            <option value="{{ $id }}" {{ (old('clinic_id') ? old('clinic_id') : $reservation->clinic->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('clinic'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('clinic') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.reservation.fields.clinic_helper') }}</span>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="notes">{{ trans('cruds.reservation.fields.notes') }}</label>
-                    <textarea class="form-control {{ $errors->has('notes') ? 'is-invalid' : '' }}" name="notes" id="notes">{{ old('notes', $reservation->notes) }}</textarea>
-                    @if($errors->has('notes'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('notes') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.reservation.fields.notes_helper') }}</span>
-                </div>
+                </div> 
                 <div class="form-group col-md-4">
                     <label for="transfer_name">{{ trans('cruds.reservation.fields.transfer_name') }}</label>
                     <input class="form-control {{ $errors->has('transfer_name') ? 'is-invalid' : '' }}" type="text" name="transfer_name" id="transfer_name" value="{{ old('transfer_name', $reservation->transfer_name) }}">
@@ -107,6 +35,46 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.reservation.fields.transfer_name_helper') }}</span>
+                </div> 
+                <div class="form-group col-md-4">
+                    <label class="" for="reference_number">{{ trans('cruds.group.fields.reference_number') }}</label>
+                    <input class="form-control {{ $errors->has('reference_number') ? 'is-invalid' : '' }}" type="text" name="reference_number" id="reference_number" value="{{ old('reference_number', '') }}" >
+                    @if($errors->has('reference_number'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('reference_number') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.reservation.fields.reference_number_helper') }}</span>
+                </div>   
+                <div class="form-group col-md-3">
+                    <label class="" for="payment_type">{{ trans('cruds.reservation.fields.payment_type') }}</label>
+                    @foreach(App\Models\Reservation::PAYMENT_TYPE_SELECT as $key => $label)
+                        <div class="form-check {{ $errors->has('payment_type') ? 'is-invalid' : '' }}">
+                            <input class="form-check-input" type="radio" id="payment_type_{{ $key }}" name="payment_type" value="{{ $key }}" {{ old('payment_type', '') === (string) $key ? 'checked' : '' }} >
+                            <label class="form-check-label" for="payment_type_{{ $key }}">{{ $label }}</label>
+                        </div>
+                    @endforeach
+                    @if($errors->has('payment_type'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('payment_type') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.reservation.fields.payment_type_helper') }}</span>
+                </div>   
+                <div class="form-group col-md-3">
+                    <label class="">{{ trans('cruds.reservation.fields.payment_status') }}</label>
+                    @foreach(App\Models\Reservation::PAYMENT_STATUS_SELECT as $key => $label)
+                        <div class="form-check {{ $errors->has('payment_status') ? 'is-invalid' : '' }}">
+                            <input class="form-check-input" type="radio" id="payment_status_{{ $key }}" name="payment_status" value="{{ $key }}" {{ old('payment_status', '') === (string) $key ? 'checked' : '' }} >
+                            <label class="form-check-label" for="payment_status_{{ $key }}">{{ $label }}</label>
+                        </div>
+                    @endforeach
+                    @if($errors->has('payment_status'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('payment_status') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.reservation.fields.payment_status_helper') }}</span>
                 </div> 
             </div>
             <div class="form-group">

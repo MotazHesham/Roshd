@@ -10,6 +10,7 @@ use App\Models\ExpenseCategory;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class ExpenseCategoryController extends Controller
 {
@@ -33,6 +34,7 @@ class ExpenseCategoryController extends Controller
     {
         $expenseCategory = ExpenseCategory::create($request->all());
 
+        Alert::success('تم بنجاح');
         return redirect()->route('admin.expense-categories.index');
     }
 
@@ -47,6 +49,7 @@ class ExpenseCategoryController extends Controller
     {
         $expenseCategory->update($request->all());
 
+        Alert::success('تم بنجاح');
         return redirect()->route('admin.expense-categories.index');
     }
 
@@ -63,6 +66,7 @@ class ExpenseCategoryController extends Controller
 
         $expenseCategory->delete();
 
+        Alert::success('تم بنجاح');
         return back();
     }
 

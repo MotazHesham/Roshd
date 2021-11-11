@@ -90,19 +90,21 @@
                                     </a>
                                 @endcan
 
-                                @can('reservation_edit')
-                                    {{-- <a class="btn btn-xs btn-info" href="{{ route('admin.reservations.edit', $reservation->id) }}">
-                                        {{ trans('global.edit') }}
-                                    </a> --}}
-                                @endcan
+                                @if($reservation->payment_status == 'not_paid')
+                                    @can('reservation_edit')
+                                        <a class="btn btn-xs btn-info" href="{{ route('admin.reservations.edit', $reservation->id) }}">
+                                            {{ trans('global.pay') }}
+                                        </a>
+                                    @endcan
 
-                                @can('reservation_delete')
-                                    <form action="{{ route('admin.reservations.destroy', $reservation->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                    </form>
-                                @endcan
+                                    @can('reservation_delete')
+                                        <form action="{{ route('admin.reservations.destroy', $reservation->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        </form>
+                                    @endcan
+                                @endif
 
                             </td>
 

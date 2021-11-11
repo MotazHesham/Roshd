@@ -10,7 +10,7 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('hours');
+            $table->integer('hours')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

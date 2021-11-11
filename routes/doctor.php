@@ -3,4 +3,8 @@ Route::group(['prefix' => 'doctor', 'as' => 'doctor.', 'namespace' => 'doctor', 
 
 
     Route::get('/', 'HomeController@index')->name('home');
+
+    // Reservation 
+    Route::delete('reservations/destroy', 'ReservationController@massDestroy')->name('reservations.massDestroy');
+    Route::resource('reservations', 'ReservationController');
 });

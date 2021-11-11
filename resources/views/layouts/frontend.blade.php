@@ -117,7 +117,7 @@
                                 $type = 'admin';
                             }
                         ?>
-                        <div class="login"><a href="{{ route($type.'.home') }}"><i class="fas fa-user"></i> لوحة التحكم</a></div>
+                        <div class="login"><a href="{{ route($type.'.home') }}"><i class="fas fa-user"></i> {{ Auth::user()->name }} </a></div>
                     @else 
                         <div class="login"><a data-popup-open="popup-1" href="#"><i class="fas fa-user"></i> تسجيل
                                 الدخول </a></div>
@@ -288,7 +288,7 @@
                     @csrf
                     <h1>تسجيل الدخول</h1>
                     <div class="form-group">
-                        <input type="email" name="email" placeholder="البريد الالكتروني" required value="{{ old('email', null) }}" autocomplete="email" autofocus>
+                        <input type="text" name="email" placeholder="البريد الالكتروني أو رقم الهاتف" required value="{{ old('email', null) }}" autofocus>
                         @if($errors->has('email'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('email') }}

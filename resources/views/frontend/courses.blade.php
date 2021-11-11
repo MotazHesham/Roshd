@@ -44,7 +44,13 @@
                                 <a href="{{ route('frontend.course',$group->id)}}"> المزيد </a>
                             </button>
                             <button class="btn-primary">
-                                <a href="#"> التسجيل </a>
+                                @auth 
+                                    @if(auth()->user()->user_type == 'student')
+                                        <a href="{{ route('frontend.courses.join',$group->id) }}"> طلب انضمام </a>
+                                    @endif
+                                @else 
+                                    <a href="{{ route('frontend.signup') }}"> التسجيل </a>
+                                @endauth
                             </button>
                         </div>
                     </div> 

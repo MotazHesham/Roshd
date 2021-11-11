@@ -16,34 +16,23 @@ class UpdateReservationRequest extends FormRequest
 
     public function rules()
     {
-        return [
-            'reservation_date' => [
-                'required',
-                'date_format:' . config('panel.date_format'),
-            ],
+        return [ 
             'statuse' => [
                 'required',
             ],
-            'delay_date' => [
-                'date_format:' . config('panel.date_format'),
+            'transfer_name' => [
+                'string',
                 'nullable',
             ],
-            'cost' => [
-                'required',
+            'payment_status' => [
+                'string',
+                'nullable',
             ],
-            'user_id' => [
-                'required',
-                'integer',
+            'payment_type' => [
+                'string',
+                'nullable',
             ],
-            'doctor_id' => [
-                'required',
-                'integer',
-            ],
-            'clinic_id' => [
-                'required',
-                'integer',
-            ],
-            'transfer_name' => [
+            'reference_number' => [
                 'string',
                 'nullable',
             ],

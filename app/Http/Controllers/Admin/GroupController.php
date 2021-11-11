@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateGroupRequest;
 use App\Models\Group;
 use App\Models\Student;
 use App\Models\User;
+use App\Models\Income;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
@@ -21,11 +22,12 @@ class GroupController extends Controller
 {
     use MediaUploadingTrait;
 
+
     public function store_student(Request $request){
         
         $group = Group::findOrFail($request->group_id);  
-        
-        $group->students()->sync([
+        $student = Student::findOrFail($request->student_id);
+        $group->students()->syncWithoutDetaching([
             $request->student_id => [
                 'status' => $request->status,
                 'payment_status' => $request->payment_status,
@@ -34,6 +36,17 @@ class GroupController extends Controller
                 'reference_number' => $request->reference_number, 
             ]
         ]); 
+
+        if($request->payment_status == 'paid'){ 
+            Income::create([
+                'income_category_id' => 2,
+                'entry_date' => date(config('panel.date_format'),strtotime('now')),
+                'amount' => $group->course_cost,
+                'relation_id' => $group->id,
+                'description' => 'الطالب: ' . $student->user->name ,
+            ]);
+
+        }
 
         Alert::success('تم بنجاح');
 
@@ -51,21 +64,31 @@ class GroupController extends Controller
                 'reference_number' => $request->reference_number, 
             ]
         ]); 
+        if($request->payment_status == 'paid'){ 
+            Income::create([
+                'income_category_id' => 2,
+                'entry_date' => date(config('panel.date_format'),strtotime('now')),
+                'amount' => $group->course_cost,
+                'relation_id' => $group->id,
+                'description' => 'الطالب: ' . $student->user->name ,
+            ]);
+
+        }
         Alert::success('تم بنجاح');
 
         return redirect()->route('admin.groups.show',$request->group_id);
     }
 
-    public function edit_student($group_id){
+    public function edit_student($group_id,$student_id){
         $group = Group::findOrFail($group_id);
-        $student = $group->students()->first();
+        $student = $group->students()->wherePivot('student_id',$student_id)->first();
         return view('admin.groups.partials.edit_student',compact('group','student'));
     }
 
-    public function destroy_student($group_id){ 
+    public function destroy_student($group_id,$student_id){ 
 
         $group = group::findOrFail($group_id);
-        $group->students()->detach();
+        $group->students()->wherePivot('student_id',$student_id)->detach();
         
         Alert::success('تم بنجاح');
         return redirect()->route('admin.groups.show',$group->id);

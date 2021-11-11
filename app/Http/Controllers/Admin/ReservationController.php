@@ -9,11 +9,14 @@ use App\Http\Requests\UpdateReservationRequest;
 use App\Models\Clinic;
 use App\Models\Doctor;
 use App\Models\Reservation;
+use App\Models\Income;
 use App\Models\User;
+use App\Models\Patient;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Alert;
+use DB;
 
 class ReservationController extends Controller
 {
@@ -89,6 +92,7 @@ class ReservationController extends Controller
             'user_id' => $request->user_id,
             'payment_status' => 'not_paid',
         ]);
+        
 
         Alert::success('تم بنجاح', 'تم إضافة الحجز بنجاح ');
 
@@ -114,6 +118,16 @@ class ReservationController extends Controller
     {
         $reservation->update($request->all());
 
+        if($request->payment_status == 'paid'){ 
+            Income::create([
+                'income_category_id' => 1,
+                'entry_date' => date(config('panel.date_format'),strtotime('now')),
+                'amount' => $reservation->cost,
+                'relation_id' => $reservation->id,
+                'description' => 'المراجع: ' . $reservation->user->name ,
+            ]);
+
+        }
         Alert::success('تم بنجاح', 'تم  تعديل الحجز بنجاح ');
 
         return redirect()->route('admin.reservations.index');

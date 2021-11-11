@@ -57,9 +57,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Group
     Route::post('groups/store_student', 'GroupController@store_student')->name('groups.store_student');
-    Route::get('groups/edit_student/{group_id}', 'GroupController@edit_student')->name('groups.edit_student');
+    Route::get('groups/edit_student/{group_id}/{student_id}', 'GroupController@edit_student')->name('groups.edit_student');
     Route::put('groups/update_student', 'GroupController@update_student')->name('groups.update_student');
-    Route::get('groups/destroy_student/{group_id}', 'GroupController@destroy_student')->name('groups.destroy_student');
+    Route::get('groups/destroy_student/{group_id}/{student_id}', 'GroupController@destroy_student')->name('groups.destroy_student');
     Route::delete('groups/destroy', 'GroupController@massDestroy')->name('groups.massDestroy');
     Route::post('groups/media', 'GroupController@storeMedia')->name('groups.storeMedia');
     Route::post('groups/ckmedia', 'GroupController@storeCKEditorImages')->name('groups.storeCKEditorImages');
@@ -84,9 +84,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Student
     Route::post('students/store_group', 'StudentController@store_group')->name('students.store_group');
-    Route::get('students/edit_group/{student_id}', 'StudentController@edit_group')->name('students.edit_group');
+    Route::get('students/edit_group/{student_id}/{group_id}', 'StudentController@edit_group')->name('students.edit_group');
     Route::put('students/update_group', 'StudentController@update_group')->name('students.update_group');
-    Route::get('students/destroy_group/{student_id}', 'StudentController@destroy_group')->name('students.destroy_group');
+    Route::get('students/destroy_group/{student_id}/{group_id}', 'StudentController@destroy_group')->name('students.destroy_group');
     Route::delete('students/destroy', 'StudentController@massDestroy')->name('students.massDestroy');
     Route::resource('students', 'StudentController');
 

@@ -8,7 +8,7 @@
 
     <ul class="c-sidebar-nav">
         <li class="c-sidebar-nav-item">
-            <a href="{{ route("admin.home") }}" class="c-sidebar-nav-link">
+            <a href="{{ route("student.home") }}" class="c-sidebar-nav-link">
                 <i class="c-sidebar-nav-icon fas fa-fw fa-tachometer-alt">
 
                 </i>
@@ -16,6 +16,15 @@
             </a>
         </li>
     
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route("student.groups.index") }}" class="c-sidebar-nav-link {{ request()->is("student/groups") || request()->is("student/groups/*") ? "c-active" : "" }}">
+                <i class="fa-fw fas fa-users c-sidebar-nav-icon">
+
+                </i>
+                {{ trans('cruds.group.title') }}
+            </a>
+        </li>
+
         <li class="c-sidebar-nav-item">
             <a href="#" class="c-sidebar-nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                 <i class="c-sidebar-nav-icon fas fa-fw fa-sign-out-alt">

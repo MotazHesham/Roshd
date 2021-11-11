@@ -3,4 +3,6 @@ Route::group(['prefix' => 'student', 'as' => 'student.', 'namespace' => 'student
 
     
     Route::get('/', 'HomeController@index')->name('home');
+    
+    Route::resource('groups', 'GroupController');
 });

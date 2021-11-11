@@ -145,19 +145,17 @@
                                 {{ App\Models\CenterServicesPackage::PAYMENT_STATUS_SELECT[$centerServicesPackage->pivot->payment_status] ?? '' }}
                             </td>
                             <td>  
-                                @if($centerServicesPackage->pivot->payment_status != 'paid')
-                                    @can('center_services_package_edit')
-                                        <button onclick="editModal('{{ route('admin.patients.edit_patient_package', [ 'row_id' => $centerServicesPackage->pivot->id , 'patient_id' => $patient->id]) }}')" title="{{ trans('global.edit') }}" class="btn btn-outline-success btn-pill action-buttons-edit">
-                                            <i  class="fa fa-edit actions-custom-i"></i>
-                                        </button>
-                                    @endcan
-            
-                                    @can('center_services_package_delete')  
-                                        <a href="{{ route('admin.patients.destroy_patient_package', [ 'row_id' => $centerServicesPackage->pivot->id , 'patient_id' => $patient->id]) }}" class="btn btn-outline-danger btn-pill action-buttons-delete">
-                                            <i  class="fa fa-trash actions-custom-i"></i>
-                                        </a> 
-                                    @endcan 
-                                @endif
+                                @can('center_services_package_edit')
+                                    <button onclick="editModal('{{ route('admin.patients.edit_patient_package', [ 'row_id' => $centerServicesPackage->pivot->id , 'patient_id' => $patient->id]) }}')" title="{{ trans('global.edit') }}" class="btn btn-outline-success btn-pill action-buttons-edit">
+                                        <i  class="fa fa-edit actions-custom-i"></i>
+                                    </button>
+                                @endcan
+        
+                                @can('center_services_package_delete')  
+                                    <a href="{{ route('admin.patients.destroy_patient_package', [ 'row_id' => $centerServicesPackage->pivot->id , 'patient_id' => $patient->id]) }}" class="btn btn-outline-danger btn-pill action-buttons-delete">
+                                        <i  class="fa fa-trash actions-custom-i"></i>
+                                    </a> 
+                                @endcan 
                             </td>
 
                         </tr>

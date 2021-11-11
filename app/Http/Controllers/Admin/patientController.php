@@ -8,6 +8,7 @@ use App\Http\Requests\UpdatePatientRequest;
 use App\Models\CenterServicesPackage;
 use App\Models\Patient;
 use App\Models\User;
+use App\Models\Income;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,6 +31,16 @@ class patientController extends Controller
             ]
         ]); 
 
+        if($request->payment_status == 'paid'){ 
+            Income::create([
+                'income_category_id' => 3,
+                'entry_date' => date(config('panel.date_format'),strtotime('now')),
+                'amount' => $package->package_value,
+                'relation_id' => $package->id,
+                'description' => 'المراجع: ' . $patient->user->name ,
+            ]);
+
+        }
         Alert::success('تم بنجاح');
 
         return redirect()->route('admin.patients.show',$request->patient_id);
@@ -47,6 +58,17 @@ class patientController extends Controller
                 'reference_number' => $request->reference_number, 
             ]
         ]); 
+
+        if($request->payment_status == 'paid'){ 
+            Income::create([
+                'income_category_id' => 3,
+                'entry_date' => date(config('panel.date_format'),strtotime('now')),
+                'amount' => $package->package_value,
+                'relation_id' => $package->id,
+                'description' => 'المراجع: ' . $patient->user->name ,
+            ]);
+
+        }
         Alert::success('تم بنجاح');
 
         return redirect()->route('admin.patients.show',$request->patient_id);

@@ -8,7 +8,9 @@ use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Models\Specialization;
 use App\Models\Student;
+use App\Models\Income;
 use App\Models\User;
+use App\Models\Group;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,25 +20,9 @@ class StudentController extends Controller
 {
     public function store_group(Request $request){
         
-        $student = student::findOrFail($request->student_id);  
+        $student = Student::findOrFail($request->student_id);  
+        $group = Group::findOrFail($request->group_id);  
         
-        $student->studentsGroups()->sync([
-            $request->student_id => [
-                'status' => $request->status,
-                'payment_status' => $request->payment_status,
-                'payment_type' => $request->payment_type,
-                'transfer_name' => $request->transfer_name,
-                'reference_number' => $request->reference_number, 
-            ]
-        ]); 
-
-        Alert::success('تم بنجاح');
-
-        return redirect()->route('admin.students.show',$request->student_id);
-    }
-
-    public function update_group(Request $request){
-        $student = student::findOrFail($request->student_id);  
         $student->studentsGroups()->syncWithoutDetaching([
             $request->group_id => [
                 'status' => $request->status,
@@ -46,21 +32,58 @@ class StudentController extends Controller
                 'reference_number' => $request->reference_number, 
             ]
         ]); 
+        if($request->payment_status == 'paid'){ 
+            Income::create([
+                'income_category_id' => 2,
+                'entry_date' => date(config('panel.date_format'),strtotime('now')),
+                'amount' => $group->course_cost,
+                'relation_id' => $request->group_id,
+                'description' => 'الطالب: ' . $student->user->name ,
+            ]);
+
+        }
         Alert::success('تم بنجاح');
 
-        return redirect()->route('admin.students.show',$request->group_id);
+        return redirect()->route('admin.students.show',$request->student_id);
     }
 
-    public function edit_group($student_id){
+    public function update_group(Request $request){
+        $student = student::findOrFail($request->student_id);  
+        $group = Group::findOrFail($request->group_id);  
+        $student->studentsGroups()->syncWithoutDetaching([
+            $request->group_id => [
+                'status' => $request->status,
+                'payment_status' => $request->payment_status,
+                'payment_type' => $request->payment_type,
+                'transfer_name' => $request->transfer_name,
+                'reference_number' => $request->reference_number, 
+            ]
+        ]); 
+        if($request->payment_status == 'paid'){ 
+            Income::create([
+                'income_category_id' => 2,
+                'entry_date' => date(config('panel.date_format'),strtotime('now')),
+                'amount' => $group->course_cost,
+                'relation_id' => $request->group_id,
+                'description' => 'الطالب: ' . $student->user->name ,
+            ]);
+
+        }
+        Alert::success('تم بنجاح');
+
+        return redirect()->route('admin.students.show',$student->id);
+    }
+
+    public function edit_group($student_id,$group_id){
         $student = student::findOrFail($student_id);  
-        $group = $student->studentsGroups()->first();
+        $group = $student->studentsGroups()->wherePivot('group_id',$group_id)->first();
         return view('admin.students.partials.edit_group',compact('group','student'));
     }
 
-    public function destroy_group($student_id){ 
+    public function destroy_group($student_id,$group_id){ 
 
         $student = student::findOrFail($student_id);  
-        $student->studentsGroups()->detach();
+        $student->studentsGroups()->wherePivot('group_id',$group_id)->detach();
         
         Alert::success('تم بنجاح');
         return redirect()->route('admin.students.show',$student->id);

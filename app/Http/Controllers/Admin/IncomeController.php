@@ -13,6 +13,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class IncomeController extends Controller
 {
@@ -48,6 +49,7 @@ class IncomeController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $income->id]);
         }
 
+        Alert::success('تم بنجاح');
         return redirect()->route('admin.incomes.index');
     }
 
@@ -80,6 +82,7 @@ class IncomeController extends Controller
             }
         }
 
+        Alert::success('تم بنجاح');
         return redirect()->route('admin.incomes.index');
     }
 
@@ -98,6 +101,7 @@ class IncomeController extends Controller
 
         $income->delete();
 
+        Alert::success('تم بنجاح');
         return back();
     }
 

@@ -112,4 +112,9 @@ class User extends Authenticatable implements HasMedia
     {
         return $date->format('Y-m-d H:i:s');
     }
+    
+    public function userReservations()
+    {
+        return $this->hasMany(Reservation::class, 'user_id', 'id');
+    }
 }

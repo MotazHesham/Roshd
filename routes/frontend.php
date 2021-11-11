@@ -21,6 +21,7 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function(){
     // courses
     Route::get('courses','CoursesController@courses')->name('courses');
     Route::get('course/{id}','CoursesController@course')->name('course');
+    Route::get('course/join/{id}','CoursesController@course_join')->name('courses.join');
     
     Route::get('consulting','ConsultingController@consulting')->name('consulting');
     Route::post('consulting/store','ConsultingController@store')->name('consulting.store');
@@ -29,4 +30,5 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function(){
     Route::post('contactus/store','ContactUsController@store')->name('contactus.store');
 
     Route::get('signup','HomeController@signup')->name('signup');
+    Route::post('signup_user','HomeController@signup_user')->name('signup_user');
 });

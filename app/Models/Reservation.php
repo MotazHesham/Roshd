@@ -23,10 +23,9 @@ class Reservation extends Model
     ];
 
     public const STATUSE_SELECT = [
-        'attended'  => 'تم الحضور',
         'pending'   => 'قيد الإنتظار',
+        'attended'  => 'تم الحضور',
         'cancelled' => 'تم الإلغاء',
-        'postponed' => 'تم التأجيل',
     ];
 
     public $table = 'reservations';

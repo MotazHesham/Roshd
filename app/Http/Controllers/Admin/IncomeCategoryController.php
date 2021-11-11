@@ -10,6 +10,7 @@ use App\Models\IncomeCategory;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Alert;
 
 class IncomeCategoryController extends Controller
 {
@@ -33,6 +34,7 @@ class IncomeCategoryController extends Controller
     {
         $incomeCategory = IncomeCategory::create($request->all());
 
+        Alert::success('تم بنجاح');
         return redirect()->route('admin.income-categories.index');
     }
 
@@ -47,6 +49,7 @@ class IncomeCategoryController extends Controller
     {
         $incomeCategory->update($request->all());
 
+        Alert::success('تم بنجاح');
         return redirect()->route('admin.income-categories.index');
     }
 
@@ -63,6 +66,7 @@ class IncomeCategoryController extends Controller
 
         $incomeCategory->delete();
 
+        Alert::success('تم بنجاح');
         return back();
     }
 

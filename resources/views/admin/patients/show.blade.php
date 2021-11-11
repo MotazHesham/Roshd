@@ -3,7 +3,7 @@
 
     <div class="card">
         <div class="card-header">
-            {{ trans('global.show') }} {{ trans('cruds.user.title') }}
+            {{ trans('global.show') }} {{ trans('cruds.patients.title') }}
         </div>
 
         <div class="card-body">
@@ -68,10 +68,18 @@
                                 {{ trans('cruds.centerServicesPackage.title') }}
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#user_reservations" role="tab" data-toggle="tab">
+                                {{ trans('cruds.reservation.title') }}
+                            </a>
+                        </li>
                     </ul>
                     <div class="tab-content" style="padding:20px"> 
                         <div class="tab-pane active" role="tabpanel" id="patients_center_services_packages">
                             @includeIf('admin.patients.relationships.patientsCenterServicesPackages', ['centerServicesPackages' => $patient->packages , 'patient' => $patient])
+                        </div>
+                        <div class="tab-pane" role="tabpanel" id="user_reservations">
+                            @includeIf('admin.patients.relationships.userReservations', ['reservations' => $patient->user->userReservations])
                         </div>
                     </div> 
                 </div>

@@ -32,6 +32,22 @@
                 </div>
             </div>
         </form>
+        <form method="get"> 
+            <div class="row">
+                <div class="col-3 form-group">
+                    <label class="control-label" for="start_date">بداية التاريخ</label> 
+                    <input class="form-control date {{ $errors->has('start_date') ? 'is-invalid' : '' }}" type="text" name="start_date" id="start_date" value="{{ $start_date ?? '' }}" required>
+                </div>
+                <div class="col-3 form-group">
+                    <label class="control-label" for="end_date">نهاية التاريخ</label>
+                    <input class="form-control date {{ $errors->has('end_date') ? 'is-invalid' : '' }}" type="text" name="end_date" id="end_date" value="{{ $end_date ?? '' }}" required>
+                </div>
+                <div class="col-4">
+                    <label class="control-label">&nbsp;</label><br>
+                    <button class="btn btn-primary" type="submit">{{ trans('global.filterDate') }}</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 

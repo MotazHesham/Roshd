@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use \DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+// use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ExpenseCategory extends Model
 {
     use SoftDeletes;
-    use HasFactory;
+    // use HasFactory;
 
     public $table = 'expense_categories';
 

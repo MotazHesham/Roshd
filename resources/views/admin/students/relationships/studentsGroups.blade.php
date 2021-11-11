@@ -165,17 +165,19 @@
                                 {{ App\Models\Group::PAYMENT_STATUS_SELECT[$group->pivot->payment_status] ?? '' }}
                             </td>
                             <td> 
-                                @can('group_edit')
-                                    <button onclick="editModal('{{ route('admin.students.edit_group',$student->id) }}')" title="{{ trans('global.edit') }}" class="btn btn-outline-success btn-pill action-buttons-edit">
-                                        <i  class="fa fa-edit actions-custom-i"></i>
-                                    </button>
-                                @endcan
-        
-                                @can('group_delete')  
-                                    <a href="{{ route('admin.students.destroy_group',$student->id) }}" class="btn btn-outline-danger btn-pill action-buttons-delete">
-                                        <i  class="fa fa-trash actions-custom-i"></i>
-                                    </a> 
-                                @endcan  
+                                @if($group->pivot->payment_status != 'paid')
+                                    @can('group_edit')
+                                        <button onclick="editModal('{{ route('admin.students.edit_group',['student_id' => $student->id, 'group_id' => $group->id]) }}')" title="{{ trans('global.edit') }}" class="btn btn-outline-success btn-pill action-buttons-edit">
+                                            <i  class="fa fa-edit actions-custom-i"></i>
+                                        </button>
+                                    @endcan
+            
+                                    @can('group_delete')  
+                                        <a href="{{ route('admin.students.destroy_group',['student_id' => $student->id, 'group_id' => $group->id]) }}" class="btn btn-outline-danger btn-pill action-buttons-delete">
+                                            <i  class="fa fa-trash actions-custom-i"></i>
+                                        </a> 
+                                    @endcan  
+                                @endif
 
                             </td>
 
