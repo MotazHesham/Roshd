@@ -21,12 +21,6 @@
                             {{ trans('cruds.reservation.fields.reservation_date') }}
                         </th>
                         <th>
-                            {{ trans('cruds.reservation.fields.statuse') }}
-                        </th> 
-                        <th>
-                            {{ trans('cruds.reservation.fields.cost') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.reservation.fields.condation') }}
                         </th> 
                         <th>
@@ -51,12 +45,6 @@
                             </td>
                             <td>
                                 {{ $reservation->reservation_date ?? '' }}
-                            </td>
-                            <td>
-                                {{ App\Models\Reservation::STATUSE_SELECT[$reservation->statuse] ?? '' }}
-                            </td> 
-                            <td>
-                                {{ $reservation->cost ?? '' }}
                             </td>
                             <td>
                                 {{ $reservation->condation ?? '' }}
