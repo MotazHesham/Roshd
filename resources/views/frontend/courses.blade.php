@@ -31,7 +31,8 @@
                             إلى  {{$group->end_date}}
                             </p>
                         </div>
-                </div>
+                <a class="btn shadow-none blue-btn" href="{{ route('frontend.course',$group->id)}}">المزيد</a>
+            </div>
                 @endforeach
                 </div>
         </div>    

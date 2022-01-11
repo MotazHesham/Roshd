@@ -28,42 +28,42 @@
         <div class="owl-one owl-carousel owl-theme owl-container">
                 <div class="item">
                 <img class="service-img" src="{{asset('frontend/new/img/family-silhouette.png')}}">
-                <a class="service-name" href="#">الاستشارات الأسرية</a>
+                <a class="service-name"  href="{{ route('frontend.service','familly_advice') }}">الاستشارات الأسرية</a>
                 </div>
             
                 <div class="item">
                 <img class="service-img" src="{{asset('frontend/new/img/standing-up-man-.png')}}">
-                <a class="service-name" href="#">الاستشارات الفردية</a>
+                <a class="service-name" href="{{ route('frontend.service','individual_advice') }}">الاستشارات الفردية</a>
                 </div>
             
                 <div class="item">
                 <img class="service-img"  src="{{asset('frontend/new/img/argue.png')}}">
-                <a class="service-name" href="#">علاج الجدلي السلوكي</a>
+                <a class="service-name" href="{{ route('frontend.service','el_gadaly_elsloky') }}">علاج الجدلي السلوكي</a>
                 </div>
             
                 <div class="item">
                 <img class="service-img" src="{{asset('frontend/new/img/quarrel.png')}}">
-                <a class="service-name" href="#">العلاج المعرفي السلوكي</a>
+                <a class="service-name"  href="{{ route('frontend.service','el_maarefe_elsloky') }}">العلاج المعرفي السلوكي</a>
                 </div>
                 <div class="item">
                 <img class="service-img" src="{{asset('frontend/new/img/family-silhouette.png')}}">
-                <a class="service-name" href="#">الاستشارات الأسرية</a>
+                <a class="service-name"  href="{{ route('frontend.service','familly_advice') }}">الاستشارات الأسرية</a>
                 </div>
             
                 <div class="item">
                 <img class="service-img" src="{{asset('frontend/new/img/standing-up-man-.png')}}">
-                <a class="service-name" href="#">الاستشارات الفردية</a>
+                <a class="service-name" href="{{ route('frontend.service','individual_advice') }}">الاستشارات الفردية</a>
                 </div>
             
                 <div class="item">
                 <img class="service-img"  src="{{asset('frontend/new/img/argue.png')}}">
-                <a class="service-name" href="#">علاج الجدلي السلوكي</a>
+                <a class="service-name" href="{{ route('frontend.service','el_gadaly_elsloky') }}">علاج الجدلي السلوكي</a>
                 </div>
             
                 <div class="item">
-                <img class="service-img" src="{{asset('frontend/new/img/quarrel.png')}}">
-                <a class="service-name" href="#">العلاج المعرفي السلوكي</a>
-                </div>
+                    <img class="service-img" src="{{asset('frontend/new/img/quarrel.png')}}">
+                    <a class="service-name"  href="{{ route('frontend.service','el_maarefe_elsloky') }}">العلاج المعرفي السلوكي</a>
+                    </div>
         </div>
         </div>
     </div>

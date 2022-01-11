@@ -1078,6 +1078,28 @@ ul.mobile-menu li {
 }
 }
 
+.single-course .course-info {
+    text-align: right;
+}
+.single-course p.date {
+    align-items: center;
+    justify-content: flex-start;
+}
+.course-row .btn.blue-btn {
+    margin-top: 20px;
+}
+p.single-course-title {
+    font-weight: bold;
+    text-align: right;
+    margin-top: 15px;
+}
+.single-course p {
+    text-align: right;
+}
+span.course-price {
+    color: #19b6b1;
+}
+
 @media (max-width:465px){
 .footer-buttons {
     width: 100%;

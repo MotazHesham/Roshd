@@ -48,6 +48,7 @@
                          @elseif (\Request::is('courses*')) hero-section-sub-pages courses-hero-section
                          @elseif (\Request::is('contactus*')) hero-section-sub-pages contact-hero-section 
                          @elseif (\Request::is('blogs*'))  hero-section-sub-pages blog-hero-section 
+                         @elseif (\Request::is('course/*')) hero-section-sub-pages courses-hero-section
                          @else 
                          @endif
                              container-fluid" >
@@ -59,7 +60,7 @@
                 <li><a class="menu-link {{ request()->is("about") ? " active" : "" }} " href="{{ route('frontend.about') }}">عن رشد</a></li>   
                 <li><a class="menu-link {{ request()->is("services") ? " active" : "" }}" href="{{ route('frontend.services') }}">خدماتنا</a></li>   
                 <li><a class="menu-link {{ request()->is("team") ? " active" : "" }} "  href="{{ route('frontend.team') }}" >مستشارين رشد</a></li>   
-                <li><a class="menu-link {{ request()->is("courses") ? " active" : "" }} "  href="{{ route('frontend.courses') }}" >الدورات التدريبية</a></li>   
+                <li><a class="menu-link {{ request()->is("courses")||  request()->is("course/*") ? " active" : "" }} "  href="{{ route('frontend.courses') }}" >الدورات التدريبية</a></li>   
                 <li><a class="menu-link {{ request()->is("blogs") ? " active" : "" }} "  href="{{ route('frontend.blogs') }}">مدونة</a></li>
                 <li><a class="menu-link {{ request()->is("contactus") ? " active" : "" }} "  href="{{ route('frontend.contactus') }}">تواصل معنا</a></li>    
             </ul>
