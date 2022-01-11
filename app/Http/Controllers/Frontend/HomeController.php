@@ -20,7 +20,8 @@ class HomeController extends Controller
         $setting = Setting::first();
         $activites = Activate::orderBy('updated_at','desc')->get()->take(3);
         $doctors = Doctor::with('user')->orderBy('created_at','desc')->get()->take(12);
-        return view('frontend.home',compact('setting','activites','doctors'));
+        $groups = Group::with('user')->orderBy('created_at','desc')->get()->take(4);
+        return view('frontend.home',compact('setting','activites','doctors','groups'));
     }
 
     public function signup(){

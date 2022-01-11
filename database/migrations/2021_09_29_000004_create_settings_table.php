@@ -25,6 +25,10 @@ class CreateSettingsTable extends Migration
             $table->longText('el_maarefe_elsloky');
             $table->longText('art_therapy');
             $table->longText('play_therapy');
+            $table->longText('message');
+            $table->longText('vision');
+            $table->longText('services');
+            $table->longText('why');
             $table->timestamps();
             $table->softDeletes();
         });

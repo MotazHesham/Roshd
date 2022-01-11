@@ -31,4 +31,7 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function(){
 
     Route::get('signup','HomeController@signup')->name('signup');
     Route::post('signup_user','HomeController@signup_user')->name('signup_user');
+
+    //blogs
+    Route::get('blogs','BlogController@blogs')->name('blogs');
 });

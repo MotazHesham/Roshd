@@ -146,6 +146,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('incomes/ckmedia', 'IncomeController@storeCKEditorImages')->name('incomes.storeCKEditorImages');
     Route::resource('incomes', 'IncomeController');
 
+        // Blogs
+     Route::delete('blogs/destroy', 'BlogsController@massDestroy')->name('blogs.massDestroy');
+     Route::post('blogs/media', 'BlogsController@storeMedia')->name('blogs.storeMedia');
+     Route::post('blogs/ckmedia', 'BlogsController@storeCKEditorImages')->name('blogs.storeCKEditorImages');
+     Route::resource('blogs', 'BlogsController');
+
     // Expense Report
     Route::delete('expense-reports/destroy', 'ExpenseReportController@massDestroy')->name('expense-reports.massDestroy');
     Route::resource('expense-reports', 'ExpenseReportController');

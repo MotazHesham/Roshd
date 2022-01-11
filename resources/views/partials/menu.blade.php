@@ -325,18 +325,28 @@
                         </li>
                     @endcan
                     @can('setting_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.settings.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/settings") || request()->is("admin/settings/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.settings.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/settings") || request()->is("admin/settings/*") ? "c-active" : "" }}">
+                            <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
 
-                                </i>
-                                {{ trans('cruds.setting.title') }}
-                            </a>
-                        </li>
-                    @endcan
-                </ul>
-            </li>
-        @endcan
+                            </i>
+                            {{ trans('cruds.setting.title') }}
+                        </a>
+                    </li>
+                @endcan
+                @can('blog_access')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.blogs.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/blogs") || request()->is("admin/blogs/*") ? "c-active" : "" }}">
+                            <i class="fa-fw fas fa-edit c-sidebar-nav-icon">
+
+                            </i>
+                            {{ trans('cruds.blog.title') }}
+                        </a>
+                    </li>
+                @endcan
+            </ul>
+        </li>
+    @endcan
         @can('advice_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.advice.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/advice") || request()->is("admin/advice/*") ? "c-active" : "" }}">

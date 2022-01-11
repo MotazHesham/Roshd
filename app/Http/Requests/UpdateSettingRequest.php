@@ -21,16 +21,15 @@ class UpdateSettingRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'email' => [
-                'string',
-                'required',
-            ],
             'phone' => [
                 'string',
                 'required',
             ],
             'address' => [
                 'string',
+                'required',
+            ],
+            'logo' => [
                 'required',
             ],
             'facebook' => [
@@ -68,6 +67,18 @@ class UpdateSettingRequest extends FormRequest
                 'required',
             ],
             'play_therapy' => [
+                'required',
+            ],
+            'message' => [
+                'required',
+            ],
+            'vision' => [
+                'required',
+            ],
+            'services' => [
+                'required',
+            ],
+            'why' => [
                 'required',
             ],
         ];

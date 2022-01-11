@@ -9,7 +9,7 @@ use App\Models\Doctor;
 class TeamsController extends Controller
 {
     public function team(){
-        $doctors = Doctor::with('user')->orderBy('created_at','desc')->paginate(8);
+        $doctors = Doctor::with('user','doctorExperiences','doctorEducation')->orderBy('created_at','desc')->paginate(4);
         return view('frontend.team',compact('doctors'));
     }
 

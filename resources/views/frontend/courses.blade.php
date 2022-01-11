@@ -1,61 +1,44 @@
 @extends('layouts.frontend')
 
 @section('content')
-
-    <!-----------market------------------>
-    <div class="market">
-        <div class="container">
-            <div class="section_title text-center">
-                <h3>
-                    <br />
-                    الدورات التدريبية
-                </h3>
-            </div>
-
-            <div class="row">
-                @foreach($groups as $group)
-                    @php
-                        if($group->photo){
-                            $group_image = $group->photo->getUrl('preview2');
-                        }else{
-                            // $group_image = asset('frontend/img/activ01.png');
-                            $group_image = '';
-                        }
-                    @endphp 
-                    <div class="col-md-4">
-                        <div class="item">
-                            <div class="pic">
-                                <img src="{{ $group_image }}" class="img-fluid" />
-                            </div>
-                            <div class="title">
-                                <h4>{{$group->title}}</h4>
-                            </div>
-                            <div class="clear"></div>
-                            <div class="details">
-                                <li><i class="fas fa-calendar-minus"></i> {{$group->start_date}} - {{$group->end_date}}</li> 
-                            </div>
-                            <div class="clear"></div>
-
-                            <p>
-                                <?php echo nl2br($group->description); ?>
-                            </p>
-
-                            <button class="btn-success">
-                                <a href="{{ route('frontend.course',$group->id)}}"> المزيد </a>
-                            </button>
-                            <button class="btn-primary">
-                                @auth 
-                                    @if(auth()->user()->user_type == 'student')
-                                        <a href="{{ route('frontend.courses.join',$group->id) }}"> طلب انضمام </a>
-                                    @endif
-                                @else 
-                                    <a href="{{ route('frontend.signup') }}"> التسجيل </a>
-                                @endauth
-                            </button>
+</div>
+    <div class="courses-second-section section container">
+        <div class="row">
+                <div class="row">
+                    @foreach($groups as $group)
+                @php
+                    if($group->photo){
+                        $group_image = $group->photo->getUrl('preview2');
+                    }else{
+                        // $group_image = asset('frontend/img/activ01.png');
+                        $group_image = '';
+                    }
+                @endphp 
+                        
+                <div class="col-lg-4 course-row">
+                <div class="course-wrap">
+                            <img class="course-img" src="{{ $group_image}}">
                         </div>
-                    </div> 
+                        <div class="course-info">
+                            <p class="item-info">{{ $group->title }}</p>
+                            <p class="course-tutor">{{$group->user->name }}</p>
+                            <p class="date">
+                            <i class="far fa-calendar-alt"></i>
+                    من  {{$group->start_date}}
+                            </p>
+                            <p class="date">
+                            <i class="far fa-calendar-alt"></i>
+                            إلى  {{$group->end_date}}
+                            </p>
+                        </div>
+                </div>
                 @endforeach
-            </div> 
-        </div>
+                </div>
+        </div>    
+        
+    </div> 
+    <div style=" width:100%;
+    display: flex;justify-content:center;">   
+    {{$groups->links()  }}
     </div>
-@endsection
+    @endsection

@@ -11,7 +11,7 @@ use Auth;
 class CoursesController extends Controller
 {
     public function courses(){
-        $groups = Group::orderBy('created_at','desc')->paginate(9);
+        $groups = Group::where('status','1')->orderBy('created_at','desc')->paginate(9);
         return view('frontend.courses',compact('groups'));
     }
 

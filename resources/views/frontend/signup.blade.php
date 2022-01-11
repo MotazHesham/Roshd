@@ -1,7 +1,19 @@
+
+  @section('styles')
+  <style>
+  form {
+    display: block;
+    text-align: center;
+  }
+  .btn-primary { background-color: #505050; color: #fff; border: thin solid #595959;  padding: 10px 30px;line-height: 1.5;text-decoration:none;  font-weight: bold; margin-bottom: 10px; font-size: 13px; border-radius: 15px;}
+  .btn-primary:hover {background-color: #3c3a3a; color: #fff; border: thin solid #3c3a3a; }
+  </style>
+  @endsection  
 @extends('layouts.frontend')
 
 @section('content')
-
+</div>
+  
     <div class="container">
         <div class="page about">
             <div class="container">

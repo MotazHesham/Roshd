@@ -69,6 +69,18 @@ class StoreSettingRequest extends FormRequest
             'play_therapy' => [
                 'required',
             ],
+            'message' => [
+                'required',
+            ],
+            'vision' => [
+                'required',
+            ],
+            'services' => [
+                'required',
+            ],
+            'why' => [
+                'required',
+            ],
         ];
     }
 }
