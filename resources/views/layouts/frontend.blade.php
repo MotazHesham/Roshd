@@ -56,6 +56,25 @@
        <div class="header-inner row navbar navbar-default">
            <div class="col-8 header-menu">
             <ul class="desktop-menu">
+                    @auth 
+                        <?php
+                            if(auth()->user()->user_type == 'staff'){
+                                $type = 'admin';
+                            }elseif(auth()->user()->user_type == 'patient'){
+                                $type = 'patient';
+                            }elseif(auth()->user()->user_type == 'doctor'){
+                                $type = 'doctor';
+                            }elseif(auth()->user()->user_type == 'student'){
+                                $type = 'student';
+                            }else{
+                                $type = 'admin';
+                            }
+                        ?>
+                         <li><a  class="menu-link" href="{{ route($type.'.home') }}"><i class="fas fa-user"></i> {{ Auth::user()->name }} </a>
+                    @else 
+                    <li><a  class="menu-link"  data-popup-open="popup-1" href="#"><i class="fas fa-user"></i> تسجيل
+                                الدخول </a>
+                    @endauth
                 <li><a class="menu-link {{ request()->is("/") ? " active" : "" }}" href="{{ route('frontend.home') }}">الرئيسية</a></li>   
                 <li><a class="menu-link {{ request()->is("about") ? " active" : "" }} " href="{{ route('frontend.about') }}">عن رشد</a></li>   
                 <li><a class="menu-link {{ request()->is("services") ? " active" : "" }}" href="{{ route('frontend.services') }}">خدماتنا</a></li>   

@@ -24,6 +24,15 @@
                     <div class="row">
                         <div class="col-md-2"></div>
                         <div class="col-md-8">
+                            @if($errors->count() > 0)
+                            <div class="alert alert-danger">
+                                <ul class="list-unstyled">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                             <form action="{{ route('frontend.signup_user') }}" method="POST">
                                 @csrf 
                                 <div class="row">
