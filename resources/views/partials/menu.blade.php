@@ -344,6 +344,16 @@
                         </a>
                     </li>
                 @endcan
+                @can('service_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.services.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/services") || request()->is("admin/services/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-server c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.service.title') }}
+                            </a>
+                        </li>
+                    @endcan
             </ul>
         </li>
     @endcan

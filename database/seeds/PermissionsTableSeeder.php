@@ -561,6 +561,30 @@ class PermissionsTableSeeder extends Seeder
                 'id' => $i++,
                 'title' => 'blog_access',
             ],
+            [
+                'id' => $i++,
+                'title' => 'service_create',
+            ],
+            [
+                'id' => $i++,
+                'title' => 'service_edit',
+            ],
+            [
+                'id' => $i++,
+                'title' => 'service_show',
+            ],
+            [
+                'id' => $i++,
+                'title' => 'service_delete',
+            ],
+            [
+                'id' => $i++,
+                'title' => 'service_access',
+            ],
+            [
+                'id' => $i++,
+                'title' => 'profile_password_edit',
+            ],
         ];
 
         Permission::insert($permissions);

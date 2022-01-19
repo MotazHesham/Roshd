@@ -11,6 +11,7 @@ use App\Models\Patient;
 use App\Models\Student;
 use App\Models\User;
 use App\Models\Group;
+use App\Models\Service;
 use App\Http\Requests\SignupUser;
 use Alert;
 
@@ -21,7 +22,8 @@ class HomeController extends Controller
         $activites = Activate::orderBy('updated_at','desc')->get()->take(3);
         $doctors = Doctor::with('user')->orderBy('created_at','desc')->get()->take(12);
         $groups = Group::with('user')->orderBy('created_at','desc')->get()->take(4);
-        return view('frontend.home',compact('setting','activites','doctors','groups'));
+        $services = Service::with(['media'])->get();
+        return view('frontend.home',compact('setting','activites','doctors','groups','services'));
     }
 
     public function signup(){

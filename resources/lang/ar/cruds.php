@@ -771,4 +771,25 @@ return [
             'deleted_at_helper'  => ' ',
         ],
     ],
+    'service' => [
+        'title'          => 'خدماتنا',
+        'title_singular' => 'خدماتنا',
+        'fields'         => [
+            'id'                 => 'ID',
+            'id_helper'          => ' ',
+            'name'               => 'اسم الخدمة',
+            'name_helper'        => ' ',
+            'description'        => 'نص الخدمة',
+            'description_helper' => ' ',
+            'photo'              => 'صورة',
+            'photo_helper'       => ' ',
+            'created_at'         => 'Created at',
+            'created_at_helper'  => ' ',
+            'updated_at'         => 'Updated at',
+            'updated_at_helper'  => ' ',
+            'deleted_at'         => 'Deleted at',
+            'deleted_at_helper'  => ' ',
+        ],
+    ],
 ];
+

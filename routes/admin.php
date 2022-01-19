@@ -157,6 +157,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('expense-reports', 'ExpenseReportController');
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
+
+       // Services
+       Route::delete('services/destroy', 'ServicesController@massDestroy')->name('services.massDestroy');
+       Route::post('services/media', 'ServicesController@storeMedia')->name('services.storeMedia');
+       Route::post('services/ckmedia', 'ServicesController@storeCKEditorImages')->name('services.storeCKEditorImages');
+       Route::resource('services', 'ServicesController');
+   
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password
