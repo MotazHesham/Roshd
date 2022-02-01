@@ -31,6 +31,12 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function(){
 
     Route::get('signup','HomeController@signup')->name('signup');
     Route::post('signup_user','HomeController@signup_user')->name('signup_user');
+    Route::view('user_login', 'frontend.signin')->name('login');
+
+    //
+    
+    Route::resource('reservations','ReservationController')->middleware(['auth','patient']);
+    Route::post('reservations/ranges', 'ReservationController@ranges')->name('reservations.ranges');
 
     //blogs
     Route::get('blogs','BlogController@blogs')->name('blogs');

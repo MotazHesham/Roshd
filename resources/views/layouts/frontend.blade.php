@@ -31,6 +31,7 @@
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <!--java scripts-->
 	<script src="{{asset('frontend/new/js/myScript.js')}}"></script>
+    <script src="{{asset('frontend/new/js/moment.js')}}"></script>
     
 <link href="{{ asset('frontend/css/model.css') }}" rel="stylesheet" type="text/css" />
 @yield('styles')
@@ -39,9 +40,20 @@
 
 
 <body>
-	<div class="main-container">
+          @php
+            $setting = \App\Models\Setting::first();
+        @endphp 
+           
+    @if (\Request::is('user_login*')||\Request::is('signup*'))
+    <div class="main-container sign-front-bg">
+        @else
+           @if(\Request::is('reservations*'))
+             <div class="main-container book-date-main">
+              <div class="container-fluid">
+             @else
+	           <div class="main-container">
        
-    <div class="hero-section
+                <div class="hero-section
                          @if (\Request::is('about*')) hero-section-sub-pages about-hero-section  
                          @elseif (\Request::is('service*'))hero-section-sub-pages services-hero-section
                          @elseif (\Request::is('team*')) hero-section-sub-pages consaltants-hero-section
@@ -52,29 +64,34 @@
                          @else 
                          @endif
                              container-fluid" >
+               @endif              
 	<header>
        <div class="header-inner row navbar navbar-default">
-           <div class="col-8 header-menu">
-            <ul class="desktop-menu">
-                    @auth 
-                        <?php
-                            if(auth()->user()->user_type == 'staff'){
-                                $type = 'admin';
-                            }elseif(auth()->user()->user_type == 'patient'){
-                                $type = 'patient';
-                            }elseif(auth()->user()->user_type == 'doctor'){
-                                $type = 'doctor';
-                            }elseif(auth()->user()->user_type == 'student'){
-                                $type = 'student';
-                            }else{
-                                $type = 'admin';
-                            }
-                        ?>
-                         <li><a  class="menu-link" href="{{ route($type.'.home') }}"><i class="fas fa-user"></i> {{ Auth::user()->name }} </a>
-                    @else 
-                    <li><a  class="menu-link"  data-popup-open="popup-1" href="#"><i class="fas fa-user"></i> تسجيل
-                                الدخول </a>
-                    @endauth
+           <div class="col-8 header-menu  {{ request()->is("reservations*") ? "  book-date-header" : "" }}">
+            @auth
+            <div class="dropdown mobile-sign account-sign">
+                <button class="btn btn-secondary dropdown-toggle shadow-none desktop-book-date-account" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true" onclick="this.blur();">
+                    {{ Auth::user()->name }}
+                </button>
+                  <button class="btn btn-secondary dropdown-toggle shadow-none mobile-book-date-account" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true" onclick="this.blur();">
+                    <i class="fas fa-user"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(407px, 38px, 0px);" data-popper-placement="bottom-start">
+                  <li><a class="dropdown-item" href="#">
+                      حسابي
+                      </a></li> 
+                    
+                    <li><a class="dropdown-item" href="#">
+                      الحجوزات السابقة
+                      </a></li> 
+                    
+                    <li><a class="dropdown-item signout-item"  onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                      تسجيل الخروج
+                      </a></li>
+                </ul>
+      </div>
+      @endauth
+            <ul class="desktop-menu  {{ request()->is("reservations*") ? " book-date-menu" : "" }}">
                 <li><a class="menu-link {{ request()->is("/") ? " active" : "" }}" href="{{ route('frontend.home') }}">الرئيسية</a></li>   
                 <li><a class="menu-link {{ request()->is("about") ? " active" : "" }} " href="{{ route('frontend.about') }}">عن رشد</a></li>   
                 <li><a class="menu-link {{ request()->is("services") ? " active" : "" }}" href="{{ route('frontend.services') }}">خدماتنا</a></li>   
@@ -96,11 +113,7 @@
                 <li><a class="menu-link {{ request()->is("courses") ? " active" : "" }} "  href="{{ route('frontend.courses') }}" >الدورات التدريبية</a></li>   
                 <li><a class="menu-link {{ request()->is("blogs") ? " active" : "" }} "  href="{{ route('frontend.blogs') }}">مدونة</a></li>   
                 <li><a class="menu-link {{ request()->is("contactus") ? " active" : "" }} "  href="{{ route('frontend.contactus') }}">تواصل معنا</a></li>        
-            </ul>
-            @php
-            $setting = \App\Models\Setting::first();
-        @endphp 
-           
+            </ul> 
         </div>
         <div class="col-4 logo-container">
             @php
@@ -116,10 +129,13 @@
        </div>    
      </div>
  </header>
+ @endif
             <!-- -->
              @yield('content')
             <!-- -->
+            @if (\Request::is('user_login*')||\Request::is('signup*')||\Request::is('reservations*'))
 
+            @else
              <div class="footer container-fluid">
                 <div class="footer-inner row container">
                     <div class="col-lg-4 text-center">
@@ -154,14 +170,14 @@
                                 <a href="{{ $setting->facebook ?? ''}}"><i class="fab fa-facebook social-media-footer"></i></a>
                                 <a href="{{ $setting->instagram ?? ''}}"><i class="fab fa-instagram social-media-footer"></i></a>
                     </div>
-                    @auth 
-                      @if(auth()->user()->user_type == 'patient')
-                    <a class="btn book-date shadow-none footer-btn"  href="{{ route('patient.reservations.create') }}">احجز موعد</a>
-                    @endif
-                  
-                    @else 
-                    <a data-popup-open="popup-1" class="btn book-date shadow-none footer-btn"  href="#"  aria-hidden="true">احجز موعد</a>
-                    @endauth
+                    @auth  
+                    @if(auth()->user()->user_type == 'patient')
+                <a class="btn book-date shadow-none footer-btn"  href="{{ route('frontend.reservations.create') }}">حجز موعد</a>
+                @endif
+                
+                @else 
+                <a class="btn book-date shadow-none footer-btn"  href="{{ route('frontend.login') }}">حجز موعد</a>
+                @endauth
                 </div>
                 </div>    
                 
@@ -169,6 +185,10 @@
                 
                 
             </div>
+            @endif
+            <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+            </form>
         <!----end of main container----->
         <!----owl-carousel--->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -194,39 +214,6 @@
             });
         });
     </script>
-
-<div class="popup" data-popup="popup-1">
-    <div class="popup-inner">
-        <div class="login-form">
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
-                <h1>تسجيل الدخول</h1>
-                <div class="form-group">
-                    <input type="text" name="email" placeholder="البريد الالكتروني أو رقم الهاتف" required value="{{ old('email', null) }}" autofocus>
-                    @if($errors->has('email'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('email') }}
-                        </div>
-                    @endif
-                </div>
-                <div class="form-group">
-                    <input type="password" name="password" placeholder="كلمة المرور" required>
-                </div>
-                <button class="login-btn">تسجيل الدخول</button>
-                <a class="reset-psw" href="#">نسيت كلمة المرور</a><a class="reset-psw"
-                    href="{{ route('frontend.signup') }}"> مستخدم جديد </a>
-                <div class="seperator"><b>او</b></div>
-                <!-- Social login buttons -->
-
-            </form>
-        </div>
-
-        <a class="popup-close" data-popup-close="popup-1" href="#">x</a>
-
-    </div>
-
-</div>
-
 
     @include('sweetalert::alert')
 

@@ -1,3 +1,8 @@
+function myFunction() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show2");
+};
+
 $(document).ready(function(){
  $('.hamburgler').click(function(e){
 		e.preventDefault();
@@ -37,4 +42,26 @@ $(document).ready(function(){
   $window.one('scroll', toggleNavBar);
 });        
     
+    
+    $('.time-option').click(function(e){
+		$(this).toggleClass('border-choice');   
+    });
+          $('.time-option').click(function(){
+                      if ($('.time-option').hasClass('border-choice')){
+                           $('.time-option').removeClass('border-choice');  
+                           $(this).toggleClass('border-choice');
+                        }
+                        else if ($(this).hasClass('border-choice')){
+                          $(this).toggleClass('border-choice');
+                        }
+            });
+    
+    
+     $('.close-pop-up').click(function(e){
+		$('#myPopup').removeClass('show2');   
+    });
+    
+      
 });
+    
+//});

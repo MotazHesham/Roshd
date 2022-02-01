@@ -10,18 +10,18 @@
 
             @auth 
             @if(auth()->user()->user_type == 'patient')
-          <a class="btn book-date shadow-none"  href="{{ route('patient.reservations.create') }}">حجز موعد</a>
+          <a class="btn book-date shadow-none"  href="{{ route('frontend.reservations.create') }}">حجز موعد</a>
           @endif
         
           @else 
-          <a data-popup-open="popup-1" class="btn book-date shadow-none"  href="#"  aria-hidden="true">حجز موعد</a>
+          <a class="btn book-date shadow-none"  href="{{ route('frontend.login') }}">حجز موعد</a>
           @endauth
         </div>
         <div class="col-lg-7"></div>
         
     </div>
     </div>
-        
+  <!--------------------------------------------------------------------------------->   
     <div class="second-section section">
         <h2 class="section-title">خدماتنا</h2>
         <div class="container services-carousel-wrap">

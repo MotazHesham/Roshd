@@ -35,25 +35,27 @@ class HomeController extends Controller
         
         if($request->user_type == 'patient'){
             $user = User::create($request->all());
-            Patient::create(['user_id' => $user->id]);  
+            Patient::create(['user_id' => $user->id]);
+            Alert::success('تم بنجاح');
+            return redirect()->route('frontend.home');  
         }elseif($request->user_type == 'student'){
             $user = User::create($request->all());
             $student = Student::create ([
                 'user_id'=>$user->id,
                 'specialization_id'=> $request->specialization_id,
             ]);
-            $student->studentsGroups()->sync([
+           /* $student->studentsGroups()->sync([
                 $request->group_id => [
                     'status' => 'requested', 
                 ]
-            ]); 
+            ]); */
         }else{  
             Alert::error('حدث خطأ');
 
             return view('frontend.signup');
         }
-        Alert::success('تم بنجاح');
+        //Alert::success('تم بنجاح');
 
-        return view('frontend.signup');
+        //return view('frontend.signup');
     }
 }

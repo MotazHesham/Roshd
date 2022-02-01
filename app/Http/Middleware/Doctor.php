@@ -19,7 +19,7 @@ class Doctor
         if(Auth::user()->user_type == 'staff'){
             return redirect()->route('admin.home');
         }elseif(Auth::user()->user_type == 'patient'){
-            return redirect()->route('patient.home');
+            return redirect()->route('frontend.reservations.create');  
         }elseif(Auth::user()->user_type == 'student'){
             return redirect()->route('student.home');
         }
