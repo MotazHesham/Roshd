@@ -41,6 +41,13 @@ class ReservationController extends Controller
         
         return view('frontend.reservations.partials.ranges',compact('range','date','reservations'));
     }
+    public function index()
+    {
+
+        $reservations = Reservation::with(['user', 'doctor', 'clinic'])->where('user_id',Auth::id())->get();
+
+        return view('frontend.reservations.index', compact('reservations'));
+    }
 
     public function create()
     {
@@ -83,4 +90,21 @@ class ReservationController extends Controller
 
         return redirect()->route('frontend.home');
     }
+    public function destroy(Reservation $reservation)
+    {
+
+        $reservation->delete();
+
+        Alert::success('تم بنجاح', 'تم حذف الحجز بنجاح ');
+
+        return back();
+    }
+
+    public function massDestroy(MassDestroyReservationRequest $request)
+    {
+        Reservation::whereIn('id', request('ids'))->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
+    }
 }
+

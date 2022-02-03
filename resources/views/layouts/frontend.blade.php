@@ -47,7 +47,7 @@
     @if (\Request::is('user_login*')||\Request::is('signup*'))
     <div class="main-container sign-front-bg">
         @else
-           @if(\Request::is('reservations*'))
+           @if(\Request::is('reservations*')||Request::is('account*'))
              <div class="main-container book-date-main">
               <div class="container-fluid">
              @else
@@ -77,11 +77,11 @@
                     <i class="fas fa-user"></i>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(407px, 38px, 0px);" data-popper-placement="bottom-start">
-                  <li><a class="dropdown-item" href="#">
+                  <li><a class="dropdown-item" href="{{route('frontend.account') }}">
                       حسابي
                       </a></li> 
                     
-                    <li><a class="dropdown-item" href="#">
+                    <li><a class="dropdown-item" href="{{route('frontend.reservations.index') }}">
                       الحجوزات السابقة
                       </a></li> 
                     
@@ -91,7 +91,7 @@
                 </ul>
       </div>
       @endauth
-            <ul class="desktop-menu  {{ request()->is("reservations*") ? " book-date-menu" : "" }}">
+            <ul class="desktop-menu  {{ request()->is("reservations*")|| request()->is("account*") ? " book-date-menu" : "" }}">
                 <li><a class="menu-link {{ request()->is("/") ? " active" : "" }}" href="{{ route('frontend.home') }}">الرئيسية</a></li>   
                 <li><a class="menu-link {{ request()->is("about") ? " active" : "" }} " href="{{ route('frontend.about') }}">عن رشد</a></li>   
                 <li><a class="menu-link {{ request()->is("services") ? " active" : "" }}" href="{{ route('frontend.services') }}">خدماتنا</a></li>   
@@ -133,7 +133,7 @@
             <!-- -->
              @yield('content')
             <!-- -->
-            @if (\Request::is('user_login*')||\Request::is('signup*')||\Request::is('reservations*'))
+            @if (\Request::is('user_login*')||\Request::is('signup*')||\Request::is('reservations*')||\Request::is('account*'))
 
             @else
              <div class="footer container-fluid">

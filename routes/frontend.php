@@ -8,7 +8,8 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function(){
     
     // services
     Route::get('services','ServicesController@services')->name('services');
-    Route::get('service/{type}','ServicesController@service')->name('service');
+   // Route::get('service/{type}','ServicesController@service')->name('service');
+    Route::get('service/{id}','ServicesController@service')->name('service');
     
     // doctors
     Route::get('team','TeamsController@team')->name('team');
@@ -32,6 +33,9 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function(){
     Route::get('signup','HomeController@signup')->name('signup');
     Route::post('signup_user','HomeController@signup_user')->name('signup_user');
     Route::view('user_login', 'frontend.signin')->name('login');
+    Route::view('account', 'frontend.account')->name('account')->middleware('auth');;
+    Route::post('update_account','HomeController@UpdateProfile')->name('account.update');
+   
 
     //
     

@@ -1561,6 +1561,301 @@ p.date-info-p.date-conultant, p.date-info-p.date-conultant-time {
     direction: ltr;
     text-align: right;
 }
+
+.account-nav-menu {
+    width: 80%;
+    background-color: #F5F5F5;
+    height: 220px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.account-nav-menu ul {
+    margin-bottom: 0;
+}
+.account-settings-section{
+    padding-top: 200px;
+    padding-bottom: 100px;
+    min-height: 60vh;
+}
+li.account-nav-menu-item {
+    padding: 10px 0px;
+    font-size: 18px;
+    text-align: center;
+}
+li.account-nav-menu-item a, li.account-nav-menu-item i{
+    color: #000;
+    
+}
+li.account-nav-menu-item.active-nav-menu-item, li.account-nav-menu-item.active-nav-menu-item a, li.account-nav-menu-item.active-nav-menu-item i {
+    font-weight: bold;
+    color: #000;
+}
+li.account-nav-menu-item:hover a, li.account-nav-menu-item:hover .client-menu-icon{
+    color: #19b6b1 !important;
+      transition: all .6s ease-in-out;
+}
+/*
+li.account-nav-menu-item.active-nav-menu-item:hover img{
+    filter: brightness(0) saturate(100%) invert(0%) sepia(83%) saturate(7431%) hue-rotate(226deg) brightness(86%) contrast(86%);
+}
+*/
+li.account-nav-menu-item:hover img{
+    filter: brightness(0) saturate(100%) invert(67%) sepia(9%) saturate(607%) hue-rotate(287deg) brightness(91%) contrast(94%);
+}
+
+
+li.account-nav-menu-item a.signout-item, li.account-nav-menu-item a.signout-item i {
+    color: #CE2F2F;
+}
+
+.account-email-psw {
+    width: 90%;
+    text-align: center;
+}
+.account-email-psw-wrapper {
+    display: flex;
+    justify-content: center;
+}
+.account-email {
+    background-color: #F5F5F5;
+    border-radius: 10px;
+    min-height: 150px;
+    margin-bottom: 40px;
+}
+img.edit-icon {
+    position: absolute;
+    width: 20px;
+    left: 20px;
+    top: 20px;
+    cursor: pointer;
+}
+p.edit-account {
+    width: 100%;
+    position: relative;
+    color: #747474;
+    margin-bottom: 0;
+    border-bottom: 1px solid #EBEBEB;
+    padding: 15px 0px;
+    text-align: center;
+    font-weight: 500;
+}
+p.registered-email {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0px;
+    font-size: 18px;
+    font-weight: 500;
+    min-height: 120px;
+}
+.change-psw-wrap {
+    min-height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #ce2f2f29;
+}
+
+p.change-psw {
+    font-size: 18px;
+    color: #CE2F2F;
+    margin-bottom: 0px;
+      transition: all .6s ease-in-out;
+    cursor: pointer;
+}
+p.change-psw:hover {
+    transform: scale(1.1);
+}
+.account-info-wrap {
+    display: flex;
+    justify-content: center;
+}
+.account-info-div {
+    width: 90%;
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
+.personal-info-wrap p {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 0px 20px;
+    color: #4E4E4E;
+    font-weight: 500;
+}
+p.phone-title, p.name-title {
+    color: #989898;
+    font-weight: 500;
+    text-align: right;
+    width: 180px;
+}
+
+.personal-info-wrap {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: -webkit-calc(100% - 100px);
+    height: -moz-calc(100% - 100px);
+    height: calc(100% - 100px);
+}
+p.phone-num {
+    direction: ltr;
+}
+
+table#booking-table {
+    width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table#booking-table caption {
+  font-size: 1.5em;
+  margin: .5em 0 .75em;
+}
+
+table#booking-table tr {
+  padding: .35em;
+}
+
+table#booking-table th,
+table#booking-table td {
+  padding: .625em;
+}
+
+table#booking-table th {
+  font-size: .85em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-align: right;
+    color: #AFAFAF;
+}
+table#booking-table thead {
+    border-bottom: 1px solid #ddd;
+}
+.previous-course-single p.item-info, .previous-course-single p.course-tutor {
+    text-align: center;
+}
+.previous-course-single .course-row {
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 40px;
+}
+table#booking-table .booking-time {
+    direction: ltr;
+    text-align: right;
+}
+.course-photo-wrap {
+    border-left: 1px solid #BFBFBF;
+}
+h4.service-name-new {
+    color: #19b6b1;
+    margin-top: 20px;
+}
+.new-course-info p {
+    text-align: right;
+    padding-right: 20px;
+    max-width: 70%;
+}
+.delete-ediy-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+.delete-ediy-buttons i.fas.fa-pen {
+    margin-left: 15px;
+    color: #19b6b1;
+    cursor: pointer;
+}
+.delete-ediy-buttons i.fas.fa-pen:hover {
+    color: #d2ad4f;
+}
+.delete-ediy-buttons i.far.fa-trash-alt {
+    color: #d2ad4f;
+    cursor: pointer;
+}
+.delete-ediy-buttons i.far.fa-trash-alt:hover {
+    color: #19b6b1;
+    cursor: pointer;
+}
+.edit-email-div, .edit-psw-div, .edit-info-div {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    z-index: 99999999;
+    background-color: #0000009e;
+    visibility: hidden;
+}
+.edit-email-inner, .edit-psw-inner, .edit-info-inner {
+    background-color: #FFFFFF;
+    padding: 30px 15px;
+    height: 300px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 40px;
+    position: relative;
+}
+.form-group.form-group-edit input {
+    border-radius: 10px;
+    height: 45px;
+    border: 0;
+    padding: 0px 20px;
+    background-color: #f4f4f4;
+    color: #AFAFAF;
+    width: 100%;
+}
+
+button.btn.btn-default.form-submit-btn.blue-btn.save-edit-btn {
+    width: 120px;
+    padding: 5px;
+    margin-bottom: 0;
+}
+.edit-email-inner i.far.fa-times-circle, .edit-psw-inner i.far.fa-times-circle, 
+.edit-info-inner i.far.fa-times-circle {
+    font-size: 22px;
+    position: absolute;
+    left: 30px;
+    top: 25px;
+    color: #19b6b1;
+    cursor: pointer;
+}
+.edit-email-inner p, .edit-psw-inner p, .edit-info-inner p  {
+    font-size: 19px;
+    margin-bottom: 0;
+    font-weight: 500;
+}
+.edit-email-inner form, .edit-psw-inner form, .edit-info-inner form {
+    width: 80%;
+    text-align: center;
+}
+.form-group.form-group-edit {
+    margin-bottom: 5px;
+}
+.show2 {
+    visibility: visible !important;
+    -webkit-animation: fadeIn 1s !important;
+    animation: fadeIn 1s !important;
+}
+.main-container.edit-account {
+    position: relative;
+    min-height: 100vh;
+}
+.psw-edit-input, .edit-name-input{
+    margin-bottom: 15px;
+}
 /*************************************Responsive***********************************/
 @media (max-width:1450px){
 
@@ -1580,6 +1875,61 @@ p.date-info-p.date-conultant, p.date-info-p.date-conultant-time {
 .color-legend {
     width: 85%;
     }
+}
+
+@media screen and (max-width: 1024px) {
+  table#booking-table {
+    border: 0;
+  }
+
+  table#booking-table caption {
+    font-size: 1.3em;
+  }
+  
+  table#booking-table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+  
+  table#booking-table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: .625em;
+  }
+  
+  table#booking-table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: .8em;
+    text-align: left;
+  }
+  
+  table#booking-table td::before {
+    /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+    content: attr(data-label);
+    float: right;
+    font-weight: bold;
+  }
+  
+  table#booking-table td:last-child {
+    border-bottom: 0;
+  }
+table#booking-table .booking-time {
+    direction: ltr;
+    text-align: left;
+}
+.delete-ediy-buttons {
+    justify-content: end;
+}
 }
 
 @media (max-width:992px){
@@ -1691,6 +2041,32 @@ button.mobile-book-date-account {
 .book-date-wrap .row {
     flex-direction: column-reverse;
 }
+.account-nav-menu-wrap {
+    display: flex;
+    justify-content: center;
+}
+    .account-nav-menu {
+    width: 270px;
+    margin-right: 0;
+    margin-bottom: 35px;
+}
+.change-psw-wrap {
+    margin-bottom: 45px;
+}
+.personal-info-wrap {
+    margin: 30px 0px;
+}
+.course-photo-wrap {
+    margin: 0 auto;
+    padding-bottom: 15px;
+    border-left: none;
+    border-bottom: 1px solid #BFBFBF;
+    margin-bottom: 40px;
+}
+.new-course-info p {
+    padding-right: 0px;
+    max-width: 100%;
+}
 }
 
 @media (max-width:845px){
@@ -1770,6 +2146,12 @@ img.logo-sign {
 .signup-wrap {
     height: auto;
 }
+.edit-email-inner, .edit-psw-inner, .edit-info-inner  {
+    width: 90%;
+    }
+.edit-email-div, .edit-psw-div, .edit-info-div {
+    height: 100%;
+    }
 }
 
 @media (max-width:465px){

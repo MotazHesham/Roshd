@@ -14,6 +14,7 @@ use App\Models\Group;
 use App\Models\Service;
 use App\Http\Requests\SignupUser;
 use Alert;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -57,5 +58,12 @@ class HomeController extends Controller
         //Alert::success('تم بنجاح');
 
         //return view('frontend.signup');
+    }
+    public function UpdateProfile(Request $request ){
+         $user=User::findOrfail(Auth::id());
+         $user->update($request->all());
+         Alert::success('تم تعديل البيانات بنجاح','تم بنجاح');
+         return redirect()->route('frontend.account');  
+
     }
 }
