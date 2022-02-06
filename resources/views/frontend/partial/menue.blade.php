@@ -11,6 +11,7 @@
             <li class="account-nav-menu-item {{ request()->is("reservations*") ? "   active-nav-menu-item" : "" }}"><a class="" href="{{route('frontend.reservations.index') }}">   
             الحجوزات السابقة
             @else
+            <li class="account-nav-menu-item {{ request()->is("groups*") ? "   active-nav-menu-item" : "" }}"><a class="" href="{{route('frontend.groups.index') }}">   
             الدورات السابقة
             @endif
         </a>

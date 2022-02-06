@@ -21,7 +21,7 @@ class staff
         }elseif(Auth::user()->user_type == 'doctor'){ 
             return redirect()->route('doctor.home');
         }elseif(Auth::user()->user_type == 'student'){ 
-            return redirect()->route('student.home');
+            return redirect()->route('frontend.groups.create');
         }
         return $next($request);
     }

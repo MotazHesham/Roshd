@@ -45,11 +45,8 @@ class HomeController extends Controller
                 'user_id'=>$user->id,
                 'specialization_id'=> $request->specialization_id,
             ]);
-           /* $student->studentsGroups()->sync([
-                $request->group_id => [
-                    'status' => 'requested', 
-                ]
-            ]); */
+            Alert::success('تم بنجاح');
+            return redirect()->route('frontend.home');  
         }else{  
             Alert::error('حدث خطأ');
 

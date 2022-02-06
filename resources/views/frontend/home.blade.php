@@ -11,9 +11,10 @@
             @auth 
             @if(auth()->user()->user_type == 'patient')
           <a class="btn book-date shadow-none"  href="{{ route('frontend.reservations.create') }}">حجز موعد</a>
+          @else
+          <a class="btn book-date shadow-none"  href="{{ route('frontend.groups.create') }}">حجز موعد</a>    
           @endif
-        
-          @else 
+          @else
           <a class="btn book-date shadow-none"  href="{{ route('frontend.login') }}">حجز موعد</a>
           @endauth
         </div>
@@ -26,44 +27,22 @@
         <h2 class="section-title">خدماتنا</h2>
         <div class="container services-carousel-wrap">
         <div class="owl-one owl-carousel owl-theme owl-container">
-                <div class="item">
-                <img class="service-img" src="{{asset('frontend/new/img/family-silhouette.png')}}">
-                <a class="service-name"  href="{{ route('frontend.service','familly_advice') }}">الاستشارات الأسرية</a>
-                </div>
-            
-                <div class="item">
-                <img class="service-img" src="{{asset('frontend/new/img/standing-up-man-.png')}}">
-                <a class="service-name" href="{{ route('frontend.service','individual_advice') }}">الاستشارات الفردية</a>
-                </div>
-            
-                <div class="item">
-                <img class="service-img"  src="{{asset('frontend/new/img/argue.png')}}">
-                <a class="service-name" href="{{ route('frontend.service','el_gadaly_elsloky') }}">علاج الجدلي السلوكي</a>
-                </div>
-            
-                <div class="item">
-                <img class="service-img" src="{{asset('frontend/new/img/quarrel.png')}}">
-                <a class="service-name"  href="{{ route('frontend.service','el_maarefe_elsloky') }}">العلاج المعرفي السلوكي</a>
-                </div>
-                <div class="item">
-                <img class="service-img" src="{{asset('frontend/new/img/family-silhouette.png')}}">
-                <a class="service-name"  href="{{ route('frontend.service','familly_advice') }}">الاستشارات الأسرية</a>
-                </div>
-            
-                <div class="item">
-                <img class="service-img" src="{{asset('frontend/new/img/standing-up-man-.png')}}">
-                <a class="service-name" href="{{ route('frontend.service','individual_advice') }}">الاستشارات الفردية</a>
-                </div>
-            
-                <div class="item">
-                <img class="service-img"  src="{{asset('frontend/new/img/argue.png')}}">
-                <a class="service-name" href="{{ route('frontend.service','el_gadaly_elsloky') }}">علاج الجدلي السلوكي</a>
-                </div>
-            
-                <div class="item">
-                    <img class="service-img" src="{{asset('frontend/new/img/quarrel.png')}}">
-                    <a class="service-name"  href="{{ route('frontend.service','el_maarefe_elsloky') }}">العلاج المعرفي السلوكي</a>
-                    </div>
+            @foreach ($services as $service )
+            @php
+            if($service->photo){
+                $image=$service->photo->geturl();
+            }
+            else {
+               $image=asset('frontend/new/img/family-silhouette.png');
+            }    
+
+            @endphp
+          <div class="item">
+          <img class="service-img" src="{{ $image }}">
+          <a class="service-name" href="{{ route('frontend.service',$service->id) }}">{{$service->name }}</a>
+          </div>
+                     
+      @endforeach
         </div>
         </div>
     </div>

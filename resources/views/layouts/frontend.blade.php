@@ -42,12 +42,13 @@
 <body>
           @php
             $setting = \App\Models\Setting::first();
+            $services=\App\Models\Service::get();
         @endphp 
            
     @if (\Request::is('user_login*')||\Request::is('signup*'))
     <div class="main-container sign-front-bg">
         @else
-           @if(\Request::is('reservations*')||Request::is('account*'))
+           @if(\Request::is('reservations*')||Request::is('account*')|Request::is('groups*'))
              <div class="main-container book-date-main">
               <div class="container-fluid">
              @else
@@ -67,7 +68,7 @@
                @endif              
 	<header>
        <div class="header-inner row navbar navbar-default">
-           <div class="col-8 header-menu  {{ request()->is("reservations*") ? "  book-date-header" : "" }}">
+           <div class="col-8 header-menu  {{ request()->is("reservations*")||request()->is("groups*")? "  book-date-header" : "" }}">
             @auth
             <div class="dropdown mobile-sign account-sign">
                 <button class="btn btn-secondary dropdown-toggle shadow-none desktop-book-date-account" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true" onclick="this.blur();">
@@ -80,10 +81,15 @@
                   <li><a class="dropdown-item" href="{{route('frontend.account') }}">
                       حسابي
                       </a></li> 
-                    
+                      @if(Auth::user()->user_type=='patient')  
                     <li><a class="dropdown-item" href="{{route('frontend.reservations.index') }}">
                       الحجوزات السابقة
                       </a></li> 
+                      @else
+                      <li><a class="dropdown-item" href="{{route('frontend.groups.index') }}">
+                        الدورات السابقة
+                        </a></li>
+                        @endif
                     
                     <li><a class="dropdown-item signout-item"  onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                       تسجيل الخروج
@@ -91,7 +97,7 @@
                 </ul>
       </div>
       @endauth
-            <ul class="desktop-menu  {{ request()->is("reservations*")|| request()->is("account*") ? " book-date-menu" : "" }}">
+            <ul class="desktop-menu  {{ request()->is("reservations*")|| request()->is("account*")|| request()->is("groups*") ? " book-date-menu" : "" }}">
                 <li><a class="menu-link {{ request()->is("/") ? " active" : "" }}" href="{{ route('frontend.home') }}">الرئيسية</a></li>   
                 <li><a class="menu-link {{ request()->is("about") ? " active" : "" }} " href="{{ route('frontend.about') }}">عن رشد</a></li>   
                 <li><a class="menu-link {{ request()->is("services") ? " active" : "" }}" href="{{ route('frontend.services') }}">خدماتنا</a></li>   
@@ -133,7 +139,7 @@
             <!-- -->
              @yield('content')
             <!-- -->
-            @if (\Request::is('user_login*')||\Request::is('signup*')||\Request::is('reservations*')||\Request::is('account*'))
+            @if (\Request::is('user_login*')||\Request::is('signup*')||\Request::is('reservations*')||\Request::is('account*')|| \Request::is("groups*"))
 
             @else
              <div class="footer container-fluid">
@@ -146,19 +152,15 @@
                     <div class="col-lg-2">
                         <h6 class="footer-title">خدمات رشد</h6>
                         <ul class="menu-footer">
-                            <li><a  href="{{ route('frontend.service','familly_advice') }}">الاستشارات الأسرية</a></li>
-                            <li><a  href="{{ route('frontend.service','individual_advice') }}">الاستشارات الفردية</a></li>
-                            <li><a  href="{{ route('frontend.service','el_gadaly_elsloky') }}">علاج الجدل السلوكي</a></li>
-                            <li><a  href="{{ route('frontend.service','el_maarefe_elsloky') }}">علاج المعرفي السلوكي</a></li>
-                            <li><a  href="{{ route('frontend.service','art_therapy') }}">العلاج بالفن</a></li>
-                            <li><a  href="{{ route('frontend.service','play_therapy') }}">العلاج باللعب</a></li>
-                            
-                            </ul>
+                            @foreach ($services as $service )
+                             <li><a  href="{{ route('frontend.service',$service->id) }}">{{$service->name }}</a></li>            
+                            @endforeach    
+                        </ul>
                        
                     </div>
                     
                     <div class="col-lg-2">
-                        <h6 class="footer-title">الدورات التدريبية</h6>
+                        <h6 class="footer-title"><a href="{{ route('frontend.courses') }}"> الدورات التدريبية</a></h6>
                         <ul class="menu-footer">
                         
                         </ul>

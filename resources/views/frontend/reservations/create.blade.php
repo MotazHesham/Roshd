@@ -53,14 +53,9 @@
      <div class="col-lg-6 book-date-right">
          <p class="book-date-title">اختر اسم الاستشاري</p>
          @includeIf('frontend.reservations.partials.choose_doctor', ['doctors' => $doctors])
-         <div class="col-md-6" id="times">
-            <div class="hour-options">
-            {{-- times --}}
-        </div>
-        </div>
      </div>
      <div class="col-lg-6 book-date-left">
-         <div class="col-md-8">
+         <div class="col-lg-9">
             <label class="required">أختر موعد الاستشارة</label>
             <div id='calendar'></div>
         </div>
@@ -107,6 +102,9 @@
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
+                validRange: {
+                  start:  Date.now()
+                    },
                 views: {
                     listWeek: {
                         buttonText: 'List a week'

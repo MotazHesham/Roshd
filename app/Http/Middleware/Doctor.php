@@ -21,7 +21,7 @@ class Doctor
         }elseif(Auth::user()->user_type == 'patient'){
             return redirect()->route('frontend.reservations.create');  
         }elseif(Auth::user()->user_type == 'student'){
-            return redirect()->route('student.home');
+            return redirect()->route('frontend.groups.create');
         }
         return $next($request);
     }

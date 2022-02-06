@@ -41,6 +41,7 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function(){
     
     Route::resource('reservations','ReservationController')->middleware(['auth','patient']);
     Route::post('reservations/ranges', 'ReservationController@ranges')->name('reservations.ranges');
+    Route::resource('groups', 'GroupController')->middleware(['auth','student']);
 
     //blogs
     Route::get('blogs','BlogController@blogs')->name('blogs');

@@ -18,6 +18,11 @@
         @endif
         <span class="help-block">{{ trans('cruds.reservation.fields.doctor_helper') }}</span>
     </div>
+    <div class="col-md-6" id="times">
+        <div class="hour-options ">
+        {{-- times --}}
+    </div>
+    </div>
     <button class="btn blue-btn col-md-8" type="submit">
               تم
     </button>
