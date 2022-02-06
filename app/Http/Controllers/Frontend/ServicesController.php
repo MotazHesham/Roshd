@@ -17,7 +17,7 @@ class ServicesController extends Controller
 
    
     public function service($id){
-        $service = Service::findOrfail($id)->with(['media'])->first();
+        $service = Service::findOrfail($id);
         return view('frontend.service-single',compact('service'));
     }
 }
