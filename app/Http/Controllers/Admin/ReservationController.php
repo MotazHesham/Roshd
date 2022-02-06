@@ -11,7 +11,8 @@ use App\Models\Doctor;
 use App\Models\Reservation;
 use App\Models\Income;
 use App\Models\User;
-use App\Models\Patient;
+use App\Models\Patient; 
+use App\Models\Setting; 
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -101,26 +102,35 @@ class ReservationController extends Controller
 
     public function edit(Reservation $reservation)
     {
-        abort_if(Gate::denies('reservation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $setting = Setting::first();
 
-        $users = User::where('user_type','patient')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        if($setting->income_category_reservation_id != null){
+            abort_if(Gate::denies('reservation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $doctors = Doctor::with('user')->get()->pluck('user.name', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $users = User::where('user_type','patient')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $clinics = Clinic::pluck('clinic_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $doctors = Doctor::with('user')->get()->pluck('user.name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $reservation->load('user', 'doctor', 'clinic');
+            $clinics = Clinic::pluck('clinic_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+            $reservation->load('user', 'doctor', 'clinic');
+
+        }else{
+            Alert::warning('حدث خطأ','من فضلك اختر تصنيف ايراد للحجوزات أولا');
+            return redirect()->route('admin.settings.index');
+        }
         return view('admin.reservations.edit', compact('users', 'doctors', 'clinics', 'reservation'));
     }
 
     public function update(UpdateReservationRequest $request, Reservation $reservation)
     {
+        $setting = Setting::first();
+
         $reservation->update($request->all());
 
         if($request->payment_status == 'paid'){ 
             Income::create([
-                'income_category_id' => 1,
+                'income_category_id' => $setting->income_category_reservation_id,
                 'entry_date' => date(config('panel.date_format'),strtotime('now')),
                 'amount' => $reservation->cost,
                 'relation_id' => $reservation->id,

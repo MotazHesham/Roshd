@@ -599,6 +599,9 @@ return [
             'services_helper'           => ' ',
             'why'                       => 'لماذا رشد؟',
             'why_helper'                => ' ',
+            'income_category_reservation_id'  => 'تصنيف الايرادات للحجوزات',
+            'income_category_package_id'   => 'تصنيف الايرادات للباقات',
+            'income_category_group_id'   => 'تصنيف الايرادات للدورات',
         ],
     ],
     'advice' => [

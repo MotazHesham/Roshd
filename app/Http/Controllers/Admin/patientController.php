@@ -9,6 +9,7 @@ use App\Models\CenterServicesPackage;
 use App\Models\Patient;
 use App\Models\User;
 use App\Models\Income;
+use App\Models\Setting;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,59 +20,74 @@ class patientController extends Controller
 {
     public function store_patient_package(Request $request){
         
-        $patient = Patient::findOrFail($request->patient_id);  
-        $package = CenterServicesPackage::findOrFail($request->package_id);  
-        $patient->packages()->attach([
-            $request->package_id => [
-                'remaining' => $package->package_value,
-                'payment_status' => $request->payment_status,
-                'payment_type' => $request->payment_type,
-                'transfer_name' => $request->transfer_name,
-                'reference_number' => $request->reference_number, 
-            ]
-        ]); 
+        $setting = Setting::first();
 
-        if($request->payment_status == 'paid'){ 
-            Income::create([
-                'income_category_id' => 3,
-                'entry_date' => date(config('panel.date_format'),strtotime('now')),
-                'amount' => $package->package_value,
-                'relation_id' => $package->id,
-                'description' => 'المراجع: ' . $patient->user->name ,
-            ]);
+        if($setting->income_category_package_id != null){
+            $patient = Patient::findOrFail($request->patient_id);  
+            $package = CenterServicesPackage::findOrFail($request->package_id);  
+            $patient->packages()->attach([
+                $request->package_id => [
+                    'remaining' => $package->package_value,
+                    'payment_status' => $request->payment_status,
+                    'payment_type' => $request->payment_type,
+                    'transfer_name' => $request->transfer_name,
+                    'reference_number' => $request->reference_number, 
+                ]
+            ]); 
 
+            if($request->payment_status == 'paid'){ 
+                Income::create([
+                    'income_category_id' => $setting->income_category_package_id,
+                    'entry_date' => date(config('panel.date_format'),strtotime('now')),
+                    'amount' => $package->package_value,
+                    'relation_id' => $package->id,
+                    'description' => 'المراجع: ' . $patient->user->name ,
+                ]);
+
+            }
+            Alert::success('تم بنجاح');
+
+        }else{
+            Alert::warning('حدث خطأ','من فضلك اختر تصنيف ايراد للباقات أولا');
+            return redirect()->route('admin.settings.index');
         }
-        Alert::success('تم بنجاح');
 
         return redirect()->route('admin.patients.show',$request->patient_id);
     }
 
     public function update_patient_package(Request $request){
-        $patient = Patient::findOrFail($request->patient_id);  
-        $package = CenterServicesPackage::findOrFail($request->package_id);  
-        $patient->packages()->wherePivot('id','=',$request->row_id)->syncWithoutDetaching([
-            $request->package_id => [
-                'remaining' => $package->package_value,
-                'payment_status' => $request->payment_status,
-                'payment_type' => $request->payment_type,
-                'transfer_name' => $request->transfer_name,
-                'reference_number' => $request->reference_number, 
-            ]
-        ]); 
+        $setting = Setting::first();
 
-        if($request->payment_status == 'paid'){ 
-            Income::create([
-                'income_category_id' => 3,
-                'entry_date' => date(config('panel.date_format'),strtotime('now')),
-                'amount' => $package->package_value,
-                'relation_id' => $package->id,
-                'description' => 'المراجع: ' . $patient->user->name ,
-            ]);
+        if($setting->income_category_package_id != null){
+            $patient = Patient::findOrFail($request->patient_id);  
+            $package = CenterServicesPackage::findOrFail($request->package_id);  
+            $patient->packages()->wherePivot('id','=',$request->row_id)->syncWithoutDetaching([
+                $request->package_id => [
+                    'remaining' => $package->package_value,
+                    'payment_status' => $request->payment_status,
+                    'payment_type' => $request->payment_type,
+                    'transfer_name' => $request->transfer_name,
+                    'reference_number' => $request->reference_number, 
+                ]
+            ]); 
 
+            if($request->payment_status == 'paid'){ 
+                Income::create([
+                    'income_category_id' => $setting->income_category_package_id,
+                    'entry_date' => date(config('panel.date_format'),strtotime('now')),
+                    'amount' => $package->package_value,
+                    'relation_id' => $package->id,
+                    'description' => 'المراجع: ' . $patient->user->name ,
+                ]);
+
+            }
+            Alert::success('تم بنجاح');
+
+            return redirect()->route('admin.patients.show',$request->patient_id);
+        }else{
+            Alert::warning('حدث خطأ','من فضلك اختر تصنيف ايراد للباقات أولا');
+            return redirect()->route('admin.settings.index');
         }
-        Alert::success('تم بنجاح');
-
-        return redirect()->route('admin.patients.show',$request->patient_id);
     }
 
     public function edit_patient_package($row_id,$patient_id){

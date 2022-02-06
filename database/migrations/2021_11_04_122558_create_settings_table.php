@@ -29,6 +29,12 @@ class CreateSettingsTable extends Migration
             $table->longText('vision');
             $table->longText('services');
             $table->longText('why');
+            $table->unsignedBigInteger('income_category_reservation_id')->nullable();
+            $table->foreign('income_category_reservation_id', 'income_category_reservation_fk_5252309')->references('id')->on('income_categories');
+            $table->unsignedBigInteger('income_category_package_id')->nullable();
+            $table->foreign('income_category_package_id', 'income_category_package_fk_5252309')->references('id')->on('income_categories');
+            $table->unsignedBigInteger('income_category_group_id')->nullable();
+            $table->foreign('income_category_group_id', 'income_category_group_fk_5252309')->references('id')->on('income_categories');
             $table->timestamps();
             $table->softDeletes();
         });

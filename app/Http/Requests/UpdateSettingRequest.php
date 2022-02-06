@@ -81,6 +81,15 @@ class UpdateSettingRequest extends FormRequest
             'why' => [
                 'required',
             ],
+            'income_category_reservation_id' => [
+                'required',
+            ],
+            'income_category_package_id' => [
+                'required',
+            ],
+            'income_category_group_id' => [
+                'required',
+            ],
         ];
     }
 }

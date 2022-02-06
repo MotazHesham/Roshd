@@ -46,6 +46,9 @@ class Setting extends Model implements HasMedia
         'vision',
         'services',
         'why',
+        'income_category_reservation_id',
+        'income_category_package_id',
+        'income_category_group_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -67,6 +70,21 @@ class Setting extends Model implements HasMedia
         }
 
         return $file;
+    }
+
+    public function income_category_reservation()
+    {
+        return $this->belongsTo(IncomeCategory::class, 'income_category_reservation_id');
+    }
+
+    public function income_category_package()
+    {
+        return $this->belongsTo(IncomeCategory::class, 'income_category_package_id');
+    }
+
+    public function income_category_group()
+    {
+        return $this->belongsTo(IncomeCategory::class, 'income_category_group_id');
     }
 
     protected function serializeDate(DateTimeInterface $date)

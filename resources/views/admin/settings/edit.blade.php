@@ -89,7 +89,7 @@
                             </div>
                         @endif
                         <span class="help-block">{{ trans('cruds.setting.fields.instagram_helper') }}</span>
-                    </div>
+                    </div> 
                     <div class="form-group col-md-6">
                         <label for="you_tube">{{ trans('cruds.setting.fields.you_tube') }}</label>
                         <input class="form-control {{ $errors->has('you_tube') ? 'is-invalid' : '' }}" type="text"
@@ -101,6 +101,45 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.setting.fields.you_tube_helper') }}</span>
                     </div>
+                    <div class="form-group col-md-4">
+                        <label for="income_category_reservation_id">{{ trans('cruds.setting.fields.income_category_reservation_id') }}</label>
+                        <select class="form-control select2 {{ $errors->has('income_category_reservation') ? 'is-invalid' : '' }}" name="income_category_reservation_id" id="income_category_reservation_id">
+                            @foreach($income_categories as $id => $entry)
+                                <option value="{{ $id }}" {{ (old('income_category_reservation_id') ? old('income_category_reservation_id') : $setting->income_category_reservation->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('income_category_reservation'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('income_category_reservation') }}
+                            </div>
+                        @endif 
+                    </div> 
+                    <div class="form-group col-md-4">
+                        <label for="income_category_package_id">{{ trans('cruds.setting.fields.income_category_package_id') }}</label>
+                        <select class="form-control select2 {{ $errors->has('income_category_package') ? 'is-invalid' : '' }}" name="income_category_package_id" id="income_category_package_id">
+                            @foreach($income_categories as $id => $entry)
+                                <option value="{{ $id }}" {{ (old('income_category_package_id') ? old('income_category_package_id') : $setting->income_category_package->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('income_category_package'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('income_category_package') }}
+                            </div>
+                        @endif 
+                    </div> 
+                    <div class="form-group col-md-4">
+                        <label for="income_category_group_id">{{ trans('cruds.setting.fields.income_category_group_id') }}</label>
+                        <select class="form-control select2 {{ $errors->has('income_category_group') ? 'is-invalid' : '' }}" name="income_category_group_id" id="income_category_group_id">
+                            @foreach($income_categories as $id => $entry)
+                                <option value="{{ $id }}" {{ (old('income_category_group_id') ? old('income_category_group_id') : $setting->income_category_group->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('income_category_group'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('income_category_group') }}
+                            </div>
+                        @endif 
+                    </div> 
                     <div class="form-group col-md-6">
                         <label class="required" for="about_rosd">{{ trans('cruds.setting.fields.about_rosd') }}</label>
                         <textarea class="form-control {{ $errors->has('about_rosd') ? 'is-invalid' : '' }}" name="about_rosd"

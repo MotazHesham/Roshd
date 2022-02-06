@@ -553,6 +553,9 @@ return [
             'art_therapy_helper'        => ' ',
             'play_therapy'              => 'العلاج باللعب',
             'play_therapy_helper'       => ' ',
+            'income_category_reservation_id'  => 'income category reservation',
+            'income_category_package_id'   => 'income category package',
+            'income_category_group_id'   => 'income category group',
         ],
     ],
     'advice' => [

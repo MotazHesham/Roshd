@@ -12,6 +12,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\IncomeCategory;
 use Alert;
 
 class SettingsController extends Controller
@@ -22,7 +23,9 @@ class SettingsController extends Controller
     { 
         $setting = Setting::first();
 
-        return view('admin.settings.edit', compact('setting'));
+        $income_categories = IncomeCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        
+        return view('admin.settings.edit', compact('setting','income_categories'));
     }
 
     public function create()
