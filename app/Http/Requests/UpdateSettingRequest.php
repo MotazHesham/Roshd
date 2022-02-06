@@ -30,7 +30,7 @@ class UpdateSettingRequest extends FormRequest
                 'required',
             ],
             'logo' => [
-                'required',
+                'nullable',
             ],
             'facebook' => [
                 'string',
@@ -82,13 +82,13 @@ class UpdateSettingRequest extends FormRequest
                 'required',
             ],
             'income_category_reservation_id' => [
-                'required',
+                'nullable',
             ],
             'income_category_package_id' => [
-                'required',
+                'nullable',
             ],
             'income_category_group_id' => [
-                'required',
+                'nullable',
             ],
         ];
     }
