@@ -9,7 +9,7 @@
     @php
         if($doctor->user && $doctor->user->photo){
             //$doctor_image = $doctor->user->photo->getUrl('preview2');
-            $doctor_image = asset('frontend/new/img/conversation.png');
+            $doctor_image = $doctor->user->photo->getUrl('preview2');
         }else{
             // $doctor_image = asset('frontend/new/img/conversation.png');
             $doctor_image = '';

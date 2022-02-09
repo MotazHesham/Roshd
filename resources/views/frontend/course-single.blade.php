@@ -37,6 +37,8 @@
          </p>
          </div>
          <p class="single-course-title">عدد المشتركين: <span class="course-price">{{$group->students->count()}} </span></p>
+         <p class="single-course-title">عدد ساعات الدورة: <span class="course-price">{{$group->course_hours}} </span></p>
+         <p class="single-course-title"> تكلفة الدورة: <span class="course-price">{{$group->course_cost}} ريال</span></p>
          @auth 
          @if(auth()->user()->user_type == 'student')
          <a class="btn blue-btn shadow-none join-course-btn" href="{{ route('frontend.courses.join',$group->id) }}"> طلب انضمام </a>

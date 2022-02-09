@@ -10,6 +10,7 @@ use App\Models\Specialization;
 use App\Models\Student;
 use App\Models\Income;
 use App\Models\User;
+use App\Models\Setting;
 use App\Models\Group;
 use Gate;
 use Illuminate\Http\Request;
@@ -20,58 +21,71 @@ class StudentController extends Controller
 {
     public function store_group(Request $request){
         
-        $student = Student::findOrFail($request->student_id);  
-        $group = Group::findOrFail($request->group_id);  
-        
-        $student->studentsGroups()->syncWithoutDetaching([
-            $request->group_id => [
-                'status' => $request->status,
-                'payment_status' => $request->payment_status,
-                'payment_type' => $request->payment_type,
-                'transfer_name' => $request->transfer_name,
-                'reference_number' => $request->reference_number, 
-            ]
-        ]); 
-        if($request->payment_status == 'paid'){ 
-            Income::create([
-                'income_category_id' => 2,
-                'entry_date' => date(config('panel.date_format'),strtotime('now')),
-                'amount' => $group->course_cost,
-                'relation_id' => $request->group_id,
-                'description' => 'الطالب: ' . $student->user->name ,
-            ]);
+        $setting = Setting::first();
 
+        if($setting->income_category_group_id != null){
+            $student = Student::findOrFail($request->student_id);  
+            $group = Group::findOrFail($request->group_id);  
+            
+            $student->studentsGroups()->syncWithoutDetaching([
+                $request->group_id => [
+                    'status' => $request->status,
+                    'payment_status' => $request->payment_status,
+                    'payment_type' => $request->payment_type,
+                    'transfer_name' => $request->transfer_name,
+                    'reference_number' => $request->reference_number, 
+                ]
+            ]); 
+            if($request->payment_status == 'paid'){ 
+                Income::create([
+                    'income_category_id' => $setting->income_category_group_id,
+                    'entry_date' => date(config('panel.date_format'),strtotime('now')),
+                    'amount' => $group->course_cost,
+                    'relation_id' => $request->group_id,
+                    'description' => 'الطالب: ' . $student->user->name ,
+                ]);
+
+            }
+            Alert::success('تم بنجاح');
+
+            return redirect()->route('admin.students.show',$request->student_id);
+        }else{
+            Alert::warning('حدث خطأ','من فضلك اختر تصنيف ايراد للدورات أولا');
+            return redirect()->route('admin.settings.index');
         }
-        Alert::success('تم بنجاح');
-
-        return redirect()->route('admin.students.show',$request->student_id);
     }
 
     public function update_group(Request $request){
-        $student = student::findOrFail($request->student_id);  
-        $group = Group::findOrFail($request->group_id);  
-        $student->studentsGroups()->syncWithoutDetaching([
-            $request->group_id => [
-                'status' => $request->status,
-                'payment_status' => $request->payment_status,
-                'payment_type' => $request->payment_type,
-                'transfer_name' => $request->transfer_name,
-                'reference_number' => $request->reference_number, 
-            ]
-        ]); 
-        if($request->payment_status == 'paid'){ 
-            Income::create([
-                'income_category_id' => 2,
-                'entry_date' => date(config('panel.date_format'),strtotime('now')),
-                'amount' => $group->course_cost,
-                'relation_id' => $request->group_id,
-                'description' => 'الطالب: ' . $student->user->name ,
-            ]);
+        $setting = Setting::first();
+        if($setting->income_category_group_id != null){
+            $student = student::findOrFail($request->student_id);  
+            $group = Group::findOrFail($request->group_id);  
+            $student->studentsGroups()->syncWithoutDetaching([
+                $request->group_id => [
+                    'status' => $request->status,
+                    'payment_status' => $request->payment_status,
+                    'payment_type' => $request->payment_type,
+                    'transfer_name' => $request->transfer_name,
+                    'reference_number' => $request->reference_number, 
+                ]
+            ]); 
+            if($request->payment_status == 'paid'){ 
+                Income::create([
+                    'income_category_id' => $setting->income_category_group_id,
+                    'entry_date' => date(config('panel.date_format'),strtotime('now')),
+                    'amount' => $group->course_cost,
+                    'relation_id' => $request->group_id,
+                    'description' => 'الطالب: ' . $student->user->name ,
+                ]);
 
+            }
+            Alert::success('تم بنجاح');
+
+            return redirect()->route('admin.students.show',$student->id);
+        }else{
+            Alert::warning('حدث خطأ','من فضلك اختر تصنيف ايراد للدورات أولا');
+            return redirect()->route('admin.settings.index');
         }
-        Alert::success('تم بنجاح');
-
-        return redirect()->route('admin.students.show',$student->id);
     }
 
     public function edit_group($student_id,$group_id){

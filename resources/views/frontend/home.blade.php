@@ -101,7 +101,7 @@
                         <img class="course-img" src="{{ $group_image  }}">
                     </div>
                     <div class="course-info">
-                        <p class="item-info">{{ $group->title }}</p>
+                        <p class="item-info"><a href="{{ route('frontend.course',$group->id)}}">{{ $group->title }}</a></p>
                         <p class="course-tutor">{{$group->user->name }}</p>
                         <p class="date">
                         <i class="far fa-calendar-alt"></i>

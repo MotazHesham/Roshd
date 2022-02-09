@@ -7,7 +7,7 @@
     <div class="container">
         <p class="grey">    <?php echo nl2br($setting->about_rosd); ?></p>
         <div class="title_lines">
-       <a class="btn book-date grey-button shadow-none" href="#">حجز موعد</a>
+       <a class="btn book-date grey-button shadow-none" href="{{ route('frontend.login') }}">حجز موعد</a>
         </div>
     </div> 
     

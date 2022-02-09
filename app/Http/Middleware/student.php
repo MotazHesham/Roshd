@@ -21,7 +21,7 @@ class student
         }elseif(Auth::user()->user_type == 'doctor'){ 
             return redirect()->route('doctor.home');
         }elseif(Auth::user()->user_type == 'staff'){ 
-            return redirect()->route('staff.home');
+            return redirect()->route('admin.home');
         }
         return $next($request);
     }
