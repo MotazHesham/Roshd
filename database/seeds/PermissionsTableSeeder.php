@@ -352,7 +352,7 @@ class PermissionsTableSeeder extends Seeder
             [
                 'id' => $i++,
                 'title' => 'general_setting_access',
-            ], 
+            ],
             [
                 'id' => $i++,
                 'title' => 'activate_create',
@@ -580,6 +580,18 @@ class PermissionsTableSeeder extends Seeder
             [
                 'id' => $i++,
                 'title' => 'service_access',
+            ],
+            [
+                'id' => $i++,
+                'title' => 'payment_store',
+            ],
+            [
+                'id' => $i++,
+                'title' => 'payment_edit',
+            ],
+            [
+                'id' => $i++,
+                'title' => 'payment_delete',
             ],
             [
                 'id' => $i++,

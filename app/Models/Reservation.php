@@ -11,17 +11,6 @@ class Reservation extends Model
 {
     use SoftDeletes;
 
-    public const PAYMENT_STATUS_SELECT = [
-        'not_paid' => 'لم يتم السداد',
-        'paid'     => 'تم السداد',
-    ];
-
-    public const PAYMENT_TYPE_SELECT = [
-        'bank'    => 'تحويل بنكي',
-        'cash'    => 'نقدي',
-        'package' => 'باقة',
-    ];
-
     public const STATUSE_SELECT = [
         'pending'   => 'قيد الإنتظار',
         'attended'  => 'تم الحضور',
@@ -115,6 +104,23 @@ class Reservation extends Model
     public function clinic()
     {
         return $this->belongsTo(Clinic::class, 'clinic_id');
+    }
+
+    public function payments(){
+        return $this->morphMany('App\Models\Payment','paymentable');
+    }
+
+    public function calculate_payments(){
+        if($this->payments()->where('payment_type','package')->first()){
+            return 'تم عن طريق باقة';
+        }else{
+            return $this->payments()->where('payment_status','paid')->sum('amount');
+        }
+    }
+
+    public function frontend_delatable(){
+        // if found any paid payments return false so he cant delete the reservation
+        return $this->payments()->where('payment_status','paid')->first() ? false : true;
     }
 
     protected function serializeDate(DateTimeInterface $date)

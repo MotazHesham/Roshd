@@ -6,110 +6,52 @@ use App\Http\Requests\MassDestroyPatientRequest;
 use App\Http\Requests\StorePatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
 use App\Models\CenterServicesPackage;
+use App\Models\CenterServicesPackageUser;
 use App\Models\Patient;
 use App\Models\User;
-use App\Models\Income;
-use App\Models\Setting;
-use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Alert;
-use Auth;
+use App\Http\Controllers\Traits\PaymentTrait;
+use App\Http\Requests\StoreV2PaymentRequest;
+use Illuminate\Support\Facades\Gate;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class patientController extends Controller
 {
-    public function store_patient_package(Request $request){
-        
-        $setting = Setting::first();
+    use PaymentTrait;
 
-        if($setting->income_category_package_id != null){
-            $patient = Patient::findOrFail($request->patient_id);  
-            $package = CenterServicesPackage::findOrFail($request->package_id);  
-            $patient->packages()->attach([
-                $request->package_id => [
-                    'remaining' => $package->package_value,
-                    'payment_status' => $request->payment_status,
-                    'payment_type' => $request->payment_type,
-                    'transfer_name' => $request->transfer_name,
-                    'reference_number' => $request->reference_number, 
-                ]
-            ]); 
+    public function store_patient_package(StoreV2PaymentRequest $request){
 
-            if($request->payment_status == 'paid'){ 
-                Income::create([
-                    'income_category_id' => $setting->income_category_package_id,
-                    'entry_date' => date(config('panel.date_format'),strtotime('now')),
-                    'amount' => $package->package_value,
-                    'relation_id' => $package->id,
-                    'description' => 'المراجع: ' . $patient->user->name ,
-                ]);
+        $package = CenterServicesPackage::findOrFail($request->package_id);
+        $packagePatient = CenterServicesPackageUser::create([
+            'user_id' => $request->user_id,
+            'center_services_package_id' => $request->package_id,
+            'sessions' => $package->sessions,
+            'free_sessions' => $package->free_sessions,
+            'remaining_sessions' => $package->sessions,
+            'remaining_free_sessions' => $package->free_sessions,
+            'package_value' => $package->package_value,
+        ]);
 
-            }
-            Alert::success('تم بنجاح');
+        $this->store_payment($request->all(),'App\Models\CenterServicesPackageUser',$packagePatient->id);
 
-        }else{
-            Alert::warning('حدث خطأ','من فضلك اختر تصنيف ايراد للباقات أولا');
-            return redirect()->route('admin.settings.index');
-        }
+        Alert::success('تم بنجاح');
 
         return redirect()->route('admin.patients.show',$request->patient_id);
     }
 
-    public function update_patient_package(Request $request){
-        $setting = Setting::first();
-
-        if($setting->income_category_package_id != null){
-            $patient = Patient::findOrFail($request->patient_id);  
-            $package = CenterServicesPackage::findOrFail($request->package_id);  
-            $patient->packages()->wherePivot('id','=',$request->row_id)->syncWithoutDetaching([
-                $request->package_id => [
-                    'remaining' => $package->package_value,
-                    'payment_status' => $request->payment_status,
-                    'payment_type' => $request->payment_type,
-                    'transfer_name' => $request->transfer_name,
-                    'reference_number' => $request->reference_number, 
-                ]
-            ]); 
-
-            if($request->payment_status == 'paid'){ 
-                Income::create([
-                    'income_category_id' => $setting->income_category_package_id,
-                    'entry_date' => date(config('panel.date_format'),strtotime('now')),
-                    'amount' => $package->package_value,
-                    'relation_id' => $package->id,
-                    'description' => 'المراجع: ' . $patient->user->name ,
-                ]);
-
-            }
-            Alert::success('تم بنجاح');
-
-            return redirect()->route('admin.patients.show',$request->patient_id);
-        }else{
-            Alert::warning('حدث خطأ','من فضلك اختر تصنيف ايراد للباقات أولا');
-            return redirect()->route('admin.settings.index');
-        }
-    }
-
-    public function edit_patient_package($row_id,$patient_id){
-        $patient = Patient::findOrFail($patient_id);
-        $centerServicesPackage = $patient->packages()->wherePivot('id','=',$row_id)->first();
-        return view('admin.patients.partials.edit_patient_package',compact('patient','centerServicesPackage'));
-    }
-
-    public function destroy_patient_package($row_id,$patient_id){ 
-
-        $patient = Patient::findOrFail($patient_id);
-        $patient->packages()->wherePivot('id','=',$row_id)->detach();
-        
+    public function destroy_patient_package($raw_id){
+        $packagePatient = CenterServicesPackageUser::findOrFail($raw_id);
+        $packagePatient->delete();
         Alert::success('تم بنجاح');
-        return redirect()->route('admin.patients.show',$patient->id);
+        return back();
     }
+
 
     public function index()
     {
         abort_if(Gate::denies('patient_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $patients = Patient::with(['user', 'packages'])->get();
+        $patients = Patient::with(['user.packages'])->get();
 
         return view('admin.patients.index', compact('patients'));
     }
@@ -126,10 +68,10 @@ class patientController extends Controller
     public function store(StorePatientRequest $request)
     {
         $validated_request = $request->all();
-        $validated_request['user_type'] = 'patient'; 
+        $validated_request['user_type'] = 'patient';
         $user = User::create($validated_request);
 
-        $patient = Patient::create(['user_id' => $user->id]); 
+        $patient = Patient::create(['user_id' => $user->id]);
 
 
         if($request->ajax()){
@@ -143,7 +85,7 @@ class patientController extends Controller
 
     public function edit(Patient $patient)
     {
-        abort_if(Gate::denies('patient_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden'); 
+        abort_if(Gate::denies('patient_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $patient->load('user');
 
@@ -152,10 +94,10 @@ class patientController extends Controller
 
     public function update(UpdatePatientRequest $request, Patient $patient)
     {
-        
+
         $user = User::find($request->user_id);
 
-        $user->update($request->all());  
+        $user->update($request->all());
 
         Alert::success('تم بنجاح', 'تم تعديل بيانات المراجع بنجاح ');
 
@@ -166,9 +108,11 @@ class patientController extends Controller
     {
         abort_if(Gate::denies('patient_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $patient->load('user', 'packages');
+        $patient->load('user');
 
-        return view('admin.patients.show', compact('patient'));
+        $patientPackages = CenterServicesPackageUser::with(['package','payments'])->where('user_id',$patient->user_id)->orderBy('id','desc')->get();
+
+        return view('admin.patients.show', compact('patient','patientPackages'));
     }
 
     public function destroy(Patient $patient)
@@ -187,5 +131,5 @@ class patientController extends Controller
         Patient::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
-    } 
+    }
 }

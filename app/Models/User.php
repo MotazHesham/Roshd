@@ -4,12 +4,11 @@ namespace App\Models;
 
 use \DateTimeInterface;
 use Carbon\Carbon;
-use Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
@@ -25,7 +24,7 @@ class User extends Authenticatable implements HasMedia
     protected $appends = [
         'photo',
     ];
-    
+
     protected $hidden = [
         'remember_token',
         'password',
@@ -108,11 +107,16 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsToMany(Role::class);
     }
 
+    public function packages()
+    {
+        return $this->belongsToMany(CenterServicesPackage::class)->withPivot('id','sessions','free_sessions','remaining_sessions','remaining_free_sessions');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
     }
-    
+
     public function userReservations()
     {
         return $this->hasMany(Reservation::class, 'user_id', 'id');

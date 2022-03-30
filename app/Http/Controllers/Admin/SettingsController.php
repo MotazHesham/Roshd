@@ -8,24 +8,22 @@ use App\Http\Requests\MassDestroySettingRequest;
 use App\Http\Requests\StoreSettingRequest;
 use App\Http\Requests\UpdateSettingRequest;
 use App\Models\Setting;
-use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\IncomeCategory;
-use Alert;
+use Illuminate\Support\Facades\Gate;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SettingsController extends Controller
 {
     use MediaUploadingTrait;
 
     public function index()
-    { 
+    {
         $setting = Setting::first();
 
-        $income_categories = IncomeCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        
-        return view('admin.settings.edit', compact('setting','income_categories'));
+
+        return view('admin.settings.edit', compact('setting'));
     }
 
     public function create()

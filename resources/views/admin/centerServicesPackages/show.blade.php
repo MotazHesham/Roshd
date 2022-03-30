@@ -33,26 +33,18 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.centerServicesPackage.fields.package_content') }}
+                            {{ trans('cruds.centerServicesPackage.fields.attend_type') }}
                         </th>
                         <td>
-                            {{ $centerServicesPackage->package_content }}
+                            {{ App\Models\CenterServicesPackage::ATTEND_TYPE_RADIO[$centerServicesPackage->attend_type] ?? '' }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.centerServicesPackage.fields.start_date') }}
+                            {{ trans('cruds.centerServicesPackage.fields.doctor_type') }}
                         </th>
                         <td>
-                            {{ $centerServicesPackage->start_date }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.centerServicesPackage.fields.end_date') }}
-                        </th>
-                        <td>
-                            {{ $centerServicesPackage->end_date }}
+                            {{ App\Models\CenterServicesPackage::DOCTOR_TYPE_RADIO[$centerServicesPackage->doctor_type] ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -61,6 +53,30 @@
                         </th>
                         <td>
                             {{ $centerServicesPackage->package_value }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.centerServicesPackage.fields.sessions') }}
+                        </th>
+                        <td>
+                            {{ $centerServicesPackage->sessions }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.centerServicesPackage.fields.free_sessions') }}
+                        </th>
+                        <td>
+                            {{ $centerServicesPackage->free_sessions }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.centerServicesPackage.fields.package_content') }}
+                        </th>
+                        <td>
+                            {{ $centerServicesPackage->package_content }}
                         </td>
                     </tr>
                 </tbody>

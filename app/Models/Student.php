@@ -39,7 +39,7 @@ class Student extends Model
 
     public function studentsGroups()
     {
-        return $this->belongsToMany(Group::class)->withPivot('status','payment_status','payment_type','transfer_name','reference_number');
+        return $this->belongsToMany(Group::class)->withPivot('status');
     }
 
     protected function serializeDate(DateTimeInterface $date)

@@ -30,12 +30,6 @@ class Patient extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-
-    public function packages()
-    {
-        return $this->belongsToMany(CenterServicesPackage::class)->withPivot('id','remaining','payment_status','payment_type','transfer_name','reference_number','created_at');
-    }
-    
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');

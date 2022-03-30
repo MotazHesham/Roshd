@@ -8,107 +8,19 @@ use App\Http\Requests\MassDestroyGroupRequest;
 use App\Http\Requests\StoreGroupRequest;
 use App\Http\Requests\UpdateGroupRequest;
 use App\Models\Group;
+use App\Models\GroupStudent;
 use App\Models\Student;
 use App\Models\User;
-use App\Models\Income;
-use App\Models\Setting;
-use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use Alert;
+use Illuminate\Support\Facades\Gate;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class GroupController extends Controller
 {
     use MediaUploadingTrait;
-
-
-    public function store_student(Request $request){
-        
-        $setting = Setting::first();
-
-        if($setting->income_category_group_id != null){
-            $group = Group::findOrFail($request->group_id);  
-            $student = Student::findOrFail($request->student_id);
-            $group->students()->syncWithoutDetaching([
-                $request->student_id => [
-                    'status' => $request->status,
-                    'payment_status' => $request->payment_status,
-                    'payment_type' => $request->payment_type,
-                    'transfer_name' => $request->transfer_name,
-                    'reference_number' => $request->reference_number, 
-                ]
-            ]); 
-
-            if($request->payment_status == 'paid'){ 
-                Income::create([
-                    'income_category_id' => $setting->income_category_group_id,
-                    'entry_date' => date(config('panel.date_format'),strtotime('now')),
-                    'amount' => $group->course_cost,
-                    'relation_id' => $group->id,
-                    'description' => 'الطالب: ' . $student->user->name ,
-                ]);
-
-            }
-
-            Alert::success('تم بنجاح');
-
-            return redirect()->route('admin.groups.show',$request->group_id);
-        }else{
-            Alert::warning('حدث خطأ','من فضلك اختر تصنيف ايراد للدورات أولا');
-            return redirect()->route('admin.settings.index');
-        }
-    }
-
-    public function update_student(Request $request){
-        $setting = Setting::first();
-
-        if($setting->income_category_group_id != null){
-            $group = Group::findOrFail($request->group_id);
-            $student = Student::findOrFail($request->student_id);
-            $group->students()->syncWithoutDetaching([
-                $request->student_id => [
-                    'status' => $request->status,
-                    'payment_status' => $request->payment_status,
-                    'payment_type' => $request->payment_type,
-                    'transfer_name' => $request->transfer_name,
-                    'reference_number' => $request->reference_number, 
-                ]
-            ]); 
-            if($request->payment_status == 'paid'){ 
-                Income::create([
-                    'income_category_id' => $setting->income_category_group_id,
-                    'entry_date' => date(config('panel.date_format'),strtotime('now')),
-                    'amount' => $group->course_cost,
-                    'relation_id' => $group->id,
-                    'description' => 'الطالب: ' . $student->user->name ,
-                ]);
-
-            }
-            Alert::success('تم بنجاح');
-
-            return redirect()->route('admin.groups.show',$request->group_id);
-        }else{
-            Alert::warning('حدث خطأ','من فضلك اختر تصنيف ايراد للدورات أولا');
-            return redirect()->route('admin.settings.index');
-        }
-    }
-
-    public function edit_student($group_id,$student_id){
-        $group = Group::findOrFail($group_id);
-        $student = $group->students()->wherePivot('student_id',$student_id)->first();
-        return view('admin.groups.partials.edit_student',compact('group','student'));
-    }
-
-    public function destroy_student($group_id,$student_id){ 
-
-        $group = group::findOrFail($group_id);
-        $group->students()->wherePivot('student_id',$student_id)->detach();
-        
-        Alert::success('تم بنجاح');
-        return redirect()->route('admin.groups.show',$group->id);
-    }
 
     public function index(Request $request)
     {
@@ -156,10 +68,10 @@ class GroupController extends Controller
             $table->editColumn('photo', function ($row) {
                 if ($photo = $row->photo) {
                     return sprintf(
-        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
-        $photo->url,
-        $photo->thumbnail
-    );
+                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
+                        $photo->url,
+                        $photo->thumbnail
+                    );
                 }
 
                 return '';
@@ -197,7 +109,7 @@ class GroupController extends Controller
         }
 
 
-     Alert::success('تم بنجاح', 'تم إضافة المجموعة بنجاح ');
+        Alert::success('تم بنجاح', 'تم إضافة المجموعة بنجاح ');
 
         return redirect()->route('admin.groups.index');
     }
@@ -209,7 +121,7 @@ class GroupController extends Controller
         $users = User::where('user_type','staff')->get()->pluck('email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $students =Student::with('user')->get()->pluck('user.email', 'id');
-        
+
         $group->load('user', 'students');
 
         return view('admin.groups.edit', compact('users', 'students', 'group'));
@@ -237,9 +149,11 @@ class GroupController extends Controller
     {
         abort_if(Gate::denies('group_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $group->load('user', 'students');
+        $group->load('user');
 
-        return view('admin.groups.show', compact('group'));
+        $groupStudents = GroupStudent::with(['student.user','payments'])->where('group_id',$group->id)->orderBy('created_at','desc')->get();
+
+        return view('admin.groups.show', compact('group','groupStudents'));
     }
 
     public function destroy(Group $group)

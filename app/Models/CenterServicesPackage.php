@@ -12,20 +12,18 @@ class CenterServicesPackage extends Model
     use SoftDeletes;
 
     public $table = 'center_services_packages';
-    
-    public const PAYMENT_STATUS_SELECT = [
-        'not_paid' => 'لم يتم السداد',
-        'paid'     => 'تم السداد',
+
+    public const ATTEND_TYPE_RADIO = [
+        'offline' => 'حضوري',
+        'online'  => 'أونلاين',
     ];
 
-    public const PAYMENT_TYPE_SELECT = [
-        'bank'    => 'تحويل بنكي',
-        'cash'    => 'نقدي', 
+    public const DOCTOR_TYPE_RADIO = [
+        'specialist' => 'أخصائي',
+        'advisor'    => 'استشاري',
     ];
 
     protected $dates = [
-        'start_date',
-        'end_date',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -33,10 +31,13 @@ class CenterServicesPackage extends Model
 
     protected $fillable = [
         'name',
-        'package_content',
-        'start_date',
-        'end_date',
+        'attend_type',
+        'doctor_type',
         'package_value',
+        'sessions',
+        'free_sessions',
+        'package_content',
+        'active',
         'created_at',
         'updated_at',
         'deleted_at',

@@ -16,13 +16,17 @@ class student
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->user_type == 'patient'){ 
-            return redirect()->route('frontend.reservations.create');  
-        }elseif(Auth::user()->user_type == 'doctor'){ 
+        if(Auth::user()->user_type == 'patient'){
+            return redirect()->route('frontend.reservations.create');
+        }elseif(Auth::user()->user_type == 'doctor'){
             return redirect()->route('doctor.home');
-        }elseif(Auth::user()->user_type == 'staff'){ 
+        }elseif(Auth::user()->user_type == 'staff'){
             return redirect()->route('admin.home');
+        }elseif(Auth::user()->user_type == 'student'){
+            return $next($request);
+        }else{
+            Auth::logout();
+            return redirect()->route('frontend.home');
         }
-        return $next($request);
     }
 }

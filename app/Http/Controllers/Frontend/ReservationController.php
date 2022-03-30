@@ -3,24 +3,22 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\push_notification;
 use Illuminate\Http\Request;
-use App\Http\Requests\MassDestroyReservationRequest;
 use App\Http\Requests\StoreReservationRequest;
-use App\Http\Requests\UpdateReservationRequest;
 use App\Models\Clinic;
 use App\Models\Doctor;
 use App\Models\Reservation;
-use App\Models\User;
-use Symfony\Component\HttpFoundation\Response;
-use Alert;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ReservationController extends Controller
 {
-    //
+    use push_notification;
+
     public function ranges(Request $request){
 
-        $date = $request->date; 
+        $date = $request->date;
         $reservations = Reservation::where('doctor_id',$request->doctor_id)->where('reservation_date',$date)->get()->pluck(['reservation_time'])->toArray();
         if(!$reservations){
             $reservations = [];
@@ -34,17 +32,18 @@ class ReservationController extends Controller
 
 
         if($doctor_clinic){
-            $range = range(strtotime($doctor_clinic->pivot->start_time),strtotime($doctor_clinic->pivot->end_time),15*60); 
+            $range = range(strtotime($doctor_clinic->pivot->start_time),strtotime($doctor_clinic->pivot->end_time),15*60);
         }else{
             $range = null;
         }
-        
+
         return view('frontend.reservations.partials.ranges',compact('range','date','reservations'));
     }
+
     public function index()
     {
 
-        $reservations = Reservation::with(['user', 'doctor', 'clinic'])->where('user_id',Auth::id())->get();
+        $reservations = Reservation::with(['user', 'doctor', 'clinic','payments'])->where('user_id',Auth::id())->orderBy('created_at','desc')->paginate(10);
 
         return view('frontend.reservations.index', compact('reservations'));
     }
@@ -58,13 +57,14 @@ class ReservationController extends Controller
 
         return view('frontend.reservations.create', compact( 'doctors', 'clinics'));
     }
-    
+
     public function store(StoreReservationRequest $request)
     {
-        
-        $doctor = Doctor::findOrFail($request->doctor_id); 
+
+        $doctor = Doctor::findOrFail($request->doctor_id);
+
         $date = date(config('panel.date_format'),strtotime($request->choosen_date));
-        $clinic_id = $doctor->clinics()->wherePivot('doctor_id',$request->doctor_id)->first()->pivot->clinic_id ?? 0; 
+        $clinic_id = $doctor->clinics()->wherePivot('doctor_id',$request->doctor_id)->first()->pivot->clinic_id ?? 0;
 
         $reservations = Reservation::where('doctor_id',$request->doctor_id)
                                     ->where('reservation_date',$request->choosen_date)
@@ -74,7 +74,6 @@ class ReservationController extends Controller
             Alert::error('لم يتم الحجز','تم حجز الموعد من قبل شخص اخر');
             return back();
         }
-        
         $reservation = Reservation::create([
             'reservation_date' => $date,
             'reservation_time' => $request->choosen_time,
@@ -83,28 +82,35 @@ class ReservationController extends Controller
             'doctor_id' => $request->doctor_id,
             'clinic_id' => $clinic_id,
             'user_id' => $request->user_id,
-            'payment_status' => 'not_paid',
         ]);
 
         Alert::success('تم بنجاح', 'تم إضافة الحجز بنجاح ');
 
-        return redirect()->route('frontend.home');
+        $alert_text = 'طلب حجز جديد من '.Auth::user()->name;
+        $alert_link = $reservation->id;
+        $data = [
+            'user' => Auth::user()->name,
+            'clinic' => Clinic::find($clinic_id)->clinic_name ?? '',
+            'doctor' => $doctor->user->name ?? '',
+            'reservation_date' => $date,
+            'reservation_time' => $request->choosen_time,
+        ];
+        $this->send_notification( $alert_text , $alert_link , 'reservation',$data);
+
+        return redirect()->route('frontend.reservations.index');
     }
     public function destroy(Reservation $reservation)
     {
 
-        $reservation->delete();
+        if($reservation->frontend_delatable()){
+            $reservation->delete();
 
-        Alert::success('تم بنجاح', 'تم حذف الحجز بنجاح ');
+            Alert::success('تم بنجاح', 'تم حذف الحجز بنجاح ');
+        }else{
+            Alert::error('لا يمكن الحذف');
+        }
 
         return back();
-    }
-
-    public function massDestroy(MassDestroyReservationRequest $request)
-    {
-        Reservation::whereIn('id', request('ids'))->delete();
-
-        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
 

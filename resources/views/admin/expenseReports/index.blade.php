@@ -32,10 +32,10 @@
                 </div>
             </div>
         </form>
-        <form method="get"> 
+        <form method="get">
             <div class="row">
                 <div class="col-3 form-group">
-                    <label class="control-label" for="start_date">بداية التاريخ</label> 
+                    <label class="control-label" for="start_date">بداية التاريخ</label>
                     <input class="form-control date {{ $errors->has('start_date') ? 'is-invalid' : '' }}" type="text" name="start_date" id="start_date" value="{{ $start_date ?? '' }}" required>
                 </div>
                 <div class="col-3 form-group">
@@ -62,7 +62,7 @@
                 <table class="table table-bordered table-striped">
                     <tr>
                         <th>{{ trans('cruds.expenseReport.reports.income') }}</th>
-                        <td>{{ number_format($incomesTotal, 2) }}</td>
+                        <td>{{ number_format( ($incomesTotal + $payments_packages_total + $payments_courses_total +  $payments_reservations_total), 2) }}</td>
                     </tr>
                     <tr>
                         <th>{{ trans('cruds.expenseReport.reports.expense') }}</th>
@@ -78,7 +78,7 @@
                 <table class="table table-bordered table-striped">
                     <tr>
                         <th>{{ trans('cruds.expenseReport.reports.incomeByCategory') }}</th>
-                        <th>{{ number_format($incomesTotal, 2) }}</th>
+                        <th>{{ number_format( ($incomesTotal + $payments_packages_total + $payments_courses_total + $payments_reservations_total ), 2) }}</th>
                     </tr>
                     @foreach($incomesSummary as $inc)
                         <tr>

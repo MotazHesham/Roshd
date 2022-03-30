@@ -16,14 +16,18 @@ class patient
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->user_type == 'staff'){ 
+        if(Auth::user()->user_type == 'staff'){
             return redirect()->route('admin.home');
-        }elseif(Auth::user()->user_type == 'doctor'){ 
+        }elseif(Auth::user()->user_type == 'doctor'){
             return redirect()->route('doctor.home');
-        }elseif(Auth::user()->user_type == 'student'){ 
-            return redirect()->route('frontend.groups.create');
+        }elseif(Auth::user()->user_type == 'student'){
+            return redirect()->route('frontend.groups.index');
+        }elseif(Auth::user()->user_type == 'patient'){
+            return $next($request);
+        }else{
+            Auth::logout();
+            return redirect()->route('frontend.home');
         }
-        return $next($request);
     }
 }
 

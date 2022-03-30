@@ -26,12 +26,13 @@ class StorePatientRequest extends FormRequest
             ],
             'password' => [
                 'required',
-            ], 
+            ],
             'phone' => [
-                'string',
+                'size:10',
+                'regex:/(05)[0-9]{8}/',
                 'required',
                 'unique:users',
-            ],  
+            ],
         ];
     }
 }

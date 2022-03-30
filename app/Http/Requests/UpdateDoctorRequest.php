@@ -26,7 +26,7 @@ class UpdateDoctorRequest extends FormRequest
             'specialization_id' => [
                 'required',
                 'integer',
-            ],  
+            ],
             'name' => [
                 'string',
                 'required',
@@ -34,9 +34,11 @@ class UpdateDoctorRequest extends FormRequest
             'email' => [
                 'required',
                 'unique:users,email,' . request()->user_id,
-            ], 
+            ],
             'phone' => [
-                'string',
+                'unique:users,phone,' . request()->user_id,
+                'size:10',
+                'regex:/(05)[0-9]{8}/',
                 'required',
             ],
             'work_days.*' => [

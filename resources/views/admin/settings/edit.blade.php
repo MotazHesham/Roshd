@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <div class="card">
         <div class="card-header">
             {{ trans('global.edit') }} {{ trans('cruds.setting.title_singular') }}
@@ -11,7 +10,7 @@
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
-                
+
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label class="required" for="site_name">{{ trans('cruds.setting.fields.site_name') }}</label>
@@ -37,8 +36,8 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label class="required" for="phone">{{ trans('cruds.setting.fields.phone') }}</label>
-                        <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone"
-                            id="phone" value="{{ old('phone', $setting->phone) }}" required>
+                        <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text"
+                            name="phone" id="phone" value="{{ old('phone', $setting->phone) }}" required>
                         @if ($errors->has('phone'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('phone') }}
@@ -89,7 +88,7 @@
                             </div>
                         @endif
                         <span class="help-block">{{ trans('cruds.setting.fields.instagram_helper') }}</span>
-                    </div> 
+                    </div>
                     <div class="form-group col-md-6">
                         <label for="you_tube">{{ trans('cruds.setting.fields.you_tube') }}</label>
                         <input class="form-control {{ $errors->has('you_tube') ? 'is-invalid' : '' }}" type="text"
@@ -101,49 +100,11 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.setting.fields.you_tube_helper') }}</span>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="income_category_reservation_id">{{ trans('cruds.setting.fields.income_category_reservation_id') }}</label>
-                        <select class="form-control select2 {{ $errors->has('income_category_reservation') ? 'is-invalid' : '' }}" name="income_category_reservation_id" id="income_category_reservation_id">
-                            @foreach($income_categories as $id => $entry)
-                                <option value="{{ $id }}" {{ (old('income_category_reservation_id') ? old('income_category_reservation_id') : $setting->income_category_reservation->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                            @endforeach
-                        </select>
-                        @if($errors->has('income_category_reservation'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('income_category_reservation') }}
-                            </div>
-                        @endif 
-                    </div> 
-                    <div class="form-group col-md-4">
-                        <label for="income_category_package_id">{{ trans('cruds.setting.fields.income_category_package_id') }}</label>
-                        <select class="form-control select2 {{ $errors->has('income_category_package') ? 'is-invalid' : '' }}" name="income_category_package_id" id="income_category_package_id">
-                            @foreach($income_categories as $id => $entry)
-                                <option value="{{ $id }}" {{ (old('income_category_package_id') ? old('income_category_package_id') : $setting->income_category_package->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                            @endforeach
-                        </select>
-                        @if($errors->has('income_category_package'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('income_category_package') }}
-                            </div>
-                        @endif 
-                    </div> 
-                    <div class="form-group col-md-4">
-                        <label for="income_category_group_id">{{ trans('cruds.setting.fields.income_category_group_id') }}</label>
-                        <select class="form-control select2 {{ $errors->has('income_category_group') ? 'is-invalid' : '' }}" name="income_category_group_id" id="income_category_group_id">
-                            @foreach($income_categories as $id => $entry)
-                                <option value="{{ $id }}" {{ (old('income_category_group_id') ? old('income_category_group_id') : $setting->income_category_group->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                            @endforeach
-                        </select>
-                        @if($errors->has('income_category_group'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('income_category_group') }}
-                            </div>
-                        @endif 
-                    </div> 
                     <div class="form-group col-md-6">
-                        <label class="required" for="about_rosd">{{ trans('cruds.setting.fields.about_rosd') }}</label>
-                        <textarea class="form-control {{ $errors->has('about_rosd') ? 'is-invalid' : '' }}" name="about_rosd"
-                            id="about_rosd" required>{{ old('about_rosd', $setting->about_rosd) }}</textarea>
+                        <label class="required"
+                            for="about_rosd">{{ trans('cruds.setting.fields.about_rosd') }}</label>
+                        <textarea class="form-control {{ $errors->has('about_rosd') ? 'is-invalid' : '' }}" name="about_rosd" id="about_rosd"
+                            required>{{ old('about_rosd', $setting->about_rosd) }}</textarea>
                         @if ($errors->has('about_rosd'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('about_rosd') }}
@@ -154,8 +115,8 @@
                     <div class="form-group col-md-6">
                         <label class="required"
                             for="familly_advice">{{ trans('cruds.setting.fields.familly_advice') }}</label>
-                        <textarea class="form-control {{ $errors->has('familly_advice') ? 'is-invalid' : '' }}"
-                            name="familly_advice" id="familly_advice"
+                        <textarea class="form-control {{ $errors->has('familly_advice') ? 'is-invalid' : '' }}" name="familly_advice"
+                            id="familly_advice"
                             required>{{ old('familly_advice', $setting->familly_advice) }}</textarea>
                         @if ($errors->has('familly_advice'))
                             <div class="invalid-feedback">
@@ -167,8 +128,8 @@
                     <div class="form-group col-md-6">
                         <label class="required"
                             for="individual_advice">{{ trans('cruds.setting.fields.individual_advice') }}</label>
-                        <textarea class="form-control {{ $errors->has('individual_advice') ? 'is-invalid' : '' }}"
-                            name="individual_advice" id="individual_advice"
+                        <textarea class="form-control {{ $errors->has('individual_advice') ? 'is-invalid' : '' }}" name="individual_advice"
+                            id="individual_advice"
                             required>{{ old('individual_advice', $setting->individual_advice) }}</textarea>
                         @if ($errors->has('individual_advice'))
                             <div class="invalid-feedback">
@@ -180,8 +141,8 @@
                     <div class="form-group col-md-6">
                         <label class="required"
                             for="el_gadaly_elsloky">{{ trans('cruds.setting.fields.el_gadaly_elsloky') }}</label>
-                        <textarea class="form-control {{ $errors->has('el_gadaly_elsloky') ? 'is-invalid' : '' }}"
-                            name="el_gadaly_elsloky" id="el_gadaly_elsloky"
+                        <textarea class="form-control {{ $errors->has('el_gadaly_elsloky') ? 'is-invalid' : '' }}" name="el_gadaly_elsloky"
+                            id="el_gadaly_elsloky"
                             required>{{ old('el_gadaly_elsloky', $setting->el_gadaly_elsloky) }}</textarea>
                         @if ($errors->has('el_gadaly_elsloky'))
                             <div class="invalid-feedback">
@@ -193,8 +154,8 @@
                     <div class="form-group col-md-6">
                         <label class="required"
                             for="el_maarefe_elsloky">{{ trans('cruds.setting.fields.el_maarefe_elsloky') }}</label>
-                        <textarea class="form-control {{ $errors->has('el_maarefe_elsloky') ? 'is-invalid' : '' }}"
-                            name="el_maarefe_elsloky" id="el_maarefe_elsloky"
+                        <textarea class="form-control {{ $errors->has('el_maarefe_elsloky') ? 'is-invalid' : '' }}" name="el_maarefe_elsloky"
+                            id="el_maarefe_elsloky"
                             required>{{ old('el_maarefe_elsloky', $setting->el_maarefe_elsloky) }}</textarea>
                         @if ($errors->has('el_maarefe_elsloky'))
                             <div class="invalid-feedback">
@@ -206,9 +167,8 @@
                     <div class="form-group col-md-6">
                         <label class="required"
                             for="art_therapy">{{ trans('cruds.setting.fields.art_therapy') }}</label>
-                        <textarea class="form-control {{ $errors->has('art_therapy') ? 'is-invalid' : '' }}"
-                            name="art_therapy" id="art_therapy"
-                            required>{{ old('art_therapy', $setting->art_therapy) }}</textarea>
+                        <textarea class="form-control {{ $errors->has('art_therapy') ? 'is-invalid' : '' }}" name="art_therapy"
+                            id="art_therapy" required>{{ old('art_therapy', $setting->art_therapy) }}</textarea>
                         @if ($errors->has('art_therapy'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('art_therapy') }}
@@ -219,19 +179,19 @@
                     <div class="form-group col-md-6">
                         <label class="required"
                             for="play_therapy">{{ trans('cruds.setting.fields.play_therapy') }}</label>
-                        <textarea class="form-control {{ $errors->has('play_therapy') ? 'is-invalid' : '' }}"
-                            name="play_therapy" id="play_therapy"
-                            required>{{ old('play_therapy', $setting->play_therapy) }}</textarea>
+                        <textarea class="form-control {{ $errors->has('play_therapy') ? 'is-invalid' : '' }}" name="play_therapy"
+                            id="play_therapy" required>{{ old('play_therapy', $setting->play_therapy) }}</textarea>
                         @if ($errors->has('play_therapy'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('play_therapy') }}
                             </div>
                         @endif
                         <span class="help-block">{{ trans('cruds.setting.fields.play_therapy_helper') }}</span>
-                    </div> 
+                    </div>
                     <div class="form-group col-md-6">
                         <label class="required" for="logo">{{ trans('cruds.setting.fields.logo') }}</label>
-                        <div class="needsclick dropzone {{ $errors->has('logo') ? 'is-invalid' : '' }}" id="logo-dropzone">
+                        <div class="needsclick dropzone {{ $errors->has('logo') ? 'is-invalid' : '' }}"
+                            id="logo-dropzone">
                         </div>
                         @if ($errors->has('logo'))
                             <div class="invalid-feedback">
@@ -240,56 +200,59 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.setting.fields.logo_helper') }}</span>
                     </div>
+                    <div class="form-group col-md-6">
+                        <label class="required" for="message">{{ trans('cruds.setting.fields.message') }}</label>
+                        <textarea class="form-control {{ $errors->has('message') ? 'is-invalid' : '' }}" name="message" id="message"
+                            required>{{ old('message', $setting->message) }}</textarea>
+                        @if ($errors->has('message'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('message') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.setting.fields.message_helper') }}</span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="required" for="vision">{{ trans('cruds.setting.fields.vision') }}</label>
+                        <textarea class="form-control {{ $errors->has('vision') ? 'is-invalid' : '' }}" name="vision" id="vision"
+                            required>{{ old('vision', $setting->vision) }}</textarea>
+                        @if ($errors->has('vision'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('vision') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.setting.fields.vision_helper') }}</span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="required" for="services">{{ trans('cruds.setting.fields.services') }}</label>
+                        <textarea class="form-control {{ $errors->has('services') ? 'is-invalid' : '' }}" name="services" id="services"
+                            required>{{ old('services', $setting->services) }}</textarea>
+                        @if ($errors->has('services'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('services') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.setting.fields.services_helper') }}</span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="required" for="why">{{ trans('cruds.setting.fields.why') }}</label>
+                        <textarea class="form-control {{ $errors->has('why') ? 'is-invalid' : '' }}" name="why" id="why"
+                            required>{{ old('why', $setting->why) }}</textarea>
+                        @if ($errors->has('why'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('why') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.setting.fields.why_helper') }}</span>
+                    </div>
                 </div>
-                <div class="form-group col-md-6">
-                <label class="required" for="message">{{ trans('cruds.setting.fields.message') }}</label>
-                <textarea class="form-control {{ $errors->has('message') ? 'is-invalid' : '' }}" name="message" id="message" required>{{ old('message', $setting->message) }}</textarea>
-                @if($errors->has('message'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('message') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.setting.fields.message_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label class="required" for="vision">{{ trans('cruds.setting.fields.vision') }}</label>
-                <textarea class="form-control {{ $errors->has('vision') ? 'is-invalid' : '' }}" name="vision" id="vision" required>{{ old('vision', $setting->vision) }}</textarea>
-                @if($errors->has('vision'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('vision') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.setting.fields.vision_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label class="required" for="services">{{ trans('cruds.setting.fields.services') }}</label>
-                <textarea class="form-control {{ $errors->has('services') ? 'is-invalid' : '' }}" name="services" id="services" required>{{ old('services', $setting->services) }}</textarea>
-                @if($errors->has('services'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('services') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.setting.fields.services_helper') }}</span>
-            </div>
-            <div class="form-group col-md-6">
-                <label class="required" for="why">{{ trans('cruds.setting.fields.why') }}</label>
-                <textarea class="form-control {{ $errors->has('why') ? 'is-invalid' : '' }}" name="why" id="why" required>{{ old('why', $setting->why) }}</textarea>
-                @if($errors->has('why'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('why') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.setting.fields.why_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+                <div class="form-group">
+                    <button class="btn btn-danger" type="submit">
+                        {{ trans('global.save') }}
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
 @endsection
 
 @section('scripts')

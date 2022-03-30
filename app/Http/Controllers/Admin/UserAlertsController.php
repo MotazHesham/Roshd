@@ -7,8 +7,9 @@ use App\Http\Requests\MassDestroyUserAlertRequest;
 use App\Http\Requests\StoreUserAlertRequest;
 use App\Models\User;
 use App\Models\UserAlert;
-use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -19,7 +20,7 @@ class UserAlertsController extends Controller
         abort_if(Gate::denies('user_alert_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = UserAlert::with(['users'])->select(sprintf('%s.*', (new UserAlert())->table));
+            $query = UserAlert::with(['users'])->where('type','personal')->select(sprintf('%s.*', (new UserAlert())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -32,12 +33,12 @@ class UserAlertsController extends Controller
                 $crudRoutePart = 'user-alerts';
 
                 return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
             });
 
             $table->editColumn('id', function ($row) {
@@ -110,11 +111,16 @@ class UserAlertsController extends Controller
 
     public function read(Request $request)
     {
-        $alerts = \Auth::user()->userUserAlerts()->where('read', false)->get();
-        foreach ($alerts as $alert) {
+
+        if($request->type == 'personal'){
+            $alert = Auth::user()->userUserAlerts()->where('user_alert_id', $request->id)->first();
             $pivot       = $alert->pivot;
             $pivot->read = true;
             $pivot->save();
+        }elseif($request->type == 'reservation'){
+            $alert = UserAlert::findOrFail($request->id);
+            $alert->seen = true;
+            $alert->save();
         }
     }
 }

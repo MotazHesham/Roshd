@@ -27,10 +27,11 @@ class UpdatePatientRequest extends FormRequest
                 'unique:users,email,'. request()->user_id,
             ],
             'phone' => [
-                'string',
                 'required',
+                'size:10',
+                'regex:/(05)[0-9]{8}/',
                 'unique:users,phone,'. request()->user_id,
-            ],  
+            ],
         ];
     }
 }

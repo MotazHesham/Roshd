@@ -16,22 +16,7 @@ class Group extends Model implements HasMedia
     use SoftDeletes;
     use HasMediaTrait;
     use Auditable;
-    
-    public const PAYMENT_STATUS_SELECT = [
-        'not_paid' => 'لم يتم السداد',
-        'paid'     => 'تم السداد',
-    ];
 
-    public const PAYMENT_TYPE_SELECT = [
-        'bank'    => 'تحويل بنكي',
-        'cash'    => 'نقدي',
-        'package' => 'باقة',
-    ];
-    public const STATUS_SELECT = [
-        'requested'    => 'طلب انضمام',
-        'accepted'    => 'مقبول',
-        'refused' => 'مرفوض',
-    ];
     public const STATUS_RADIO = [
         '1' => 'مفعله',
         '0' => 'غير مفعله',
@@ -99,7 +84,7 @@ class Group extends Model implements HasMedia
 
     public function students()
     {
-        return $this->belongsToMany(Student::class)->withPivot('status','payment_status','payment_type','transfer_name','reference_number');
+        return $this->belongsToMany(Student::class)->withPivot('status');
     }
 
     public function getPhotoAttribute()

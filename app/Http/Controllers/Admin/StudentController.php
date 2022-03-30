@@ -6,102 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyStudentRequest;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use App\Models\GroupStudent;
 use App\Models\Specialization;
 use App\Models\Student;
-use App\Models\Income;
 use App\Models\User;
-use App\Models\Setting;
-use App\Models\Group;
-use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Alert;
+use Illuminate\Support\Facades\Gate;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class StudentController extends Controller
 {
-    public function store_group(Request $request){
-        
-        $setting = Setting::first();
-
-        if($setting->income_category_group_id != null){
-            $student = Student::findOrFail($request->student_id);  
-            $group = Group::findOrFail($request->group_id);  
-            
-            $student->studentsGroups()->syncWithoutDetaching([
-                $request->group_id => [
-                    'status' => $request->status,
-                    'payment_status' => $request->payment_status,
-                    'payment_type' => $request->payment_type,
-                    'transfer_name' => $request->transfer_name,
-                    'reference_number' => $request->reference_number, 
-                ]
-            ]); 
-            if($request->payment_status == 'paid'){ 
-                Income::create([
-                    'income_category_id' => $setting->income_category_group_id,
-                    'entry_date' => date(config('panel.date_format'),strtotime('now')),
-                    'amount' => $group->course_cost,
-                    'relation_id' => $request->group_id,
-                    'description' => 'الطالب: ' . $student->user->name ,
-                ]);
-
-            }
-            Alert::success('تم بنجاح');
-
-            return redirect()->route('admin.students.show',$request->student_id);
-        }else{
-            Alert::warning('حدث خطأ','من فضلك اختر تصنيف ايراد للدورات أولا');
-            return redirect()->route('admin.settings.index');
-        }
-    }
-
-    public function update_group(Request $request){
-        $setting = Setting::first();
-        if($setting->income_category_group_id != null){
-            $student = student::findOrFail($request->student_id);  
-            $group = Group::findOrFail($request->group_id);  
-            $student->studentsGroups()->syncWithoutDetaching([
-                $request->group_id => [
-                    'status' => $request->status,
-                    'payment_status' => $request->payment_status,
-                    'payment_type' => $request->payment_type,
-                    'transfer_name' => $request->transfer_name,
-                    'reference_number' => $request->reference_number, 
-                ]
-            ]); 
-            if($request->payment_status == 'paid'){ 
-                Income::create([
-                    'income_category_id' => $setting->income_category_group_id,
-                    'entry_date' => date(config('panel.date_format'),strtotime('now')),
-                    'amount' => $group->course_cost,
-                    'relation_id' => $request->group_id,
-                    'description' => 'الطالب: ' . $student->user->name ,
-                ]);
-
-            }
-            Alert::success('تم بنجاح');
-
-            return redirect()->route('admin.students.show',$student->id);
-        }else{
-            Alert::warning('حدث خطأ','من فضلك اختر تصنيف ايراد للدورات أولا');
-            return redirect()->route('admin.settings.index');
-        }
-    }
-
-    public function edit_group($student_id,$group_id){
-        $student = student::findOrFail($student_id);  
-        $group = $student->studentsGroups()->wherePivot('group_id',$group_id)->first();
-        return view('admin.students.partials.edit_group',compact('group','student'));
-    }
-
-    public function destroy_group($student_id,$group_id){ 
-
-        $student = student::findOrFail($student_id);  
-        $student->studentsGroups()->wherePivot('group_id',$group_id)->detach();
-        
-        Alert::success('تم بنجاح');
-        return redirect()->route('admin.students.show',$student->id);
-    }
 
     public function index()
     {
@@ -125,7 +39,7 @@ class StudentController extends Controller
 
     public function store(StoreStudentRequest $request)
     {
-    
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -173,7 +87,7 @@ class StudentController extends Controller
             'phone' => $request->phone,
             'user_type' => 'student',
         ]);
-       
+
         Alert::success('تم  بنجاح', 'تم تعديل بيانات الطالبة بنجاح ');
 
         return redirect()->route('admin.students.index');
@@ -185,7 +99,9 @@ class StudentController extends Controller
 
         $student->load('specialization', 'user');
 
-        return view('admin.students.show', compact('student'));
+        $groupStudents = GroupStudent::with(['group','payments'])->where('student_id',$student->id)->orderBy('created_at','desc')->get();
+
+        return view('admin.students.show', compact('student','groupStudents'));
     }
 
     public function destroy(Student $student)

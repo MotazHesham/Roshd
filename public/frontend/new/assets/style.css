@@ -400,9 +400,18 @@ body,html {
    .consultant-wrap {
        width: 100%;
        background-color: #F1F1F1;
-       padding: 45px;
-       margin-bottom: 20px;
+      padding: 10px;
+    margin-bottom: 20px;
+    aspect-ratio: 1/ 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
    }
+   .consultant-wrap img.consultant-img {
+    width: 85%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+}
    .owl-two.owl-carousel .item-inner {
        width: 75%;
        display: flex;
@@ -858,6 +867,12 @@ body,html {
        border-left: 1px solid #BFBFBF;
        padding:10px 30px;
    }
+   .consultant-row .col-lg-3.col-md-6.consaltant-name-img:nth-child(4n) .consaltant {
+    border-left: 0;
+}
+.col-lg-3.col-md-6.consaltant-name-img {
+    margin-bottom: 30px;
+}
    p.consultant-p {
        color: #4E4E4E;
        font-weight: bold;
@@ -874,8 +889,10 @@ body,html {
        padding: 0px 25px !important;
    }
    .consaltant-job-info p.services-p {
-       max-width: 70%;
+       /*max-width: 70%;*/
+       max-width:90%;
    }
+   
    .courses-hero-section{
        background-image:
        url(../img/layer.png),

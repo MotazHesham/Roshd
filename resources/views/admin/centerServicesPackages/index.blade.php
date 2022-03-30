@@ -29,13 +29,22 @@
                             {{ trans('cruds.centerServicesPackage.fields.name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.centerServicesPackage.fields.start_date') }}
+                            {{ trans('cruds.centerServicesPackage.fields.attend_type') }}
                         </th>
                         <th>
-                            {{ trans('cruds.centerServicesPackage.fields.end_date') }}
+                            {{ trans('cruds.centerServicesPackage.fields.doctor_type') }}
                         </th>
                         <th>
                             {{ trans('cruds.centerServicesPackage.fields.package_value') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.centerServicesPackage.fields.sessions') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.centerServicesPackage.fields.free_sessions') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.centerServicesPackage.fields.package_content') }}
                         </th>
                         <th>
                             &nbsp;
@@ -55,13 +64,22 @@
                                 {{ $centerServicesPackage->name ?? '' }}
                             </td>
                             <td>
-                                {{ $centerServicesPackage->start_date ?? '' }}
+                                {{ App\Models\CenterServicesPackage::ATTEND_TYPE_RADIO[$centerServicesPackage->attend_type] ?? '' }}
                             </td>
                             <td>
-                                {{ $centerServicesPackage->end_date ?? '' }}
+                                {{ App\Models\CenterServicesPackage::DOCTOR_TYPE_RADIO[$centerServicesPackage->doctor_type] ?? '' }}
                             </td>
                             <td>
                                 {{ $centerServicesPackage->package_value ?? '' }}
+                            </td>
+                            <td>
+                                {{ $centerServicesPackage->sessions ?? '' }}
+                            </td>
+                            <td>
+                                {{ $centerServicesPackage->free_sessions ?? '' }}
+                            </td>
+                            <td>
+                                {{ $centerServicesPackage->package_content ?? '' }}
                             </td>
                             <td>
                                 @can('center_services_package_show')
@@ -142,7 +160,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

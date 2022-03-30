@@ -20,7 +20,6 @@ class BlogController extends Controller
 
     public function blogs()
     {
-        abort_if(Gate::denies('blog_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $blogs = Blog::with(['media'])->paginate(6);
 

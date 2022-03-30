@@ -80,16 +80,7 @@ class UpdateSettingRequest extends FormRequest
             ],
             'why' => [
                 'required',
-            ],
-            'income_category_reservation_id' => [
-                'nullable',
-            ],
-            'income_category_package_id' => [
-                'nullable',
-            ],
-            'income_category_group_id' => [
-                'nullable',
-            ],
+            ]
         ];
     }
 }

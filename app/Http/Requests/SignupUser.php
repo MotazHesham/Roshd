@@ -33,15 +33,13 @@ class SignupUser extends FormRequest
             ],
             'password' => [
                 'required',
-            ], 
+            ],
             'phone' => [
-                'string',
                 'required',
                 'unique:users',
                 'size:10',
-                'regex:/(05)[0-9]{8}/', 
-            
-            ],  
+                'regex:/(05)[0-9]{8}/',
+            ],
             'user_type' => [
                 'required'
             ],

@@ -17,25 +17,32 @@ class UpdateCenterServicesPackageRequest extends FormRequest
     public function rules()
     {
         return [
+
             'name' => [
                 'string',
                 'required',
             ],
-            'package_content' => [
+            'attend_type' => [
                 'required',
             ],
-            'start_date' => [
+            'doctor_type' => [
                 'required',
-                'date_format:' . config('panel.date_format'),
-            ],
-            'end_date' => [
-                'required',
-                'date_format:' . config('panel.date_format'),
             ],
             'package_value' => [
                 'required',
             ],
-            
+            'sessions' => [
+                'required',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
+            ],
+            'free_sessions' => [
+                'required',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
+            ],
         ];
     }
 }

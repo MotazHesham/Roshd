@@ -36,9 +36,6 @@ class UpdateGroupRequest extends FormRequest
             ],
             'course_cost' => [
                 'required',
-                'integer',
-                'min:-2147483648',
-                'max:2147483647',
             ],
             'status' => [
                 'required',
@@ -50,7 +47,7 @@ class UpdateGroupRequest extends FormRequest
             'students.*' => [
                 'integer',
             ],
-            'students' => [ 
+            'students' => [
                 'array',
             ],
             'photo' => [

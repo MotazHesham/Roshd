@@ -107,14 +107,18 @@ return [
     'uploaded'    => 'فشل التحميل :attribute .',
     'url'         => ':attribute نوعة غير صحيح',
     'uuid'        => ':attribute يجب أن يكون UUID صالحًا.',
-    'custom'      => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
-    ],
     'reserved_word'                  => ':attribute  يحتوي على كلمة محجوزة',
     'dont_allow_first_letter_number' => 'حقل الادخال \":input\" لايمكن ان يكون اول خانة رقم',
     'exceeds_maximum_number'         => 'ال :attribute وصل الحد الاقصى للمودل',
     'db_column'                      => 'ال :attribute يمكن ان يحتوى فقط على ترميز الايزو للاحراف اللاتينية وارقام وعلامة الداش ولايمكن ان يبدأ برقم',
     'attributes'                     => [],
+    'custom'      => [
+        'payment_type' => [
+            'required' => 'يجب أختيار طريقة دفع'
+        ],
+        'phone' => [
+            'size' => 'لابد ان يكون الجوال 10 أرقام' ,
+            'regex' => 'تنسيق الجوال غير صالح لابد ان يبدأ 05' ,
+        ],
+    ],
 ];

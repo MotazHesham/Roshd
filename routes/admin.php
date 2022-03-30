@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 Route::redirect('/login', '/login');
 Route::get('/home', function () {
     if (session('status')) {
@@ -29,7 +32,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // User Alerts
     Route::delete('user-alerts/destroy', 'UserAlertsController@massDestroy')->name('user-alerts.massDestroy');
-    Route::get('user-alerts/read', 'UserAlertsController@read');
+    Route::post('user-alerts/read', 'UserAlertsController@read')->name('alert.read');
     Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
 
     // Audit Logs
@@ -56,13 +59,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('precentage-contracts', 'PrecentageContractController');
 
     // Group
-    Route::post('groups/store_student', 'GroupController@store_student')->name('groups.store_student');
-    Route::get('groups/edit_student/{group_id}/{student_id}', 'GroupController@edit_student')->name('groups.edit_student');
-    Route::put('groups/update_student', 'GroupController@update_student')->name('groups.update_student');
-    Route::get('groups/destroy_student/{group_id}/{student_id}', 'GroupController@destroy_student')->name('groups.destroy_student');
-    Route::delete('groups/destroy', 'GroupController@massDestroy')->name('groups.massDestroy');
     Route::post('groups/media', 'GroupController@storeMedia')->name('groups.storeMedia');
     Route::post('groups/ckmedia', 'GroupController@storeCKEditorImages')->name('groups.storeCKEditorImages');
+    Route::delete('groups/destroy', 'GroupController@massDestroy')->name('groups.massDestroy');
     Route::resource('groups', 'GroupController');
 
     // Center Services Packages
@@ -80,15 +79,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Doctor
     Route::delete('doctors/destroy', 'DoctorController@massDestroy')->name('doctors.massDestroy');
-    Route::resource('doctors', 'DoctorController'); 
+    Route::resource('doctors', 'DoctorController');
 
     // Student
-    Route::post('students/store_group', 'StudentController@store_group')->name('students.store_group');
-    Route::get('students/edit_group/{student_id}/{group_id}', 'StudentController@edit_group')->name('students.edit_group');
-    Route::put('students/update_group', 'StudentController@update_group')->name('students.update_group');
-    Route::get('students/destroy_group/{student_id}/{group_id}', 'StudentController@destroy_group')->name('students.destroy_group');
     Route::delete('students/destroy', 'StudentController@massDestroy')->name('students.massDestroy');
     Route::resource('students', 'StudentController');
+
+    // GroupStudent
+    Route::get('group_student/change_status/{raw_id}/{status}', 'GroupStudentController@change_status')->name('group-student.change_status');
+    Route::post('group_student/store', 'GroupStudentController@store')->name('group-student.store');
+    Route::delete('group_student/destroy/{raw_id}', 'GroupStudentController@destroy')->name('group-student.destroy');
 
     // Experience
     Route::delete('experiences/destroy', 'ExperienceController@massDestroy')->name('experiences.massDestroy');
@@ -115,10 +115,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('settings', 'SettingsController');
 
     // patients
-    Route::post('patients/store_patient_package', 'PatientController@store_patient_package')->name('patients.store_patient_package');
-    Route::get('patients/edit_patient_package/{row_id}/{patient_id}', 'PatientController@edit_patient_package')->name('patients.edit_patient_package');
-    Route::put('patients/update_patient_package', 'PatientController@update_patient_package')->name('patients.update_patient_package');
-    Route::get('patients/destroy_patient_package/{row_id}/{patient_id}', 'PatientController@destroy_patient_package')->name('patients.destroy_patient_package');
+    Route::post('patients/store_patient_package', 'PatientController@store_patient_package')->name('package-patient.store');
+    Route::delete('patients/destroy_patient_package/{raw_id}', 'PatientController@destroy_patient_package')->name('package-patient.destroy');
     Route::delete('patients/destroy', 'PatientController@massDestroy')->name('patients.massDestroy');
     Route::resource('patients', 'PatientController');
 
@@ -146,11 +144,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('incomes/ckmedia', 'IncomeController@storeCKEditorImages')->name('incomes.storeCKEditorImages');
     Route::resource('incomes', 'IncomeController');
 
-        // Blogs
-     Route::delete('blogs/destroy', 'BlogsController@massDestroy')->name('blogs.massDestroy');
-     Route::post('blogs/media', 'BlogsController@storeMedia')->name('blogs.storeMedia');
-     Route::post('blogs/ckmedia', 'BlogsController@storeCKEditorImages')->name('blogs.storeCKEditorImages');
-     Route::resource('blogs', 'BlogsController');
+    // Blogs
+    Route::delete('blogs/destroy', 'BlogsController@massDestroy')->name('blogs.massDestroy');
+    Route::post('blogs/media', 'BlogsController@storeMedia')->name('blogs.storeMedia');
+    Route::post('blogs/ckmedia', 'BlogsController@storeCKEditorImages')->name('blogs.storeCKEditorImages');
+    Route::resource('blogs', 'BlogsController');
 
     // Expense Report
     Route::delete('expense-reports/destroy', 'ExpenseReportController@massDestroy')->name('expense-reports.massDestroy');
@@ -158,12 +156,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
 
-       // Services
-       Route::delete('services/destroy', 'ServicesController@massDestroy')->name('services.massDestroy');
-       Route::post('services/media', 'ServicesController@storeMedia')->name('services.storeMedia');
-       Route::post('services/ckmedia', 'ServicesController@storeCKEditorImages')->name('services.storeCKEditorImages');
-       Route::resource('services', 'ServicesController');
-   
+    // Services
+    Route::delete('services/destroy', 'ServicesController@massDestroy')->name('services.massDestroy');
+    Route::post('services/media', 'ServicesController@storeMedia')->name('services.storeMedia');
+    Route::post('services/ckmedia', 'ServicesController@storeCKEditorImages')->name('services.storeCKEditorImages');
+    Route::resource('services', 'ServicesController');
+
+
+    Route::post('payments/partials_edit', 'PaymentsController@edit_partials')->name('payments.edit_partials');
+    Route::post('payments/show_payments', 'PaymentsController@show_payments')->name('payments.show_payments');
+    Route::resource('payments', 'PaymentsController');
+
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

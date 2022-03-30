@@ -11,10 +11,13 @@ class CreateCenterServicesPackagesTable extends Migration
         Schema::create('center_services_packages', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->longText('package_content');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->string('attend_type');
+            $table->string('doctor_type');
+            $table->longText('package_content')->nullable();
+            $table->integer('sessions');
+            $table->integer('free_sessions');
             $table->decimal('package_value', 15, 2);
+            $table->boolean('active')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

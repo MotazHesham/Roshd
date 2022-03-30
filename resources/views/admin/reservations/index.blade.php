@@ -44,7 +44,7 @@
                             {{ trans('cruds.reservation.fields.clinic') }}
                         </th>
                         <th>
-                            {{ trans('cruds.reservation.fields.payment_status') }}
+                            {{ trans('cruds.reservation.fields.payment') }}
                         </th>
                         <th>
                             &nbsp;
@@ -61,9 +61,9 @@
                                 {{ $reservation->id ?? '' }}
                             </td>
                             <td>
-                                <span class="badge badge-dark">{{ $reservation->reservation_date ?? '' }}</span> 
+                                <span class="badge badge-dark">{{ $reservation->reservation_date ?? '' }}</span>
                                 <br>
-                                <span class="badge badge-light">{{ $reservation->reservation_time ?? '' }}</span> 
+                                <span class="badge badge-light">{{ $reservation->reservation_time ?? '' }}</span>
                             </td>
                             <td>
                                 {{ App\Models\Reservation::STATUSE_SELECT[$reservation->statuse] ?? '' }}
@@ -81,7 +81,7 @@
                                 {{ $reservation->clinic->clinic_name ?? '' }}
                             </td>
                             <td>
-                                {{ App\Models\Reservation::PAYMENT_STATUS_SELECT[$reservation->payment_status] ?? '' }}
+                                {{ $reservation->calculate_payments() }}
                             </td>
                             <td>
                                 @can('reservation_show')
@@ -90,22 +90,19 @@
                                     </a>
                                 @endcan
 
-                                @if($reservation->payment_status == 'not_paid')
-                                    @can('reservation_edit')
-                                        <a class="btn btn-xs btn-info" href="{{ route('admin.reservations.edit', $reservation->id) }}">
-                                            {{ trans('global.pay') }}
-                                        </a>
-                                    @endcan
+                                @can('reservation_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.reservations.edit', $reservation->id) }}">
+                                        {{ trans('global.pay') }}
+                                    </a>
+                                @endcan
 
-                                    @can('reservation_delete')
-                                        <form action="{{ route('admin.reservations.destroy', $reservation->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                        </form>
-                                    @endcan
-                                @endif
-
+                                @can('reservation_delete')
+                                    <form action="{{ route('admin.reservations.destroy', $reservation->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
                             </td>
 
                         </tr>

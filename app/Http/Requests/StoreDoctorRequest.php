@@ -29,7 +29,7 @@ class StoreDoctorRequest extends FormRequest
             'specialization_id' => [
                 'required',
                 'integer',
-            ],  
+            ],
             'name' => [
                 'string',
                 'required',
@@ -40,9 +40,11 @@ class StoreDoctorRequest extends FormRequest
             ],
             'password' => [
                 'required',
-            ], 
+            ],
             'phone' => [
-                'string',
+                'unique:users',
+                'size:10',
+                'regex:/(05)[0-9]{8}/',
                 'required',
             ],
             'work_days.*' => [

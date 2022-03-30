@@ -16,8 +16,12 @@ class UpdateReservationRequest extends FormRequest
 
     public function rules()
     {
-        return [ 
-            'statuse' => [
+        return [
+            'amount' => [
+                'required',
+            ],
+            'payment_type' => [
+                'string',
                 'required',
             ],
             'transfer_name' => [
@@ -28,11 +32,11 @@ class UpdateReservationRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'payment_type' => [
+            'reference_number' => [
                 'string',
                 'nullable',
             ],
-            'reference_number' => [
+            'last_4_digits' => [
                 'string',
                 'nullable',
             ],
