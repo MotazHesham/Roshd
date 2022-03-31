@@ -17,7 +17,7 @@
                         <img class="consultant-img" src="{{$doctor_image}}" />
                     </div>
                     <div class="consultant-info">
-                        <p class="item-info">محمود عبدالكريم</p>
+                        <p class="item-info">{{$doctor->user->name ?? ''}}</p>
                         <p class="consultant-job">{{ $doctor->specialization->name ?? '' }}</p>
                     </div>
                 </div>
