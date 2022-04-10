@@ -52,11 +52,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Salary Contract
     Route::delete('salary-contracts/destroy', 'SalaryContractController@massDestroy')->name('salary-contracts.massDestroy');
-    Route::resource('salary-contracts', 'SalaryContractController');
+    Route::resource('salary-contracts', 'SalaryContractController')->except([
+        'create']);
+    Route::get('salary-contracts/create/{id}','SalaryContractController@create')->name('salary-contracts.create');  
+
 
     // Precentage Contract
     Route::delete('precentage-contracts/destroy', 'PrecentageContractController@massDestroy')->name('precentage-contracts.massDestroy');
-    Route::resource('precentage-contracts', 'PrecentageContractController');
+    Route::resource('precentage-contracts', 'PrecentageContractController')->except([
+        'create']);
+    Route::get('precentage-contracts/create/{id}','PrecentageContractController@create')->name('precentage-contracts.create');  
+
 
     // Group
     Route::post('groups/media', 'GroupController@storeMedia')->name('groups.storeMedia');
@@ -92,11 +98,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Experience
     Route::delete('experiences/destroy', 'ExperienceController@massDestroy')->name('experiences.massDestroy');
-    Route::resource('experiences', 'ExperienceController');
+    Route::resource('experiences', 'ExperienceController')->except([
+        'create']);
+    Route::get('experiences/create/{id}','ExperienceController@create')->name('experiences.create');  
+
 
     // Education
     Route::delete('education/destroy', 'EducationController@massDestroy')->name('education.massDestroy');
-    Route::resource('education', 'EducationController');
+    Route::resource('education', 'EducationController')->except([
+        'create']);
+    Route::get('education/create/{id}','EducationController@create')->name('education.create');  
 
     // Activates
     Route::delete('activates/destroy', 'ActivatesController@massDestroy')->name('activates.massDestroy');
@@ -166,6 +177,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('payments/partials_edit', 'PaymentsController@edit_partials')->name('payments.edit_partials');
     Route::post('payments/show_payments', 'PaymentsController@show_payments')->name('payments.show_payments');
     Route::resource('payments', 'PaymentsController');
+
+    ///
+   
+
+    Route::Put('/update_status/{id}','ReservationController@update_status')->name('reservations.update_status');
 
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

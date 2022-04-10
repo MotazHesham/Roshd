@@ -24,21 +24,24 @@
             </div>
             <div class="col-lg-9 consaltant-job-info">
                 <p class="consultant-p">الخبرات السابقة</p>
+                @foreach($doctor->doctorExperiences as $exper)
                 <p class="services-p">
-                    @foreach($doctor->doctorExperiences as $exper)
+                   
                         {{$exper->job_title}} : {{$exper->work_place}}
                         <br>
                         {{$exper->start_date}} - {{$exper->end_date}}
-                    @endforeach
+           
                 </p>
+                @endforeach
                 <p class="consultant-p">التعليم</p>
+                @foreach($doctor->doctorEducation as $edu)
                 <p class="services-p">
-                    @foreach($doctor->doctorEducation as $edu)
                         {{ \App\Models\Education::NAME_SELECT[$edu->name] }}
                         <br>
                         {{$exper->start_date}} - {{$exper->end_date}}
-                    @endforeach
+                   
                 </p>
+                @endforeach
             </div>
         </div>
     </div>

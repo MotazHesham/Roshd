@@ -1,7 +1,7 @@
 @can('precentage_contract_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.precentage-contracts.create') }}">
+            <a class="btn btn-success" href="{{ route('admin.precentage-contracts.create', $doctor->id) }}">
                 {{ trans('global.add') }} {{ trans('cruds.precentageContract.title_singular') }}
             </a>
         </div>

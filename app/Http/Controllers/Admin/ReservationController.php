@@ -162,4 +162,16 @@ class ReservationController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    public function update_status($id,Request $request){
+
+        $reservation = Reservation::findOrfail($id);
+    
+        $reservation->update([
+            'statuse'=>$request->statuse,
+        ]);
+        Alert::success('تم بنجاح', 'تم التحديث بنجاح ');
+
+        return redirect()->route('admin.reservations.edit',$reservation->id);
+    }
 }

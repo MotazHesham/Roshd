@@ -1,7 +1,7 @@
 
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.experiences.create') }}">
+            <a class="btn btn-success" href="{{ route('admin.experiences.create', $doctor->id) }}">
                 {{ trans('global.add') }} {{ trans('cruds.experience.title_singular') }}
             </a>
         </div>

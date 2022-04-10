@@ -25,15 +25,20 @@ class SalaryContractController extends Controller
         return view('admin.salaryContracts.index', compact('salaryContracts'));
     }
 
-    public function create()
-    {
+    public function create($doctor_id)
+    { 
+    
         abort_if(Gate::denies('salary_contract_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
+      
+           // $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
+     
+            $doctor=Doctor::findOrfail($doctor_id);
+            $doctor->load('user');
 
         $allowances = Allowance::all();
 
-        return view('admin.salaryContracts.create', compact('doctors', 'allowances'));
+        return view('admin.salaryContracts.create', compact('doctor', 'allowances'));
     }
 
     public function store(StoreSalaryContractRequest $request)

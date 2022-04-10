@@ -24,13 +24,17 @@ class PrecentageContractController extends Controller
         return view('admin.precentageContracts.index', compact('precentageContracts'));
     }
 
-    public function create()
-    {
+    public function  create($doctor_id)
+    { 
+    
         abort_if(Gate::denies('precentage_contract_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+      
+           // $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
+     
+            $doctor=Doctor::findOrfail($doctor_id);
+            $doctor->load('user');
 
-        $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.precentageContracts.create', compact('doctors'));
+        return view('admin.precentageContracts.create', compact('doctor'));
     }
 
     public function store(StorePrecentageContractRequest $request)

@@ -23,11 +23,14 @@ class ExperienceController extends Controller
         return view('admin.experiences.index', compact('experiences'));
     }
 
-    public function create()
+    public function create($doctor_id)
     { 
-        $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
+       // $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
+ 
+        $doctor=Doctor::findOrfail($doctor_id);
+        $doctor->load('user');
 
-        return view('admin.experiences.create', compact('doctors'));
+        return view('admin.experiences.create', compact('doctor'));
     }
 
     public function store(StoreExperienceRequest $request)

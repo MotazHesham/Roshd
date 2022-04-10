@@ -23,11 +23,15 @@ class EducationController extends Controller
         return view('admin.education.index', compact('education'));
     }
 
-    public function create()
+    public function create($doctor_id)
     { 
-        $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
+       // $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
+ 
+        $doctor=Doctor::findOrfail($doctor_id);
+        $doctor->load('user');
 
-        return view('admin.education.create', compact('doctors'));
+
+        return view('admin.education.create', compact('doctor'));
     }
 
     public function store(StoreEducationRequest $request)
