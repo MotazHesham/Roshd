@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroyEducationRequest;
 use App\Http\Requests\StoreEducationRequest;
 use App\Http\Requests\UpdateEducationRequest;
 use App\Models\Doctor;
+use App\Models\TypesOfDegree;
 use App\Models\Education;
 use Gate;
 use Illuminate\Http\Request;
@@ -17,8 +18,8 @@ class EducationController extends Controller
 {
     public function index()
     { 
-
-        $education = Education::with(['doctor'])->get();
+  
+        $education = Education::with(['doctor', 'degree'])->get();
 
         return view('admin.education.index', compact('education'));
     }
@@ -29,13 +30,14 @@ class EducationController extends Controller
  
         $doctor=Doctor::findOrfail($doctor_id);
         $doctor->load('user');
+        $degrees = TypesOfDegree::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-
-        return view('admin.education.create', compact('doctor'));
+        return view('admin.education.create', compact('doctor','degrees'));
     }
 
     public function store(StoreEducationRequest $request)
     {
+        
         $education = Education::create($request->all());
 
 
@@ -49,9 +51,11 @@ class EducationController extends Controller
 
         $doctors = Doctor::with('user')->get()->pluck('user.email', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $education->load('doctor');
+        $degrees = TypesOfDegree::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.education.edit', compact('doctors', 'education'));
+        $education->load('doctor', 'degree');
+
+        return view('admin.education.edit', compact('degrees', 'doctors', 'education'));
     }
 
     public function update(UpdateEducationRequest $request, Education $education)
@@ -67,7 +71,7 @@ class EducationController extends Controller
     public function show(Education $education)
     { 
 
-        $education->load('doctor');
+        $education->load('doctor', 'degree');
 
         return view('admin.education.show', compact('education'));
     }

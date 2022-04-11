@@ -32,7 +32,7 @@ class ReservationController extends Controller
 
 
         if($doctor_clinic){
-            $range = range(strtotime($doctor_clinic->pivot->start_time),strtotime($doctor_clinic->pivot->end_time),15*60);
+            $range = range(strtotime($doctor_clinic->pivot->start_time),strtotime($doctor_clinic->pivot->end_time)-1,60*60);
         }else{
             $range = null;
         }

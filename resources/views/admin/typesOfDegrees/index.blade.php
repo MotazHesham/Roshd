@@ -1,41 +1,32 @@
 @extends('layouts.admin')
 @section('content')
-@can('education_create')
+@can('types_of_degree_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.education.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.education.title_singular') }}
+            <a class="btn btn-success" href="{{ route('admin.types-of-degrees.create') }}">
+                {{ trans('global.add') }} {{ trans('cruds.typesOfDegree.title_singular') }}
             </a>
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.education.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.typesOfDegree.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-Education">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-TypesOfDegree">
                 <thead>
                     <tr>
                         <th width="10">
 
                         </th>
                         <th>
-                            {{ trans('cruds.education.fields.id') }}
+                            {{ trans('cruds.typesOfDegree.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.education.fields.name') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.education.fields.start_date') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.education.fields.end_date') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.education.fields.doctor') }}
+                            {{ trans('cruds.typesOfDegree.fields.name') }}
                         </th>
                         <th>
                             &nbsp;
@@ -43,41 +34,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($education as $key => $education)
-                        <tr data-entry-id="{{ $education->id }}">
+                    @foreach($typesOfDegrees as $key => $typesOfDegree)
+                        <tr data-entry-id="{{ $typesOfDegree->id }}">
                             <td>
 
                             </td>
                             <td>
-                                {{ $education->id ?? '' }}
+                                {{ $typesOfDegree->id ?? '' }}
                             </td>
                             <td>
-                                {{ $education->degree ?? '' }}
+                                {{ $typesOfDegree->name ?? '' }}
                             </td>
                             <td>
-                                {{ $education->start_date ?? '' }}
-                            </td>
-                            <td>
-                                {{ $education->end_date ?? '' }}
-                            </td>
-                            <td>
-                                {{ $education->doctor->user->email ?? '' }}
-                            </td>
-                            <td>
-                                @can('education_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.education.show', $education->id) }}">
+                                @can('types_of_degree_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.types-of-degrees.show', $typesOfDegree->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @can('education_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.education.edit', $education->id) }}">
+                                @can('types_of_degree_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.types-of-degrees.edit', $typesOfDegree->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
-                                @can('education_delete')
-                                    <form action="{{ route('admin.education.destroy', $education->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                @can('types_of_degree_delete')
+                                    <form action="{{ route('admin.types-of-degrees.destroy', $typesOfDegree->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
@@ -102,11 +84,11 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('education_delete')
+@can('types_of_degree_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.education.massDestroy') }}",
+    url: "{{ route('admin.types-of-degrees.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
@@ -137,12 +119,12 @@
     order: [[ 1, 'desc' ]],
     pageLength: 25,
   });
-  let table = $('.datatable-Education:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  let table = $('.datatable-TypesOfDegree:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-
+  
 })
 
 </script>

@@ -632,4 +632,21 @@ return [
             'deleted_at_helper'  => ' ',
         ],
     ],
+    'typesOfDegree' => [
+        'title'          => 'الدرجات العلميه',
+        'title_singular' => 'الدرجات العلميه',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => ' ',
+            'name'              => 'اسم الدرجة',
+            'name_helper'       => ' ',
+            'created_at'        => 'Created at',
+            'created_at_helper' => ' ',
+            'updated_at'        => 'Updated at',
+            'updated_at_helper' => ' ',
+            'deleted_at'        => 'Deleted at',
+            'deleted_at_helper' => ' ',
+        ],
+    ],
 ];
+

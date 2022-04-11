@@ -31,6 +31,7 @@ class Education extends Model
         'start_date',
         'end_date',
         'doctor_id',
+        'degree_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -59,6 +60,11 @@ class Education extends Model
     public function doctor()
     {
         return $this->belongsTo(Doctor::class, 'doctor_id');
+    }
+
+    public function degree()
+    {
+        return $this->belongsTo(TypesOfDegree::class, 'degree_id');
     }
 
     protected function serializeDate(DateTimeInterface $date)

@@ -11,19 +11,18 @@
             @method('PUT')
             @csrf
             <div class="form-group">
-                <label>{{ trans('cruds.education.fields.name') }}</label>
-                <select class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" name="name" id="name">
-                    <option value disabled {{ old('name', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\Education::NAME_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('name', $education->name) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                <label class="required" for="degree_id">{{ trans('cruds.education.fields.degree') }}</label>
+                <select class="form-control select2 {{ $errors->has('degree') ? 'is-invalid' : '' }}" name="degree_id" id="degree_id" required>
+                    @foreach($degrees as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('degree_id') ? old('degree_id') : $education->degree->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
                 </select>
-                @if($errors->has('name'))
+                @if($errors->has('degree'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
+                        {{ $errors->first('degree') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.education.fields.name_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.education.fields.degree_helper') }}</span>
             </div>
             <div class="form-group">
                 <label class="required" for="start_date">{{ trans('cruds.education.fields.start_date') }}</label>

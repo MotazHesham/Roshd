@@ -179,6 +179,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('payments', 'PaymentsController');
 
     ///
+        // Types Of Degrees
+        Route::delete('types-of-degrees/destroy', 'TypesOfDegreesController@massDestroy')->name('types-of-degrees.massDestroy');
+        Route::resource('types-of-degrees', 'TypesOfDegreesController');
    
 
     Route::Put('/update_status/{id}','ReservationController@update_status')->name('reservations.update_status');

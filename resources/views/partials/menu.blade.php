@@ -354,6 +354,16 @@
                             </a>
                         </li>
                     @endcan
+                    @can('types_of_degree_access')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.types-of-degrees.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/types-of-degrees") || request()->is("admin/types-of-degrees/*") ? "c-active" : "" }}">
+                            <i class="fa-fw fas fa-user-graduate c-sidebar-nav-icon">
+
+                            </i>
+                            {{ trans('cruds.typesOfDegree.title') }}
+                        </a>
+                    </li>
+                @endcan
             </ul>
         </li>
     @endcan

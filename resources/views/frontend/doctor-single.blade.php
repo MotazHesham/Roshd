@@ -36,9 +36,9 @@
                 <p class="consultant-p">التعليم</p>
                 @foreach($doctor->doctorEducation as $edu)
                 <p class="services-p">
-                        {{ \App\Models\Education::NAME_SELECT[$edu->name] }}
+                    {{ $edu->degree->name ?? '' }}
                         <br>
-                        {{$exper->start_date}} - {{$exper->end_date}}
+                        {{$edu->start_date}} - {{$edu->end_date}}
                    
                 </p>
                 @endforeach

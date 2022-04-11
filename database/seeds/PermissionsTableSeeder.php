@@ -597,6 +597,30 @@ class PermissionsTableSeeder extends Seeder
                 'id' => $i++,
                 'title' => 'profile_password_edit',
             ],
+            [
+                'id'    => $i++,
+                'title' => 'types_of_degree_create',
+            ],
+            [
+                'id'    => $i++,
+                'title' => 'types_of_degree_edit',
+            ],
+            [
+                'id'    => $i++,
+                'title' => 'types_of_degree_show',
+            ],
+            [
+                'id'    => $i++,
+                'title' => 'types_of_degree_delete',
+            ],
+            [
+                'id'    => $i++,
+                'title' => 'types_of_degree_access',
+            ],
+            [
+                'id'    =>$i++,
+                'title' => 'profile_password_edit',
+            ],
         ];
 
         Permission::insert($permissions);

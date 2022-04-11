@@ -29,6 +29,10 @@ class UpdateEducationRequest extends FormRequest
                 'required',
                 'integer',
             ],
+            'degree_id' => [
+                'required',
+                'integer',
+            ],
         ];
     }
 }

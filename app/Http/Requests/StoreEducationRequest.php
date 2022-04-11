@@ -29,6 +29,10 @@ class StoreEducationRequest extends FormRequest
                 'required',
                 'integer',
             ],
+            'degree_id' => [
+                'required',
+                'integer',
+            ],
         ];
     }
 }

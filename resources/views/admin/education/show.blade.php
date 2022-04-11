@@ -28,7 +28,7 @@
                             {{ trans('cruds.education.fields.name') }}
                         </th>
                         <td>
-                            {{ App\Models\Education::NAME_SELECT[$education->name] ?? '' }}
+                            {{ $education->degree->name ?? '' }}
                         </td>
                     </tr>
                     <tr>
