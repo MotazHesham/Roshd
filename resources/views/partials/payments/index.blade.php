@@ -1,7 +1,9 @@
 
 @if($required_amount != 0)
     @php
-        $sum = $payments->where('payment_status','paid')->sum('amount');
+        $result = $payments->where('payment_status','paid');
+        if($result)
+        $sum=$result->sum('amount');
         $progress = ($sum / $required_amount) * 100;
     @endphp
     <div class="text-center">
